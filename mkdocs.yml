@@ -25,10 +25,10 @@ extra:
     some displayed features may not be available in the stable release.
     You can switch to stable version using the version box at screen bottom.'
   support:
-    tool: Discord
-    channel: https://discord.gg/5U9Jwp7
-    email: quorum@consensys.net
-    website: https://consensys.net/quorum/developers
+    tool: discussions
+    channel: https://github.com/ConsenSys/gnark/discussions
+    email: zkteam@consensys.net
+    website: https://github.com/Consensys/gnark
     company: Consensys
     issues: https://github.com/Consensys/gnark/issues
   google:
@@ -43,11 +43,12 @@ repo_url: https://github.com/Consensys/gnark
 theme:
   name: material
   custom_dir: common/custom_theme
-  palette:
-    primary: deep-orange
-    accent: teal
-  logo: 'Images/logo.svg'
-  favicon: 'Images/favicon.svg'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  language: 'en'
+  logo: 'Images/gnark_white.svg'
+  favicon: 'Images/gnark_favicon.svg'
 nav:
     - How to:
         - Get started with gnark:
