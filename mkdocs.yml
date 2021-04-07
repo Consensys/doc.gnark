@@ -37,8 +37,8 @@ extra:
 
 
 # Software Repository
-repo_name: Consensys/gnark
-repo_url: https://github.com/Consensys/gnark
+repo_name: ConsenSys/gnark
+repo_url: https://github.com/ConsenSys/gnark
 
 theme:
   name: material
@@ -52,10 +52,15 @@ theme:
 nav:
     - How to:
         - Get started with gnark:
-            - Install binary distribution: HowTo/Get-Started/Install-Binaries.md
-            - Run gnark from Docker image: HowTo/Get-Started/Use-Docker.md
-            - Build from source: HowTo/Get-Started/Build-From-Source.md
-            - Start gnark: HowTo/Get-Started/Start.md
+            - Add gnark to your project: HowTo/get_started/add_to_project.md
+            - Workflow: HowTo/get_started/workflow.md
+        - Use gnark as a service:
+            - gnarkd (experimental): HowTo/use/gnarkd.md
+        - Write Circuits:
+            - gnark API: HowTo/write/write_circuit.md
+            - gnark standard library: HowTo/write/standard_library.md
+            - Conditional and loops: HowTo/write/instructions.md
+        - Optimize Circuits: HowTo/optimize/optimize.md
     - Concepts:
         - Overview: Concepts/Overview.md
     - Tutorials:
