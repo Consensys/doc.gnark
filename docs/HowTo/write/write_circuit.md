@@ -29,11 +29,12 @@ type MyCircuit struct {
 
 At compile time, `frontend.Compile(...)` (recursively) parses the struct fields that contains `frontend.Variable` to build the `frontend.ConstraintSystem`. 
 
+**By default, a `frontend.Variable` has the `gnark:",secret"` visibility**.
 
 ???note "Struct tags"
 	Similarly to standard Go packages (like `encoding/json`), struct fields can have tags, which adds important metadata to input declaration.
 
-	By default, a `frontend.Variable` has the `gnark:",secret"` visibility. Other tag options include:
+	Other tag options:
 
 	```go
 	// omits Y, frontend.Compile will not instantiate a new variable in the ConstraintSystem
@@ -97,4 +98,4 @@ With `gnark` there is no need for *gadgets*, as you can just use functions, that
 
 ## Example
 
-Refer to the [zk-rollup operator tutorial]() for a detailed real-life use case. 
+Refer to the [zk-rollup operator tutorial]() for a detailed use case. 

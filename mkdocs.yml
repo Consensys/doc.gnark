@@ -54,22 +54,25 @@ nav:
         - Get started with gnark:
             - Add gnark to your project: HowTo/get_started/add_to_project.md
             - Workflow: HowTo/get_started/workflow.md
+        - Write Circuits:
+            - Circuit API: HowTo/write/write_circuit.md
+            - Standard library: HowTo/write/standard_library.md
+            - Conditional and loops: HowTo/write/instructions.md
+            - Design considerations: HowTo/write/design_considerations.md
+        - Compile Circuits: HowTo/compile.md
+        - Create and Verify Proofs: HowTo/prove.md
+        - Serialize: HowTo/serialize/serialize.md
         - Use gnark as a service:
             - gnarkd (experimental): HowTo/use/gnarkd.md
-        - Write Circuits:
-            - gnark API: HowTo/write/write_circuit.md
-            - gnark standard library: HowTo/write/standard_library.md
-            - Conditional and loops: HowTo/write/instructions.md
-        - Optimize Circuits: HowTo/optimize/optimize.md
     - Concepts:
-        - Overview: Concepts/Overview.md
+        - Zero knowledge proofs (ZKP): Concepts/zkp.md
+        - Circuits: Concepts/circuits.md
+        - ZKP frontend: Concepts/zkp_frontend.md
+        - ZKP backend: Concepts/zkp_backend.md
     - Tutorials:
-        - Overview: Tutorials/Overview.md
+        - ZK Rollup circuit: Tutorials/zkrollup.md
     - Reference:
-        - Command Line:
-            - Options: Reference/CLI/CLI-Syntax.md
-            - Subcommands: Reference/CLI/CLI-Subcommands.md
-        - REST API methods: Reference/Rest.md
+        - API: Reference/api.md
 
 markdown_extensions:
   - toc:
