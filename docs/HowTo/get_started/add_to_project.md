@@ -11,7 +11,7 @@ You'll need to [install Go](https://golang.org/doc/install).
 `gnark` is a standard Go module. In your project, simply execute:
 
 ```bash
-go get github.com/consensys/gnark@v0.X.X // TODO current version tag
+go get github.com/consensys/gnark@v0.4.0
 ```
 
 !!!note

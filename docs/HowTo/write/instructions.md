@@ -8,7 +8,7 @@ description: How to use conditional and loops in a gnark circuit
 
 Use standard `for` loops inside circuit definition. 
 
-!!!important
+!!!note
 	`for` loop impact on the constraint system is identical to unrolling its content  
 
 !!! example "check that `X*X*X*X*X... == Y`" 
@@ -38,4 +38,4 @@ func (cs *ConstraintSystem) Select(b Variable, i1, i2 interface{}) Variable {
 ```
 
 !!!note
-	Work is ongoing to provide a sexier alternative closer to traditional `if` / `else` statements
+	Work is ongoing to provide a `if` like statement. [Github issue](https://github.com/ConsenSys/gnark/issues/81)

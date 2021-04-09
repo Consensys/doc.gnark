@@ -5,19 +5,23 @@ description: gnark is a fast, open-source library for zero-knowledge proof proto
 
 # gnark
 
-## What is gnark?
+## What is `gnark`?
 
 `gnark` is a framework to execute (and verify) algorithms in zero-knowledge. It offers a high-level API to easily design circuits and fast implementation of state of the art ZKP schemes.
 
 !!! warning
     `gnark` has not been audited and is provided as-is, use at your own risk. In particular, `gnark` makes no security guarantees such as constant time implementation or side-channel attack resistance.
 
-!!! info
-    `gnark` is optimized for `amd64` targets (x86 64bits) and tested on Unix (Linux / macOS).
-
 ### `gnark` circuits are written in Go
 
-While several ZKP projects chose to develop their own language and compiler for the frontend, we designed a high-level API, in plain Go.
+`gnark` users write their ZKP functions in plain Go. In contrast to other ZKP libraries, we chose to not develop our own language and compiler.  Here's why:
+
+* Go is a mature and widely used language with a robust toolchain.
+* Developers can **debug**, **document**, **test** and **benchmark** their circuits as they would with any other Go program.
+* Circuits can be versioned, unit-tested and used in standard continious-delivery workflows.
+* IDE integration (we use VSCode) and all these features come for free and are stable accross platforms.
+
+Moreover, `gnark` exposes its APIs like any conventional cryptographic library (think `aes.encrypt([]byte)`). Complex solutions need this flexibility --- gRPC/REST APIs, serialization protocols, monitoring, logging, are all few lines of code away.
 
 !!! example
     This example shows how to prove knowledge of a pre-image.
@@ -35,7 +39,7 @@ While several ZKP projects chose to develop their own language and compiler for 
         // Define declares the circuit's constraints
         func (circuit *Circuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
             // hash function
-            mimc, _ := mimc.NewMiMC("seed", curveID)
+            mimc, err := mimc.NewMiMC("seed", curveID)
 
             // specify constraints
             // mimc(preImage) == hash
@@ -49,15 +53,15 @@ While several ZKP projects chose to develop their own language and compiler for 
 
         ```go
         var mimcCircuit Circuit
-        r1cs, _ := frontend.Compile(ecc.BN254, backend.GROTH16, &mimcCircuit)
+        r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &mimcCircuit)
         ```
 
     === "3. create proof"
 
         ```go
-        pk, vk, _ := groth16.Setup(r1cs)
-        proof, _ := groth16.Prove(r1cs, pk, witness)
-        _ := groth16.Verify(proof, vk, publicWitness)
+        pk, vk, err := groth16.Setup(r1cs)
+        proof, err := groth16.Prove(r1cs, pk, witness)
+        err := groth16.Verify(proof, vk, publicWitness)
 
         ```
     === "4. unit test"
@@ -86,16 +90,38 @@ While several ZKP projects chose to develop their own language and compiler for 
 
         ```
 
-Relying on Go ---a mature and widely used language--- and its toolchain, has several benefits.
-
-Developers can **debug, document, test and benchmark** their circuits as they would with any other Go program. Circuits can be versionned, unit tested and used into standard continuous delivery workflows. IDE integration (we use VSCode) and all these features **come for free and are stable** across platforms.
-
-Moreover, `gnark` is not a black box and exposes APIs like a conventional cryptographic library (think `aes.encrypt([]byte)`). Complex solutions need this flexibility --- gRPC/REST APIs, serialization protocols, monitoring, logging, ... are all few lines of code away.
-
 
 ### `gnark` is fast
 
-TODO
+!!!info
+    It is difficult to fairly and accurately compare benchmarks among libraries. Some implementations may excel in conditions where others may not: target or available instruction set, CPUs and RAM may have significant impact. 
+
+    Nonetheless, **it appears that `gnark` is faster than state-of-the-art**.
+
+The same circuit is benchmarked using `gnark`, `bellman` (bls12_381, ZCash), `bellman_ce` (bn254, matterlabs).
+
+##### BN254
+
+| nb constraints | 100000|32000000|64000000|
+| -------- | --------| -------- | -------- |
+| bellman_ce (s/op)|0.43|106|214.8|
+| gnark (s/op)  |0.16|33.9|63.4|
+| speedup  |x2.6|x3.1|x3.4|
+
+On large circuits, that's **over 1M constraints per second**. 
+
+##### BLS12_381
+
+| nb constraints | 100000|32000000|64000000|
+| -------- | --------| -------- | -------- |
+| bellman (s/op)|0.6|158|316.8|
+| gnark (s/op)  |0.23|47.6|90.7|
+| speedup  |x2.7|x3.3|x3.5|
+
+!!!note
+    These benchmarks ran on a AWS c5a.24xlarge instance, with hyperthreading disabled.
+
+    They are not recent and [will be updated](https://github.com/ConsenSys/gnark/issues/83).
 
 ## Proving schemes
 

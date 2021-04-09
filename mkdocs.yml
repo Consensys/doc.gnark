@@ -55,20 +55,19 @@ nav:
             - Add gnark to your project: HowTo/get_started/add_to_project.md
             - Workflow: HowTo/get_started/workflow.md
         - Write Circuits:
-            - Circuit API: HowTo/write/write_circuit.md
+            - Circuit Structure: HowTo/write/circuit_structure.md
+            - Circuit API: HowTo/write/circuit_api.md
             - Standard library: HowTo/write/standard_library.md
             - Conditional and loops: HowTo/write/instructions.md
-            - Design considerations: HowTo/write/design_considerations.md
         - Compile Circuits: HowTo/compile.md
         - Create and Verify Proofs: HowTo/prove.md
-        - Serialize: HowTo/serialize/serialize.md
+        - Serialize: HowTo/serialize.md
         - Use gnark as a service:
             - gnarkd (experimental): HowTo/use/gnarkd.md
     - Concepts:
         - Zero knowledge proofs (ZKP): Concepts/zkp.md
-        - Circuits: Concepts/circuits.md
-        - ZKP frontend: Concepts/zkp_frontend.md
-        - ZKP backend: Concepts/zkp_backend.md
+        - Circuits and Constraint Systems: Concepts/circuits.md
+        - Proving schemes and curves: Concepts/schemes_curves.md
     - Tutorials:
         - ZK Rollup circuit: Tutorials/zkrollup.md
     - Reference:
