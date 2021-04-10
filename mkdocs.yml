@@ -55,6 +55,7 @@ nav:
             - Add gnark to your project: HowTo/get_started/add_to_project.md
             - Workflow: HowTo/get_started/workflow.md
         - Write Circuits:
+            - Design considerations: HowTo/write/design_considerations.md
             - Circuit Structure: HowTo/write/circuit_structure.md
             - Circuit API: HowTo/write/circuit_api.md
             - Standard library: HowTo/write/standard_library.md

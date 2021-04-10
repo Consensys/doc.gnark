@@ -7,7 +7,7 @@ description: How to write a gnark circuit
 As described in [Circuit Structure](circuit_structure.md), `MyCircuit` will implement 
 
 ```go
-func (circuit *MyCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+func Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error
 ```
 
 * `curveID` is injected at compile time to handle different code paths depending on the curve (for example, hash functions like MiMC have variations depending on the `curveID`)
@@ -19,11 +19,8 @@ To write `x * x`, one simply write `x² := cs.Mul(x, x)`.
 For example, if we want to prove that we know the solution to the cubic equation `x**3 + x + 5 == y`
 
 ```go
-func (circuit *MyCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
-	x3 := cs.Mul(circuit.X, circuit.X, circuit.X)
-	cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
-	return nil
-}
+x3 := cs.Mul(circuit.X, circuit.X, circuit.X)
+cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
 ```
 
 
