@@ -18,6 +18,8 @@ copyright: gnark and its documentation are licensed under Apache 2.0 license
 
 #extra project info and template customisation
 extra:
+  sample_data:
+    my_custom_value: "This is a custom value defined in the extra section of mkdocs.yml"
   logo_is_text: true
   latest_version_warning:
     url_contains: /latest/
