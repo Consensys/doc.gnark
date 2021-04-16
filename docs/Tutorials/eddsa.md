@@ -7,10 +7,10 @@ description: How to write a ZK-Rollup operator circuit with gnark
 
 This tutorial walks through the implementation of a circuit asserting that an EdDSA signature is correct.
 
-Such a circuit is important for a zk-rollup. In a zk-rollup, an operator receives signed transactions from users, and update its state accordingly. Once sufficiently many transactions have been received, the operator creates a ZK-SNARK proof proving all the transactions are valid, and that the state updates have been done correctly. In particular, the circuit representing the batch of all the transactions must assert the signatures are correct.
+Such a circuit is important for a zk-rollup. In a zk-rollup, an operator receives signed transactions from users, and update its state accordingly. Once sufficiently many transactions have been received, the operator creates a zk-SNARK proof proving all the transactions are valid, and that the state updates have been done correctly. In particular, the circuit representing the batch of all the transactions must assert the signatures are correct.
 
 !!!info
-    The EdDSA signature scheme does not use standard curves such as ed1559. The reason is that in a ZK-SNARK circuit, variables live in $\mathbb{F}_r$, which is different from the ed1559's field of definition. To settle this issue, special twisted Edwards curves have been created which are defined on $\mathbb{F}_r$.
+    The EdDSA signature scheme does not use standard curves such as ed1559. The reason is that in a zk-SNARK circuit, variables live in $\mathbb{F}_r$, which is different from the ed1559's field of definition. To settle this issue, special twisted Edwards curves have been created which are defined on $\mathbb{F}_r$.
 
  Before diving into the implementation, let's think about what will be the witnesses of the circuit, that is the variables that need to be provided to verify an eddsa signature.
 

@@ -12,14 +12,14 @@ description: gnark is a fast, open-source library for zero-knowledge proof proto
 * Verifying that a proof is valid reveals nothing about the private inputs.
 * Verifying a proof is a constant time operation regarldess the size of  the mathematical statement.
 
-Such a cryptographic construction is called a [ZK-SNARK](Concepts/zkp.md).
+Such a cryptographic construction is called a [zk-SNARK](Concepts/zkp.md).
 
 !!! warning
     `gnark` has not been audited and is provided as-is, use at your own risk. In particular, `gnark` makes no security guarantees such as constant time implementation or side-channel attack resistance.
 
 ### `gnark` circuits are written in Go
 
-`gnark` users write their ZK-SNARK circuits in plain Go. In contrast to other ZK-SNARK libraries, we chose to not develop our own language and compiler.  Here's why:
+`gnark` users write their zk-SNARK circuits in plain Go. In contrast to other zk-SNARK libraries, we chose to not develop our own language and compiler.  Here's why:
 
 * Go is a mature and widely used language with a robust toolchain.
 * Developers can **debug**, **document**, **test** and **benchmark** their circuits as they would with any other Go program.

@@ -19,11 +19,11 @@ The *numbers* used in the constraints are not integers or floats, but finite fie
 
 So when you write `a = b * c`, not only you don't have the liberty to specify *types* for these variables (ie `float`, `int`, ...) but you must worry about field overflow. 
 
-Some cryptographic constructs, like MiMC hash or EdDSA signature scheme, where designed to work on those field elements, and are particularly suited to be used in a ZK-SNARK setting. 
+Some cryptographic constructs, like MiMC hash or EdDSA signature scheme, where designed to work on those field elements, and are particularly suited to be used in a zk-SNARK setting. 
 
-**That is why ZK-SNARKs are mostly used to verify hashes, signatures or other "snark friendly" cryptographic primitives.** 
+**That is why zk-SNARKs are mostly used to verify hashes, signatures or other "snark friendly" cryptographic primitives.** 
 
-Here is a (non-exhaustive) list of things that you may be used to do in a traditional programming language, but are un-natural in most ZK-SNARK constructs:
+Here is a (non-exhaustive) list of things that you may be used to do in a traditional programming language, but are un-natural in most zk-SNARK constructs:
 
 * Using `float`
 * Doing conditional (`if` / `else` statements)
@@ -32,7 +32,7 @@ Here is a (non-exhaustive) list of things that you may be used to do in a tradit
 
 
 !!!info
-    Like other projects in the ZK-SNARK/Blockchain space, we're actively researching ways to make ZK-SNARKs more programmable, through use of proof recursion -- proof verifying proof(s) --  or zk-virtual machines, for example. 
+    Like other projects in the zk-SNARK/Blockchain space, we're actively researching ways to make zk-SNARKs more programmable, through use of proof recursion -- proof verifying proof(s) --  or zk-virtual machines, for example. 
 
     One of `gnark` goal is to enable ZK² rollups -- ie have fully programmable rollups (L2) anchored on a blockchain (L1). 
 

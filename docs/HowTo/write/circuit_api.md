@@ -33,7 +33,7 @@ cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
 
 ## Reusing circuit components (aka *gadgets*)
 
-Other ZK-SNARK libraries introduced the term *gadget* to describe circuit composition. 
+Other zk-SNARK libraries introduced the term *gadget* to describe circuit composition. 
 
 With `gnark` there is no need for *gadgets*, as you can just use functions, that can live, be versionned and tested in a Go package like any other piece of code.  
 

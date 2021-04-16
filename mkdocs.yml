@@ -18,6 +18,7 @@ copyright: gnark and its documentation are licensed under Apache 2.0 license
 
 #extra project info and template customisation
 extra:
+  gnark_version: "v0.4.0"
   logo_is_text: true
   latest_version_warning:
     url_contains: /latest/
