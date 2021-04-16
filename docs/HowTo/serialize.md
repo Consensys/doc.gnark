@@ -70,7 +70,7 @@ pk.ReadFrom(&buf) // reader will detect if points are compressed or not.
 
 Witnesses (inputs to the `Prove` or `Verify` functions) may be constructed outside of `gnark`, in a non-Go codebase.
 
-While there is no standard yet, we followed similar patterns used by other ZKP libraries. 
+While there is no standard yet, we followed similar patterns used by other ZK-SNARK libraries. 
 
 For performance reason (witnesses can be large), witnesses are encoded using a binary protocol. 
 

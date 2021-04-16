@@ -29,17 +29,11 @@ cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
 	```go
 	cs.Mul(X, 2, cs.Add(Y, Z, 42))
 	```
-	Constants bigger than base field modulus will be reduced mod fr. 
-
-!!! important
-	Notice that we have two types of constraints: 
-
-	* computational constraints (`cs.Mul`, `cs.Add`, `cs.Div`, ...)
-	* assertions (`cs.AssertIsEqual`, `cs.AssertIsBoolean`, ...)
+	Constants bigger than base field modulus will be reduced mod r. 
 
 ## Reusing circuit components (aka *gadgets*)
 
-Other ZKP libraries introduced the term *gadget* to describe circuit composition. 
+Other ZK-SNARK libraries introduced the term *gadget* to describe circuit composition. 
 
 With `gnark` there is no need for *gadgets*, as you can just use functions, that can live, be versionned and tested in a Go package like any other piece of code.  
 

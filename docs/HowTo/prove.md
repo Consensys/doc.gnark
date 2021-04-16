@@ -7,16 +7,16 @@ description: How to create and verify proofs
 
 ## Use `gnark/backend`
 
-Once the [circuit](write/circuit_structure.md) is [compiled](compile.md) we can run the three algorithms of a ZKP backend:
+Once the [circuit](write/circuit_structure.md) is [compiled](compile.md) we can run the three algorithms of a ZK-SNARK backend:
 
 * `Setup`
 * `Prove`
 * `Verify`
 
 !!!note
-    Supported ZKP backend are under `gnark/backend`. `gnark` currently implements `Groth16` and an experimental version of `PLONK`. 
+    Supported ZK-SNARK backends are under `gnark/backend`. `gnark` currently implements `Groth16` and an experimental version of `PLONK`. 
 
-!!!example "Use a ZKP backend"
+!!!example "Use a ZK-SNARK backend"
     === "Groth16"
 
         ```go
@@ -58,7 +58,7 @@ type Circuit struct {
 var witness Circuit
 witness.X.Assign(3)
 witness.Y.Assign(35)
-// use the witness directly in ZKP backend APIs
+// use the witness directly in ZK-SNARK backend APIs
 groth16.Prove(cs, pk, &witness)
 // test file --> assert.ProverSucceeded(cs, &witness)
 ```
