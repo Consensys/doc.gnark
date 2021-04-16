@@ -70,7 +70,7 @@ nav:
         - Circuits and Constraint Systems: Concepts/circuits.md
         - Proving schemes and curves: Concepts/schemes_curves.md
     - Tutorials:
-        - ZK Rollup circuit: Tutorials/zkrollup.md
+        - EdDSA: Tutorials/eddsa.md
     - Reference:
         - API: Reference/api.md
 
