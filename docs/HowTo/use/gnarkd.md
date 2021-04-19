@@ -8,7 +8,7 @@ description: gnarkd, a gnark proving and verifying server
     `gnarkd` is experimental and might not stay in `gnark` main repository in the future
 
 !!! note
-    `gnarkd` only support Groth16 proofs. [Support for PLONK](https://github.com/ConsenSys/gnark/issues/82) is planned for `v0.5.0` release.
+    `gnarkd` only support Groth16 proofs. [Support for PlonK](https://github.com/ConsenSys/gnark/issues/82) is planned for `v0.5.0` release.
 
 For multiple reasons (resource allocation, security, architecture ...) it may be useful to isolate `gnark` as a service.
 

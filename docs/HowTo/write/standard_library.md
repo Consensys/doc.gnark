@@ -51,7 +51,7 @@ We provide in `gnark/std` the following functions:
         return nil
     }
     ```
-???example "zkSNARK verifier"
+???example "zk-SNARK verifier"
     !!!info
         enables verifying a *BLS12_377* Groth16 `Proof` inside a *BW6_761* circuit
     ```go

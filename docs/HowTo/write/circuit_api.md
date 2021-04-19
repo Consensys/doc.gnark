@@ -41,6 +41,6 @@ With `gnark` there is no need for *gadgets*, as you can just use functions, that
 
 ## Reference
 
-Refer to the [Go package documentation]([[![PkgGoDev](https://pkg.go.dev/badge/mod/github.com/consensys/gnark/frontend)]() ](https://pkg.go.dev/mod/github.com/consensys/gnark/frontend)) for a complete list of the API with examples.
+Refer to the [Go package documentation](https://pkg.go.dev/mod/github.com/consensys/gnark@{{gnark_version}}/frontend) for a complete list of the API with examples.
 
-Refer to the [zk-rollup operator tutorial]() for a detailed use case. 
+Refer to the [EdDSA tutorial](../../Tutorials/eddsa.md) for a concrete example. 

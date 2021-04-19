@@ -14,7 +14,7 @@ Once the [circuit](write/circuit_structure.md) is [compiled](compile.md) we can 
 * `Verify`
 
 !!!note
-    Supported zk-SNARK backends are under `gnark/backend`. `gnark` currently implements `Groth16` and an experimental version of `PLONK`. 
+    Supported zk-SNARK backends are under `gnark/backend`. `gnark` currently implements `Groth16` and an experimental version of `PlonK`. 
 
 !!!example "Use a zk-SNARK backend"
     === "Groth16"
@@ -31,7 +31,7 @@ Once the [circuit](write/circuit_structure.md) is [compiled](compile.md) we can 
 
         ```
 
-    === "PLONK"
+    === "PlonK"
 
         ```go
         // 1. One time setup

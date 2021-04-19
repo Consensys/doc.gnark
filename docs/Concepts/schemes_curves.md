@@ -15,7 +15,7 @@ Groth16 is a circuit-specific preprocessing general-purpose zk-SNARK constructio
 PlonK is a universal preprocessing general-purpose zk-SNARK construction introduced by A. Gabizon, Z. Williamson and O. Ciobotaru in 2019. It is a recent proving scheme that trackted a lot of attention in several blockchain projects due to it universal and updatable preprocessing phase and its relatively short and constant verifier time. On the downside, PlonK proofs are relatively bigger and slower to generate. Beside the [paper](https://eprint.iacr.org/2019/953.pdf), we recommend this good [explainer](https://hackmd.io/@zkteam/plonk).
 
 !!!note
-    PlonK comes in different flavours according to the chosen polynomial commitment scheme (e.g. [KZG](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf), [Pedersen-Bulletproofs](http://web.stanford.edu/~buenz/pubs/bulletproofs.pdf), [FRI-based](https://eprint.iacr.org/2019/1020.pdf), [DARK](https://eprint.iacr.org/2019/1229.pdf)), the prover/verifier tradeoff (e.g. "fast-prover-but-slow-verifier" or "slow-prover-but-fast-verifier" settings) and different optimizations (e.g. [TurboPlonK](https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-turbo_plonk.pdf), [Plookup](https://eprint.iacr.org/2020/315.pdf). Currently, `gnark` supports PlonK with KZG polynomial commitment.)
+    PlonK comes in different flavours according to the chosen polynomial commitment scheme (e.g. [KZG](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf), [Pedersen-Bulletproofs](http://web.stanford.edu/~buenz/pubs/bulletproofs.pdf), [FRI-based](https://eprint.iacr.org/2019/1020.pdf), [DARK](https://eprint.iacr.org/2019/1229.pdf)), the prover/verifier tradeoff (e.g. "fast-prover-but-slow-verifier" or "slow-prover-but-fast-verifier" settings) and different optimizations (e.g. [TurboPlonK](https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-turbo_plonk.pdf), [Plookup](https://eprint.iacr.org/2020/315.pdf).)
 
 !!!info
     Some projects that use PlonK: *Aztec, ZKSync, Dusk.*
@@ -63,42 +63,4 @@ Applications that require one-layer proof composition (a proof of proofs) cannot
 !!!info
     Some applications that use one-layer proof composition: *ZEXE, Celo, Aleo, ZEXE, Zecale.*
 
-## Benchmark
-TODO: @youssef
-based on gnark-crypto PlonK implementation (with different curves)
 
-(example)
-
-### Prover
-**BN254**
-
-| nb constraints | 100000  | 32000000 | 64000000 |
-| -------------- | --------| -------- | -------- |
-| Groth16 (s/op) |         |          |          |
-| PlonK (s/op)   |         |          |          |
-
-**BLS12-381**
-
-| nb constraints | 100000  | 32000000 | 64000000 |
-| -------------- | --------| -------- | -------- |
-| Groth16 (s/op) |         |          |          |
-| PlonK (s/op)   |         |          |          |
-
-### Verifier
-**BN254**
-
-|                | circuit A  | Circuit B* |
-| -------------- | ---------- | ---------- |
-| Groth16 (ms)   |            |            |
-| PlonK (ms)     |            |            |
-
-\* circuit B with public inputs >> 18 ?
-
-**BLS12-381**
-
-|                | circuit A  | Circuit B* |
-| -------------- | ---------- | ---------- |
-| Groth16 (ms)   |            |            |
-| PlonK (ms)     |            |            |
-
-++ BLS24 curves?
