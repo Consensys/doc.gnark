@@ -18,6 +18,7 @@ copyright: gnark and its documentation are licensed under Apache 2.0 license
 
 #extra project info and template customisation
 extra:
+  gnark_version: "v0.4.0" # this is used in external URL (godoc, ...)
   logo_is_text: true
   latest_version_warning:
     url_contains: /latest/
@@ -51,9 +52,7 @@ theme:
   favicon: 'Images/gnark_favicon.svg'
 nav:
     - How to:
-        - Get started with gnark:
-            - Add gnark to your project: HowTo/get_started/add_to_project.md
-            - Workflow: HowTo/get_started/workflow.md
+        - Add gnark to your project: HowTo/get_started.md
         - Write Circuits:
             - Design considerations: HowTo/write/design_considerations.md
             - Circuit Structure: HowTo/write/circuit_structure.md
@@ -66,11 +65,11 @@ nav:
         - Use gnark as a service:
             - gnarkd (experimental): HowTo/use/gnarkd.md
     - Concepts:
-        - Zero knowledge proofs (ZKP): Concepts/zkp.md
+        - zk-SNARK: Concepts/zkp.md
         - Circuits and Constraint Systems: Concepts/circuits.md
         - Proving schemes and curves: Concepts/schemes_curves.md
     - Tutorials:
-        - ZK Rollup circuit: Tutorials/zkrollup.md
+        - EdDSA: Tutorials/eddsa.md
     - Reference:
         - API: Reference/api.md
 

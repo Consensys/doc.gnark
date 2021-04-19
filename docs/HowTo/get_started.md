@@ -2,16 +2,18 @@
 description: Add gnark to your project
 ---
 
+# Add gnark to your project
+
 ## Prerequisites
 
 You'll need to [install Go](https://golang.org/doc/install).
 
 ## Install `gnark`
 
-`gnark` is a standard Go module. In your project, simply execute:
+`gnark` is a standard Go module. Simply execute:
 
 ```bash
-go get github.com/consensys/gnark@v0.4.0
+go get github.com/consensys/gnark@{{gnark_version}}
 ```
 
 !!!note

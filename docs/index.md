@@ -1,25 +1,29 @@
 ---
 title: gnark
-description: gnark is a fast, open-source library for zero-knowledge proof protocols written in Go
+description: gnark is a fast, open-source zk-SNARK library written in Go
 ---
 
 # gnark
 
 ## What is `gnark`?
 
-`gnark` is a framework to execute (and verify) algorithms in zero-knowledge. It offers a high-level API to easily design circuits and fast implementation of state of the art ZKP schemes.
+`gnark` is a [zk-SNARK](Concepts/zkp.md) library. It offers a [high-level API](HowTo/write/circuit_api.md) to easily design [circuits](Concepts/circuits.md) and fast implementation of state of the art zk-SNARKs.
+
+1. In a typical workflow, one starts [implementing an algorithm](HowTo/write/circuit_api.md) -- for which we want to prove and verify its execution. 
+2. Then, we use `gnark/frontend` package to [translate this "high level program" into a set of mathematical constraints](HowTo/compile.md).
+3. Finally, we use `gnark/backend` to [create and verify our **proof of knowledge**](HowTo/prove.md): we prove we know a list of **secret inputs** satisfying a set of mathematical constraints.
 
 !!! warning
     `gnark` has not been audited and is provided as-is, use at your own risk. In particular, `gnark` makes no security guarantees such as constant time implementation or side-channel attack resistance.
 
 ### `gnark` circuits are written in Go
 
-`gnark` users write their ZKP functions in plain Go. In contrast to other ZKP libraries, we chose to not develop our own language and compiler.  Here's why:
+`gnark` users write their zk-SNARK circuits in plain Go. In contrast to other zk-SNARK libraries, we chose to not develop our own language and compiler.  Here's why:
 
-* Go is a mature and widely used language with a robust toolchain.
-* Developers can **debug**, **document**, **test** and **benchmark** their circuits as they would with any other Go program.
-* Circuits can be versioned, unit-tested and used in standard continious-delivery workflows.
-* IDE integration (we use VSCode) and all these features come for free and are stable accross platforms.
+- [x] Go is a mature and widely used language with a robust toolchain.
+- [x] Developers can **debug**, **document**, **test** and **benchmark** their circuits as they would with any other Go program.
+- [x] Circuits can be versioned, unit-tested and used in standard continious-delivery workflows.
+- [x] IDE integration (we use VSCode) and all these features come for free and are stable accross platforms.
 
 Moreover, `gnark` exposes its APIs like any conventional cryptographic library (think `aes.encrypt([]byte)`). Complex solutions need this flexibility --- gRPC/REST APIs, serialization protocols, monitoring, logging, are all few lines of code away.
 
@@ -123,18 +127,6 @@ On large circuits, that's **over 1M constraints per second**.
 
     They are not recent and [will be updated](https://github.com/ConsenSys/gnark/issues/83).
 
-## Proving schemes
+## Proving schemes and curves
 
-`gnark` implements:
-
-* [Groth16](https://eprint.iacr.org/2016/260)
-* [PLONK](https://eprint.iacr.org/2019/953.pdf)
-
-## Curves
-
-`gnark` supports the following elliptic curves:
-
-* BLS12-381 (Zcash)
-* BN254 (Ethereum)
-* BLS12-377 (ZEXE)
-* BW6-761 (EC supporting pairing on BLS12-377 field of definition)
+Refer to the [Proving schemes and curves](Concepts/schemes_curves.md) section. 

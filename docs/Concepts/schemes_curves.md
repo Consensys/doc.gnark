@@ -69,3 +69,4 @@ Applications that require one-layer proof composition (a proof of proofs) cannot
 
 !!!info
     Some applications that use one-layer proof composition: *ZEXE, Celo, Aleo, Zecale.*
+

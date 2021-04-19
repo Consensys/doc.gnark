@@ -7,7 +7,7 @@ description: gnark standard library
 !!! note
      `gnark/std` will be strengthened in upcoming `v0.5.0` release. See this [Github issue](https://github.com/ConsenSys/gnark/issues/80) for more details.
 
-Other ZKP libraries introduced the term *gadget* to describe circuit composition. 
+Other zk-SNARK libraries introduced the term *gadget* to describe circuit composition. 
 
 With `gnark` there is no need for *gadgets*, as you can just use functions, that can live, be versionned and tested in a Go package like any other piece of code.
 
@@ -51,7 +51,7 @@ We provide in `gnark/std` the following functions:
         return nil
     }
     ```
-???example "zkSNARK verifier"
+???example "zk-SNARK verifier"
     !!!info
         enables verifying a *BLS12_377* Groth16 `Proof` inside a *BW6_761* circuit
     ```go
