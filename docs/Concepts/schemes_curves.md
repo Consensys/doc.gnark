@@ -15,7 +15,7 @@ Groth16 is a circuit-specific preprocessing general-purpose zk-SNARK constructio
 PlonK is a universal preprocessing general-purpose zk-SNARK construction introduced by A. Gabizon, Z. Williamson and O. Ciobotaru in 2019. It is a recent proving scheme that trackted a lot of attention in several blockchain projects due to it universal and updatable preprocessing phase and its relatively short and constant verifier time. On the downside, PlonK proofs are relatively bigger and slower to generate. Beside the [paper](https://eprint.iacr.org/2019/953.pdf), we recommend this good [explainer](https://hackmd.io/@zkteam/plonk).
 
 !!!note
-    PlonK comes in different flavours according to the chosen polynomial commitment scheme (e.g. [KZG](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf), [Pedersen-Bulletproofs](http://web.stanford.edu/~buenz/pubs/bulletproofs.pdf), [FRI-based](https://eprint.iacr.org/2019/1020.pdf), [DARK](https://eprint.iacr.org/2019/1229.pdf)), the prover/verifier tradeoff (e.g. "fast-prover-but-slow-verifier" or "slow-prover-but-fast-verifier" settings) and different optimizations (e.g. [TurboPlonK](https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-turbo_plonk.pdf), [Plookup](https://eprint.iacr.org/2020/315.pdf))
+    PlonK comes in different flavours according to the chosen polynomial commitment scheme (e.g. [KZG](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf), [Pedersen-Bulletproofs](http://web.stanford.edu/~buenz/pubs/bulletproofs.pdf), [FRI-based](https://eprint.iacr.org/2019/1020.pdf), [DARK](https://eprint.iacr.org/2019/1229.pdf)), the prover/verifier tradeoff (e.g. "fast-prover-but-slow-verifier" or "slow-prover-but-fast-verifier" settings) and different optimizations (e.g. [TurboPlonK](https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-turbo_plonk.pdf), [Plookup](https://eprint.iacr.org/2020/315.pdf). Currently, `gnark` supports PlonK with KZG polynomial commitment.)
 
 !!!info
     Some projects that use PlonK: *Aztec, ZKSync, Dusk.*
@@ -39,7 +39,7 @@ Both Groth16 and PlonK (with KZG scheme) need to be instantiated with an ellipti
 - [x] and have a highly 2-adic subgroup order (for efficient proof generation)
 
 ### BN254 or BLS1-381?
-For applications that target Ethereum 1.x mainnet, BN254 is the only curve supported through precompiles (EIPs for other curves exist but are not integrated yet: [EIP-2539](https://eips.ethereum.org/EIPS/eip-2539), [EIP2537](https://eips.ethereum.org/EIPS/eip-2537) and [EIP-3026](https://eips.ethereum.org/EIPS/eip-3026)). For applications that target Ethereum 2.0, BLS12-381 is the go-to curve. For platform-agnostic applications, the choice requires a tradeoff between performance (BN254) and security (BLS12-381). We recommend choosing BLS12-381 as it offers a conservatively more secure and still fast instantiation of zk-SNARKs.
+For applications that target Ethereum 1.x mainnet, BN254 is the only supported curve through precompiles (EIPs for other curves exist but are not integrated yet: [EIP-2539](https://eips.ethereum.org/EIPS/eip-2539), [EIP2537](https://eips.ethereum.org/EIPS/eip-2537) and [EIP-3026](https://eips.ethereum.org/EIPS/eip-3026)). For applications that target Ethereum 2.0, BLS12-381 is the go-to curve. For platform-agnostic applications, the choice requires a tradeoff between performance (BN254) and security (BLS12-381). We recommend choosing BLS12-381 as it offers a conservatively more secure and still fast instantiation of zk-SNARKs.
 
 ### What about BLS12-377 and BW6-761?
 Applications that require one-layer proof composition (a proof of proofs) cannot use BN254 or BLS12-381 as they are quite inefficient for this purpose. In fact, such an application needs a pair ($E_1, E_2$) of elliptic curves that are both:
@@ -50,7 +50,7 @@ Applications that require one-layer proof composition (a proof of proofs) cannot
 
     and
 
-- [x] $E_2$ has subgroup order equal to $E_1$'s field characteristic (for efficient proof composition)
+- [x] $E_2$ has a subgroup order equal to $E_1$'s field characteristic (for efficient proof composition)
 
 (BLS12-377, BW6-761) pair of curves satisfies these conditions while enjoying fast implementations.
 
@@ -58,7 +58,7 @@ Applications that require one-layer proof composition (a proof of proofs) cannot
     Given the last condition, $E_1$ must have a highly 2-adic field characteristic. Hence, BLS12-381 cannot be used.
 
 !!!info
-    Some benchmarks and comparisons of these elliptic curves third-parties implementations agains `gnark-crypto`.
+    Some [benchmarks and comparisons](https://hackmd.io/@zkteam/eccbench) of third-parties implementations against `gnark-crypto`.
 
 !!!info
     Some applications that use one-layer proof composition: *ZEXE, Celo, Aleo, ZEXE, Zecale.*
