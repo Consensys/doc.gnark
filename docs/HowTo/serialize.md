@@ -19,7 +19,8 @@ var buf bytes.Buffer
 cs.WriteTo(&buf)
 ```
 
-To deserialize, you first need to instantiate a *curve-typed* object, and per `gnark` API design choices, these objects are not directly accessible (under `internal/`).
+To deserialize, you first need to instantiate a *curve-typed* object, and per `gnark` API design choices,
+these objects are not directly accessible (under `internal/`).
 
 ```go
 // instantiate a curve-typed object
@@ -31,19 +32,14 @@ cs.ReadFrom(&buf)
 !!!important
     Constraint systems (`R1CS` and `SparseR1CS`, for `Groth16` and `PLONK`) are currently using the `cbor` serialization protocol.
 
-    Other `gnark` objects, like `ProvingKey`, `VerifyingKey` or `Proof` contains elliptic curve points, and use a binary serialization protocol, allowing [point compression](#compression).
+    Other `gnark` objects, like `ProvingKey`, `VerifyingKey` or `Proof` contains elliptic curve points,
+    and use a binary serialization protocol, allowing [point compression](#compression).
 
-    Nothing prevents using another protocol like so:
-    ```go
-    enc := cbor.NewEncoder(&buf)
-    enc.Encode(verifyingKey)
-    ```
-
-    but we strongly discourage it as for security reasons, deserialization must also perform curve and subgroup checks.
+    We strongly discourage to uses another protocol as, for security reasons, deserialization must also perform curve and subgroup checks.
 
 ## Compression
 
-Elliptic curve points, which are the main citizens of `ProvingKey`, `VerifyingKey` or `Proof` objects can be compressed by storing only the `X` coordinate and a parity bit.
+Elliptic curve points, which are the main citizens of `ProvingKey`, `VerifyingKey` or `Proof` objects can be compressed by storing only the `X` coordinate, and a parity bit.
 
 This divides by two the needed `bytes` to represent these objects.
 
@@ -73,8 +69,8 @@ For performance reason (witnesses can be large), witnesses are encoded using a b
 
 There are two types of witnesses:
 
-* Full witness: contains public and secret inputs, needed by `Prove`
-* Public witness: contains public inputs only, needed by `Verify`
+* **Full witness**: contains public and secret inputs, needed by `Prove`
+* **Public witness**: contains public inputs only, needed by `Verify`
 
 **Binary protocol**
 
@@ -90,7 +86,8 @@ where
 
 **Ordering**
 
-First, `publicVariables`, then `secretVariables`. Each subset is ordered from the order of definition in the circuit structure.
+First, `publicVariables`, then `secretVariables`.
+Each subset is ordered from the order of definition in the circuit structure.
 
 For example, with this circuit on `ecc.BN254`
 

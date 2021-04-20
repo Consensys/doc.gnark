@@ -10,14 +10,14 @@ You'll need to [install Go](https://golang.org/doc/install).
 
 ## Install `gnark`
 
-`gnark` is a standard Go module. Simply execute:
+`gnark` is a standard Go module, install it using the following command:
 
 ```bash
 go get github.com/consensys/gnark@{{content_vars.gnark_version}}
 ```
 
 !!!note
-    If you use go modules, in `go.mod` the module path is case sensitive (use `consensys` and not `ConsenSys`).
+    If you use Go modules, in `go.mod` the module path is case sensitive (use `consensys` and not `ConsenSys`).
 
 !!! info
-    `gnark` is optimized for `amd64` targets (x86 64bits) and tested on Unix (Linux / macOS).
+    `gnark` is optimized for `amd64` targets (`x86 64bits`) and tested on Unix (Linux / macOS).
