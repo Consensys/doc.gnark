@@ -1,6 +1,6 @@
 ---
 description: How to check an EdDSA signature inside a zkSNARK circuit
---- 
+---
 
 # EdDSA
 
@@ -9,21 +9,21 @@ This tutorial walks through the implementation of a circuit asserting that an [E
 If you are interested in how to *use* EdDSA in a zk-SNARK, you may jump to [Test the circuit](#test-the-circuit).
 
 !!!note "EdDSA in a zk-SNARK is of particular interest for zk-Rollups"
-	A zk-Rollup operator will batch process many signed transactions from its users, and updates their state accordingly. 
-	
+	A zk-Rollup operator will batch process many signed transactions from its users, and updates their state accordingly.
+
 	He will create a zk-SNARK proof attesting all the transactions are valid, and to do so, he must assert that the signatures are correct, inside a zk-SNARK circuit.
 
 ## Write the circuit
 
 !!!info
-    The EdDSA signature scheme does not use standard curves such as ed1559. As explained in the [Circuit section](../Concepts/circuits.md), in a zk-SNARK circuit, variables live in $\mathbb{F}_r$, which is different from the ed1559's field of definition. 
-	
-	To settle this issue, special twisted Edwards curves have been created which are defined on $\mathbb{F}_r$. They have been nicknamed [*JubJub*](https://z.cash/technology/jubjub/) (for *BLS12_381* companion curve) and [*Baby JubJub*](https://github.com/ethereum/EIPs/pull/2494) (for *BN254* companion curve). 
+    The EdDSA signature scheme does not use standard curves such as ed1559. As explained in the [Circuit section](../Concepts/circuits.md), in a zk-SNARK circuit, variables live in $\mathbb{F}_r$, which is different from the ed1559's field of definition.
 
-	In [`gnark-crypto`](https://github.com/consensys/gnark-crypto), they are defined under `gnark-crypto/ecc/bn254{bls12381,...}/twistededwards`. 
+	To settle this issue, special twisted Edwards curves have been created which are defined on $\mathbb{F}_r$. They have been nicknamed [*JubJub*](https://z.cash/technology/jubjub/) (for *BLS12_381* companion curve) and [*Baby JubJub*](https://github.com/ethereum/EIPs/pull/2494) (for *BN254* companion curve).
+
+	In [`gnark-crypto`](https://github.com/consensys/gnark-crypto), they are defined under `gnark-crypto/ecc/bn254{bls12381,...}/twistededwards`.
 
 
-Before diving into the implementation, let's think about what our EdDSA workflow will look like. 
+Before diving into the implementation, let's think about what our EdDSA workflow will look like.
 
 1. Sign a message, happens *outside* of the zk-SNARK circuit:
 ```go
@@ -42,8 +42,8 @@ What variables are needed (the *witness*) to verify our EdDSA signature?
 
 1. The signer's public key
 
-	The public key is a point on the twisted Edward curve, so a tuple $(x,y)$. We also need to store the parameters of the twisted Edwards curve in the public key, so that when accessing a public key one can access to the corresponding curve. 
-	
+	The public key is a point on the twisted Edward curve, so a tuple $(x,y)$. We also need to store the parameters of the twisted Edwards curve in the public key, so that when accessing a public key one can access to the corresponding curve.
+
 	Let's create the struct containing the twisted Edwards curve parameter:
 
 	```go
@@ -80,11 +80,11 @@ What variables are needed (the *witness*) to verify our EdDSA signature?
 		The package `twistededwards` defines `twistededwards.Point` as a tuple $(x,y)$ of `frontend.Variable`. This structure has the associated methods to the elliptic curve group structure, like scalar multiplication.
 
 2. The signature
-   
+
 	An EdDSA signature of a message (which we suppose is already hashed) is a tuple $(R,S)$ where $R$ is a point $(x,y)$ on the twisted Edwards curve, and $S$ is a scalar. The scalar $S$ is used to perform a scalar multiplication on the twisted Edwards curve.
 
 	**Problem**: remember that the variables in a circuit live in $\mathbb{F}_r$. So do the points on the twisted Edwards curve. However the scalar $S$ does not belong to this field. It is reduced modulo $q$, the number of points of the twisted Edwards curve, can be greater than $r$. So when $S$ is passed as a witness to the circuit, $S$ is implicitly reduced modulo $r$. If $S < r$, there is no problem. However, if $S>r$, $S$ is reduced to $S'=S[r]$ and $S'[q]\neq S[q]$, which leads to a bug.
-	
+
 	**Solution**: The solution to this is to split $S$ in a small base, like $2^{128}$ if $r$ is $256$-bits for instance, and write $S=2^{128}*S_1+S_2$. This way, $S_1$ and $S_2$ are not reduced modulo $r$ and the bug is fixed.
 
 	Now we can define the structure for storing a signature:
@@ -103,7 +103,7 @@ What variables are needed (the *witness*) to verify our EdDSA signature?
 
 ### Circuit definition: the signature verification algorithm
 
-Now that the `Signature` and `PublicKey` structures are created, we can write the core of the EdDSA verification algorithm. 
+Now that the `Signature` and `PublicKey` structures are created, we can write the core of the EdDSA verification algorithm.
 
 Let's recall the operations of the signature verification. Let $G$ be the base point of the twisted Edward curve, that is the point such that $[k]G=A$, where $k$ is the secret key of the signer, and $A$ its public key. Given a message $M$, a signature $(R,S)$, a public key $A$ and a hash function $H$ (the same that has been used for signing), the verifier must check that the following relation holds:
 $$
@@ -117,7 +117,7 @@ First things first, let's define the signature of the `Verify` function. This fu
 
 ```go
 func Verify(cs *frontend.ConstraintSystem, sig Signature, msg frontend.Variable, pubKey PublicKey) error {
-    // ... 
+    // ...
 }
 ```
 
@@ -188,11 +188,11 @@ We continue the implementation with the computation of the right-hand side:
 ```
 
 !!!tip "Debugging"
-	You can print values using `cs.Println`. It behaves like `fmt.Println`, except it will output the values at proving time (ie when they are known). 
+	You can print values using `cs.Println`. It behaves like `fmt.Println`, except it will output the values at proving time (ie when they are known).
 	```go
 	cs.Println("A.X", pubKey.A.X)
 	```
-	
+
 
 Until now, we have only used objects which are defined in the `gnark` standard library: we used the `twistededwards` library and the `mimc` library. For all the methods that we have used, we passed the `cs` parameter, of type `*frontend.ConstraintSystem`, which contains the description of the constraint system. However, we never actually used the [gnark API](../HowTo/write/circuit_api.md). Now is time to use it, to assert that the left-hand side is equal to the right-hand side.
 
@@ -286,7 +286,7 @@ We then compile the circuit we implemented above.
 	r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &circuit)
 ```
 
-!!!note 
+!!!note
 	`r1cs` is the arithmetized version of the circuit. It is a list of constraints that the prover needs to fullfill by providing a satisfying inputs, namely a correct signature on a message.
 
 We run the Groth16 setup to get the `ProvingKey` and `VerifyingKey` linked to the circuit.

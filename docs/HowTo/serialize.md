@@ -3,13 +3,13 @@ description: How to serialize gnark objects
 ---
 
 
-# Serialize 
+# Serialize
 
 ## `gnark` objects
 
-`gnark` objects implements `io.WriterTo` and `io.ReaderFrom` interfaces. 
+`gnark` objects implements `io.WriterTo` and `io.ReaderFrom` interfaces.
 
-Serialization is straightforward 
+Serialization is straightforward
 
 ```go
 // compile a circuit
@@ -29,10 +29,10 @@ cs := groth16.NewCS(ecc.BN254)
 cs.ReadFrom(&buf)
 ```
 
-!!!important 
-    Constraint systems (`R1CS` and `SparseR1CS`, for `Groth16` and `PLONK`) are currently using the `cbor` serialization protocol. 
+!!!important
+    Constraint systems (`R1CS` and `SparseR1CS`, for `Groth16` and `PLONK`) are currently using the `cbor` serialization protocol.
 
-    Other `gnark` objects, like `ProvingKey`, `VerifyingKey` or `Proof` contains elliptic curve points, and use a binary serialization protocol, allowing [point compression](#compression). 
+    Other `gnark` objects, like `ProvingKey`, `VerifyingKey` or `Proof` contains elliptic curve points, and use a binary serialization protocol, allowing [point compression](#compression).
 
     Nothing prevents using another protocol like so:
     ```go
@@ -45,22 +45,22 @@ cs.ReadFrom(&buf)
 
 ## Compression
 
-Elliptic curve points, which are the main citizens of `ProvingKey`, `VerifyingKey` or `Proof` objects can be compressed by storing only the `X` coordinate and a parity bit. 
+Elliptic curve points, which are the main citizens of `ProvingKey`, `VerifyingKey` or `Proof` objects can be compressed by storing only the `X` coordinate and a parity bit.
 
 This divides by two the needed `bytes` to represent these objects.
 
 This comes at a **significant CPU cost** on the deserialization side.
 
-These objects implement `io.WriterRawTo`, which doesn't use point compression. 
+These objects implement `io.WriterRawTo`, which doesn't use point compression.
 
-```go 
+```go
 provingKey.WriteRawTo(&buf) // alternatively, provingKey.WriteTo(&buf)
 ...
 pk := groth16.NewProvingKey(ecc.BN254)
 pk.ReadFrom(&buf) // reader will detect if points are compressed or not.
 ```
 
-!!!tip 
+!!!tip
     Use `WriteRawTo` when deserialization speed >>> storage cost.
 
     Use `WriteTo` with point compression otherwise.
@@ -70,13 +70,13 @@ pk.ReadFrom(&buf) // reader will detect if points are compressed or not.
 
 Witnesses (inputs to the `Prove` or `Verify` functions) may be constructed outside of `gnark`, in a non-Go codebase.
 
-While there is no standard yet, we followed similar patterns used by other zk-SNARK libraries. 
+While there is no standard yet, we followed similar patterns used by other zk-SNARK libraries.
 
-For performance reason (witnesses can be large), witnesses are encoded using a binary protocol. 
+For performance reason (witnesses can be large), witnesses are encoded using a binary protocol.
 
 There are two types of witnesses:
 
-* Full witness: contains public and secret inputs, needed by `Prove` 
+* Full witness: contains public and secret inputs, needed by `Prove`
 * Public witness: contains public inputs only, needed by `Verify`
 
 
@@ -89,12 +89,12 @@ There are two types of witnesses:
 
 where
 
-* `nbElements == len(publicVariables) + len(secretVariables)`. 
-* each variable (a *field element*) is encoded as a big-endian byte array, where `len(bytes(variable)) == len(bytes(modulus))` 
+* `nbElements == len(publicVariables) + len(secretVariables)`.
+* each variable (a *field element*) is encoded as a big-endian byte array, where `len(bytes(variable)) == len(bytes(modulus))`
 
 **Ordering**
 
-First, `publicVariables`, then `secretVariables`. Each subset is ordered from the order of definition in the circuit structure. 
+First, `publicVariables`, then `secretVariables`. Each subset is ordered from the order of definition in the circuit structure.
 
 For example, with this circuit on `ecc.BN254`
 ```go
@@ -105,7 +105,7 @@ type Circuit struct {
 }
 ```
 
-A valid witness would be: 
+A valid witness would be:
 
 * `[uint32(3)|bytes(Y)|bytes(X)|bytes(Z)]`
 * Hex representation with values `Y = 35`, `X = 3`, `Z = 2`
@@ -118,9 +118,9 @@ A valid witness would be:
 
 ### Example in Go
 
-This is intended for multi-process usage of `gnark`. 
+This is intended for multi-process usage of `gnark`.
 
-For example [`gnarkd`](use/gnarkd.md) needs to construct the witness in one process and deserialize it in another. 
+For example [`gnarkd`](use/gnarkd.md) needs to construct the witness in one process and deserialize it in another.
 
 !!!tip
     If the witness creation and proof creation live in the same process, refer to [Construct the witness](prove.md).

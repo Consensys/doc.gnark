@@ -14,11 +14,11 @@ In addition, verifying a proof is a computational operation which is at worst lo
 
 If we don't consider **Succintness**, and if we slightly modify the notion of **Zero knowledgeness** to **Honest Verifier Zero Knowledge** (which is weaker than **Zero Knowledge** property), examples of (HV)ZK-NARK are digital signatures algorithms ECDSA and EDDSA, which are in fact applications of the Schnorr identification protocol. It is essentially an argument of knowledge to prove knowledge  of the discrete  log of a point in a group where the discrete log is hard. Verifying such signatures is not computationally costly, but does not verify the **Succintness** property as it was previously defined.
 
-The signature schemes are very specific mathematical statements, or [**circuits**](circuits.md). 
+The signature schemes are very specific mathematical statements, or [**circuits**](circuits.md).
 
-With `gnark`, one can in fact write any circuit using the [gnark API](../HowTo/write/circuit_api.md). An instance of such a circuit is `hash(x) == y`, where y is public and x secret, and `==` is an assertion, not an assignment. 
+With `gnark`, one can in fact write any circuit using the [gnark API](../HowTo/write/circuit_api.md). An instance of such a circuit is `hash(x) == y`, where y is public and x secret, and `==` is an assertion, not an assignment.
 
-A valid proof of such a statement ensures that the creator of the proof knows x such that hash(x)=y, without revealing x. It is worth noting that if y is not specified, there are an infinity of couples (x,y) verifying hash(x)=y. But if y is specified, only one x verifies this relation. 
+A valid proof of such a statement ensures that the creator of the proof knows x such that hash(x)=y, without revealing x. It is worth noting that if y is not specified, there are an infinity of couples (x,y) verifying hash(x)=y. But if y is specified, only one x verifies this relation.
 
 ### Public and secret inputs
 

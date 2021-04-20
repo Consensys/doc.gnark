@@ -30,7 +30,7 @@ func (circuit *MyCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) 
 }
 ```
 
-At compile time, `frontend.Compile(...)` (recursively) parses the struct fields that contains `frontend.Variable` to build the `frontend.ConstraintSystem`. 
+At compile time, `frontend.Compile(...)` (recursively) parses the struct fields that contains `frontend.Variable` to build the `frontend.ConstraintSystem`.
 
 **By default, a `frontend.Variable` has the `gnark:",secret"` visibility**.
 
@@ -42,7 +42,7 @@ At compile time, `frontend.Compile(...)` (recursively) parses the struct fields 
 	```go
 	// omits Y, frontend.Compile will not instantiate a new variable in the ConstraintSystem
 	// this can be useful when a Variable is referenced in multiple places but we only wish to instantiate it once
-	Y frontend.Variable `gnark:"-"` 
+	Y frontend.Variable `gnark:"-"`
 	```
 
 	```go

@@ -9,7 +9,7 @@ description: gnark is a fast, open-source zk-SNARK library written in Go
 
 `gnark` is a [zk-SNARK](Concepts/zkp.md) library. It offers a [high-level API](HowTo/write/circuit_api.md) to easily design [circuits](Concepts/circuits.md) and fast implementation of state of the art zk-SNARKs.
 
-1. In a typical workflow, one starts [implementing an algorithm](HowTo/write/circuit_api.md) -- for which we want to prove and verify its execution. 
+1. In a typical workflow, one starts [implementing an algorithm](HowTo/write/circuit_api.md) -- for which we want to prove and verify its execution.
 2. Then, we use `gnark/frontend` package to [translate this "high level program" into a set of mathematical constraints](HowTo/compile.md).
 3. Finally, we use `gnark/backend` to [create and verify our **proof of knowledge**](HowTo/prove.md): we prove we know a list of **secret inputs** satisfying a set of mathematical constraints.
 
@@ -98,7 +98,7 @@ Moreover, `gnark` exposes its APIs like any conventional cryptographic library (
 ### `gnark` is fast
 
 !!!info
-    It is difficult to fairly and accurately compare benchmarks among libraries. Some implementations may excel in conditions where others may not: target or available instruction set, CPUs and RAM may have significant impact. 
+    It is difficult to fairly and accurately compare benchmarks among libraries. Some implementations may excel in conditions where others may not: target or available instruction set, CPUs and RAM may have significant impact.
 
     Nonetheless, **it appears that `gnark` is faster than state-of-the-art**.
 
@@ -112,7 +112,7 @@ The same circuit is benchmarked using `gnark`, `bellman` (bls12_381, ZCash), `be
 | gnark (s/op)  |0.16|33.9|63.4|
 | speedup  |x2.6|x3.1|x3.4|
 
-On large circuits, that's **over 1M constraints per second**. 
+On large circuits, that's **over 1M constraints per second**.
 
 ##### BLS12_381
 
@@ -129,4 +129,4 @@ On large circuits, that's **over 1M constraints per second**.
 
 ## Proving schemes and curves
 
-Refer to the [Proving schemes and curves](Concepts/schemes_curves.md) section. 
+Refer to the [Proving schemes and curves](Concepts/schemes_curves.md) section.
