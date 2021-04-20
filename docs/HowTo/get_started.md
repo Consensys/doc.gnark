@@ -13,7 +13,7 @@ You'll need to [install Go](https://golang.org/doc/install).
 `gnark` is a standard Go module. Simply execute:
 
 ```bash
-go get github.com/consensys/gnark@{{gnark_version}}
+go get github.com/consensys/gnark@{{content_vars.gnark_version}}
 ```
 
 !!!note

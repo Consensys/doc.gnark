@@ -2,9 +2,9 @@
 description: How to write a gnark circuit
 ---
 
-# Circuit APIs 
+# Circuit APIs
 
-As described in [Circuit Structure](circuit_structure.md), `MyCircuit` will implement 
+As described in [Circuit Structure](circuit_structure.md), `MyCircuit` will implement
 
 ```go
 func Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error
@@ -12,9 +12,9 @@ func Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error
 
 * `curveID` is injected at compile time to handle different code paths depending on the curve (for example, hash functions like MiMC have variations depending on the `curveID`)
 
-* `cs` is the root object we manipulate when defining constraints. 
+* `cs` is the root object we manipulate when defining constraints.
 
-To write `x * x`, one simply write `x² := cs.Mul(x, x)`.  
+To write `x * x`, one simply write `x² := cs.Mul(x, x)`.
 
 For example, if we want to prove that we know the solution to the cubic equation `x**3 + x + 5 == y`
 
@@ -29,18 +29,18 @@ cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
 	```go
 	cs.Mul(X, 2, cs.Add(Y, Z, 42))
 	```
-	Constants bigger than base field modulus will be reduced mod r. 
+	Constants bigger than base field modulus will be reduced mod r.
 
 ## Reusing circuit components (aka *gadgets*)
 
-Other zk-SNARK libraries introduced the term *gadget* to describe circuit composition. 
+Other zk-SNARK libraries introduced the term *gadget* to describe circuit composition.
 
-With `gnark` there is no need for *gadgets*, as you can just use functions, that can live, be versionned and tested in a Go package like any other piece of code.  
+With `gnark` there is no need for *gadgets*, as you can just use functions, that can live, be versionned and tested in a Go package like any other piece of code.
 
-`gnark` provides a [standard library](standard_library.md) with common functions like hashes or signature verification. 
+`gnark` provides a [standard library](standard_library.md) with common functions like hashes or signature verification.
 
 ## Reference
 
-Refer to the [Go package documentation](https://pkg.go.dev/mod/github.com/consensys/gnark@{{gnark_version}}/frontend) for a complete list of the API with examples.
+Refer to the [Go package documentation](https://pkg.go.dev/mod/github.com/consensys/gnark@{{content_vars.gnark_version}}/frontend) for a complete list of the API with examples.
 
-Refer to the [EdDSA tutorial](../../Tutorials/eddsa.md) for a concrete example. 
+Refer to the [EdDSA tutorial](../../Tutorials/eddsa.md) for a concrete example.

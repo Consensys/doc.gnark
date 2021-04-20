@@ -2,7 +2,7 @@
 description: gnarkd, a gnark proving and verifying server
 ---
 
-# `gnarkd`: a `gnark` proving and verifying server 
+# `gnarkd`: a `gnark` proving and verifying server
 
 !!! warning
     `gnarkd` is experimental and might not stay in `gnark` main repository in the future
@@ -12,9 +12,9 @@ description: gnarkd, a gnark proving and verifying server
 
 For multiple reasons (resource allocation, security, architecture ...) it may be useful to isolate `gnark` as a service.
 
-We provide a minimalist daemon, [`gnarkd`](github.com/consensys/gnark/gnarkd), which exposes synchronous and asynchronous gRPC APIs to create and verify proofs. 
+We provide a minimalist daemon, `gnarkd` (`github.com/consensys/gnark/gnarkd`), which exposes synchronous and asynchronous gRPC APIs to create and verify proofs.
 
-## Starting `gnarkd` 
+## Starting `gnarkd`
 
 ```bash
 cd gnark/gnarkd
@@ -37,11 +37,11 @@ Circuits must be stored in a separate folder, under a curve subfolder.
 !!!example
     `circuits/bn254/cubic` will contain `cubic.pk`, `cubic.vk` and `cubic.r1cs`
 
-    `circuitID` (as needed in the APIs) is then `bn254/cubic` 
+    `circuitID` (as needed in the APIs) is then `bn254/cubic`
 
 `gnarkd` listens on 2 distinct TCP connections: one for gRPC, one for receiving large witnesses on async calls.
 
-On this second connection, the server expects: `jobID` | `witness` 
+On this second connection, the server expects: `jobID` | `witness`
 
 * `jobID` is returned by `CreateProveJob` and is a standard UUID (RFC 4122) on 16 byte (server impl uses `github.com/google/uuid`)
 * `gnarkd` knows which witness size to expect (via `r1cs.GetNbPublicWires`, `r1cs.GetNbSecretWires` and `r1cs.SizeFrElement`)
@@ -59,7 +59,7 @@ Here is the `protobuf` service (from [gnark/gnarkd/pb/gnarkd.proto]()):
 service Groth16 {
 	// Prove takes circuitID and witness as parameter
 	// this is a synchronous call and bypasses the job queue
-	// it is meant to be used for small circuits, for larger circuits (proving time) and witnesses, 
+	// it is meant to be used for small circuits, for larger circuits (proving time) and witnesses,
 	// use CreateProveJob instead
 	rpc Prove(ProveRequest) returns (ProveResult);
 
@@ -87,8 +87,8 @@ service Groth16 {
 
 ## Generating SDKs
 
-gRPC clients can be generated for multiple languages (Go, Rust, ...) see `protoc` doc for more info. 
-For Go: 
+gRPC clients can be generated for multiple languages (Go, Rust, ...) see `protoc` doc for more info.
+For Go:
 
 ```bash
 protoc --experimental_allow_proto3_optional --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative  pb/gnarkd.proto
@@ -96,7 +96,7 @@ protoc --experimental_allow_proto3_optional --go_out=. --go_opt=paths=source_rel
 
 ## Example client (Go)
 
-From [gnark/gnarkd/client/example.go](). 
+From [gnark/gnarkd/client/example.go]().
 
 ???example
     ```go
