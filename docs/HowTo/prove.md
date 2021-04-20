@@ -51,8 +51,8 @@ Within a Go process, we re-use the circuit data structure to construct the witne
 
 ```go
 type Circuit struct {
-	X frontend.Variable
-	Y frontend.Variable `gnark:",public"`
+    X frontend.Variable
+    Y frontend.Variable `gnark:",public"`
 }
 
 var witness Circuit

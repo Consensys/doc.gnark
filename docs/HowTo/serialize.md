@@ -37,7 +37,7 @@ cs.ReadFrom(&buf)
     Nothing prevents using another protocol like so:
     ```go
     enc := cbor.NewEncoder(&buf)
-	enc.Encode(verifyingKey)
+    enc.Encode(verifyingKey)
     ```
 
     but we strongly discourage it as for security reasons, deserialization must also perform curve and subgroup checks.
@@ -129,13 +129,13 @@ For example [`gnarkd`](use/gnarkd.md) needs to construct the witness in one proc
     ```go
     // witness
     var w cubic.Circuit
-	w.X.Assign(3)
-	w.Y.Assign(35)
+    w.X.Assign(3)
+    w.Y.Assign(35)
 
     // io.Writer
     var buf bytes.Buffer
 
-	witness.WriteFullTo(&buf, ecc.BN254, &w)
+    witness.WriteFullTo(&buf, ecc.BN254, &w)
     // respectively witness.WritePublicTo(&buf, ecc.BN254, &w)
     ...
     // in another process

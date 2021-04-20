@@ -9,18 +9,18 @@ description: How to use conditional and loops in a gnark circuit
 Use standard `for` loops inside circuit definition.
 
 !!!note
-	`for` loop impact on the constraint system is identical to unrolling its content
+    `for` loop impact on the constraint system is identical to unrolling its content
 
 !!! example "check that `X*X*X*X*X... == Y`"
-	```go
-	func (circuit *Circuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
-		for i := 0; i < n; i++ {
-			circuit.X = cs.Mul(circuit.X, circuit.X)
-		}
-		cs.AssertIsEqual(circuit.X, circuit.Y)
-		return nil
-	}
-	```
+    ```go
+    func (circuit *Circuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+        for i := 0; i < n; i++ {
+            circuit.X = cs.Mul(circuit.X, circuit.X)
+        }
+        cs.AssertIsEqual(circuit.X, circuit.Y)
+        return nil
+    }
+    ```
 
 
 
@@ -38,4 +38,4 @@ func (cs *ConstraintSystem) Select(b Variable, i1, i2 interface{}) Variable {
 ```
 
 !!!note
-	Work is ongoing to provide a `if` like statement. [Github issue](https://github.com/ConsenSys/gnark/issues/81)
+    Work is ongoing to provide a `if` like statement. [Github issue](https://github.com/ConsenSys/gnark/issues/81)
