@@ -216,7 +216,7 @@ We continue the implementation with the computation of the right-hand side:
 
 !!!tip "Debugging"
     You can print values using `cs.Println` that behaves like `fmt.Println`,
-    except it will output the values at proving time (for instance when they are known).
+    except it will output the values at proving time (when they are solved).
 
     ```go
     cs.Println("A.X", pubKey.A.X)
