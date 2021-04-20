@@ -100,6 +100,8 @@ markdown_extensions:
   - pymdownx.tilde
   - meta
   - smarty
+  - plantuml_markdown:
+      server: http://www.plantuml.com/plantuml
 
 plugins:
   - search:
