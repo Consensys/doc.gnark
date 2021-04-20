@@ -14,15 +14,14 @@ func Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error
 
 * `cs` is the root object we manipulate when defining constraints.
 
-To write `x * x`, one simply write `x² := cs.Mul(x, x)`.
+To write $x \times x$, one simply write `x² := cs.Mul(x, x)`.
 
-For example, if we want to prove that we know the solution to the cubic equation `x**3 + x + 5 == y`
+For example, if we want to prove that we know the solution to the cubic equation $x^3 + x + 5 = y$
 
 ```go
 x3 := cs.Mul(circuit.X, circuit.X, circuit.X)
 cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
 ```
-
 
 !!! info
     APIs, when possible, will take a variadic list of  `frontend.Variable` and / or `interface{}`. This allow flexibility on the circuit definition side to write for example

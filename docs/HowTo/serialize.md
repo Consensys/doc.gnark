@@ -2,7 +2,6 @@
 description: How to serialize gnark objects
 ---
 
-
 # Serialize
 
 ## `gnark` objects
@@ -42,7 +41,6 @@ cs.ReadFrom(&buf)
 
     but we strongly discourage it as for security reasons, deserialization must also perform curve and subgroup checks.
 
-
 ## Compression
 
 Elliptic curve points, which are the main citizens of `ProvingKey`, `VerifyingKey` or `Proof` objects can be compressed by storing only the `X` coordinate and a parity bit.
@@ -65,7 +63,6 @@ pk.ReadFrom(&buf) // reader will detect if points are compressed or not.
 
     Use `WriteTo` with point compression otherwise.
 
-
 ## Witness
 
 Witnesses (inputs to the `Prove` or `Verify` functions) may be constructed outside of `gnark`, in a non-Go codebase.
@@ -79,11 +76,10 @@ There are two types of witnesses:
 * Full witness: contains public and secret inputs, needed by `Prove`
 * Public witness: contains public inputs only, needed by `Verify`
 
-
 **Binary protocol**
 
 ```
-// Full witness     ->  [uint32(nbElements) | publicVariables | secretVariables]
+// Full witness     ->  [uint32(nbElements) | publicVariables | secretVariables]
 // Public witness   ->  [uint32(nbElements) | publicVariables ]
 ```
 
@@ -97,6 +93,7 @@ where
 First, `publicVariables`, then `secretVariables`. Each subset is ordered from the order of definition in the circuit structure.
 
 For example, with this circuit on `ecc.BN254`
+
 ```go
 type Circuit struct {
     X frontend.Variable
@@ -126,6 +123,7 @@ For example [`gnarkd`](use/gnarkd.md) needs to construct the witness in one proc
     If the witness creation and proof creation live in the same process, refer to [Construct the witness](prove.md).
 
 !!! example "Full witness in Go"
+
     ```go
     // witness
     var w cubic.Circuit
@@ -142,5 +140,3 @@ For example [`gnarkd`](use/gnarkd.md) needs to construct the witness in one proc
     proof, _ := groth16.ReadAndProve(cs, pk, &buf)
     // respectively groth16.ReadAndVerify(proof, vk, &buf)
     ```
-
-

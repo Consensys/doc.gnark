@@ -46,8 +46,6 @@ On this second connection, the server expects: `jobID` | `witness`
 * `jobID` is returned by `CreateProveJob` and is a standard UUID (RFC 4122) on 16 byte (server impl uses `github.com/google/uuid`)
 * `gnarkd` knows which witness size to expect (via `r1cs.GetNbPublicWires`, `r1cs.GetNbSecretWires` and `r1cs.SizeFrElement`)
 
-
-
 ## APIs
 
 Here is the `protobuf` service (from [gnark/gnarkd/pb/gnarkd.proto]()):
@@ -96,9 +94,7 @@ protoc --experimental_allow_proto3_optional --go_out=. --go_opt=paths=source_rel
 
 ## Example client (Go)
 
-From [gnark/gnarkd/client/example.go]().
-
-???example
+!!!example "Example From [gnark/gnarkd/client/example.go]()."
     ```go
     // Set up a connection to the server.
     conn, err := grpc.Dial(address, grpc.WithTransportCredentials(credentials.NewTLS(config)))
@@ -106,7 +102,6 @@ From [gnark/gnarkd/client/example.go]().
         log.Fatal(err)
     }
     c := pb.NewGroth16Client(conn)
-
 
     // serialize witness
     var buf bytes.Buffer

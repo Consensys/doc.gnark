@@ -34,7 +34,7 @@ At compile time, `frontend.Compile(...)` (recursively) parses the struct fields 
 
 **By default, a `frontend.Variable` has the `gnark:",secret"` visibility**.
 
-???note "Struct tags"
+!!!note "Struct tags"
     Similarly to standard Go packages (like `encoding/json`), struct fields can have tags, which adds important metadata to input declaration.
 
     Other tag options:
@@ -53,4 +53,3 @@ At compile time, `frontend.Compile(...)` (recursively) parses the struct fields 
         Circuit `gnark:",embed"`
     }
     ```
-

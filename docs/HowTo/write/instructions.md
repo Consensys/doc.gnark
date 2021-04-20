@@ -22,8 +22,6 @@ Use standard `for` loops inside circuit definition.
     }
     ```
 
-
-
 ## Conditionals statements
 
 In an imperative programming language, that would be a `if` / `else`.

@@ -2,7 +2,6 @@
 description: How to create and verify proofs
 ---
 
-
 # Create and verify a `Proof`
 
 ## Use `gnark/backend`
@@ -17,6 +16,7 @@ Once the [circuit](write/circuit_structure.md) is [compiled](compile.md) we can 
     Supported zk-SNARK backends are under `gnark/backend`. `gnark` currently implements `Groth16` and an experimental version of `PlonK`.
 
 !!!example "Use a zk-SNARK backend"
+
     === "Groth16"
 
         ```go
@@ -66,13 +66,11 @@ groth16.Prove(cs, pk, &witness)
 !!!tip
     If witness is not build within the same process, or in another programming language, refer to [Serialize](serialize.md).
 
-
 ## Verify a `Proof` on Ethereum
 
 On `ecc.BN254` + `Groth16`, `gnark` can export the `groth16.VerifyingKey` as a solidity smart contract.
 
 See [this example](https://github.com/ConsenSys/gnark-tests/blob/main/solidity/contract/main.go) and this [end-to-end integration test](https://github.com/ConsenSys/gnark-tests/blob/47873ce8e146c1f74477a15972ec63cbfd73c888/solidity/solidity_test.go#L81) using `geth` simulated blockchain.
-
 
 ```go
 // 1. Compile (Groth16 + BN254)

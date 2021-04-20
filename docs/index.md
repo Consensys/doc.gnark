@@ -94,7 +94,6 @@ Moreover, `gnark` exposes its APIs like any conventional cryptographic library (
 
         ```
 
-
 ### `gnark` is fast
 
 !!!info
@@ -104,7 +103,7 @@ Moreover, `gnark` exposes its APIs like any conventional cryptographic library (
 
 The same circuit is benchmarked using `gnark`, `bellman` (bls12_381, ZCash), `bellman_ce` (bn254, matterlabs).
 
-##### BN254
+#### `BN254`
 
 | nb constraints | 100000|32000000|64000000|
 | -------- | --------| -------- | -------- |
@@ -114,7 +113,7 @@ The same circuit is benchmarked using `gnark`, `bellman` (bls12_381, ZCash), `be
 
 On large circuits, that's **over 1M constraints per second**.
 
-##### BLS12_381
+#### `BLS12_381`
 
 | nb constraints | 100000|32000000|64000000|
 | -------- | --------| -------- | -------- |

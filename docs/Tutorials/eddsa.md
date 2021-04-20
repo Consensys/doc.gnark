@@ -22,21 +22,22 @@ If you are interested in how to *use* EdDSA in a zk-SNARK, you may jump to [Test
 
     In [`gnark-crypto`](https://github.com/consensys/gnark-crypto), they are defined under `gnark-crypto/ecc/bn254{bls12381,...}/twistededwards`.
 
-
 Before diving into the implementation, let's think about what our EdDSA workflow will look like.
 
 1. Sign a message, happens *outside* of the zk-SNARK circuit:
-```go
-privateKey, publicKey := eddsa.New(..)
-signature := privateKey.Sign(message)
-```
 
-2. Verify the EdDSA signature, happens *inside* the zk-SNARK circuit:
-```go
-assert(isValid(signature, message, publicKey))
-```
+    ```go
+    privateKey, publicKey := eddsa.New(..)
+    signature := privateKey.Sign(message)
+    ```
 
-#### Witness and data structures
+1. Verify the EdDSA signature, happens *inside* the zk-SNARK circuit:
+
+    ```go
+    assert(isValid(signature, message, publicKey))
+    ```
+
+### Witness and data structures
 
 What variables are needed (the *witness*) to verify our EdDSA signature?
 
@@ -79,7 +80,7 @@ What variables are needed (the *witness*) to verify our EdDSA signature?
     !!!note
         The package `twistededwards` defines `twistededwards.Point` as a tuple $(x,y)$ of `frontend.Variable`. This structure has the associated methods to the elliptic curve group structure, like scalar multiplication.
 
-2. The signature
+1. The signature
 
     An EdDSA signature of a message (which we suppose is already hashed) is a tuple $(R,S)$ where $R$ is a point $(x,y)$ on the twisted Edwards curve, and $S$ is a scalar. The scalar $S$ is used to perform a scalar multiplication on the twisted Edwards curve.
 
@@ -97,9 +98,6 @@ What variables are needed (the *witness*) to verify our EdDSA signature?
         S1, S2 frontend.Variable // S = S1*basis + S2, where basis if 1/2 log r (ex 128 in case of bn256)
     }
     ```
-
-----
-
 
 ### Circuit definition: the signature verification algorithm
 
@@ -193,7 +191,6 @@ We continue the implementation with the computation of the right-hand side:
     cs.Println("A.X", pubKey.A.X)
     ```
 
-
 Until now, we have only used objects which are defined in the `gnark` standard library: we used the `twistededwards` library and the `mimc` library. For all the methods that we have used, we passed the `cs` parameter, of type `*frontend.ConstraintSystem`, which contains the description of the constraint system. However, we never actually used the [gnark API](../HowTo/write/circuit_api.md). Now is time to use it, to assert that the left-hand side is equal to the right-hand side.
 
 ```go
@@ -204,7 +201,6 @@ Until now, we have only used objects which are defined in the `gnark` standard l
 
 !!!info
     Currently, `AssertIsEqual` doesn't work on arbitrary structure. Therefore to enforce equality between the lhs and the rhs, we need to use `AssertIsEqual` on the X and Y part of the lhs and the rhs individually.
-
 
 ## Test the circuit
 
@@ -345,9 +341,9 @@ We are almost done! All we need to do now is to generate the proof and verify it
     }
 ```
 
-
 !!!tip "Unit tests"
     In a `_test.go` file, you can use `gnark/backend/groth16/assert.go` like so:
+
     ```go
     assert := groth16.NewAssert(t)
     var witness Circuit

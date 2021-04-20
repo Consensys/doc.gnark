@@ -13,7 +13,8 @@ With `gnark` there is no need for *gadgets*, as you can just use functions, that
 
 We provide in `gnark/std` the following functions:
 
-???example "MiMC hash"
+=== "MiMC hash"
+
     ```go
     func (circuit *mimcCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
         // ...
@@ -22,7 +23,9 @@ We provide in `gnark/std` the following functions:
         // ...
     }
     ```
-???example "EdDSA signature verification"
+
+=== "EdDSA signature verification"
+
     ```go
     type eddsaCircuit struct {
         PublicKey eddsa.PublicKey           `gnark:",public"`
@@ -38,7 +41,9 @@ We provide in `gnark/std` the following functions:
         return nil
     }
     ```
-???example "Merkle proof verification"
+
+=== "Merkle proof verification"
+
     ```go
     type merkleCircuit struct {
         RootHash     frontend.Variable `gnark:",public"`
@@ -51,9 +56,11 @@ We provide in `gnark/std` the following functions:
         return nil
     }
     ```
-???example "zk-SNARK verifier"
-    !!!info
-        enables verifying a *BLS12_377* Groth16 `Proof` inside a *BW6_761* circuit
+
+=== "zk-SNARK verifier"
+
+    enables verifying a *BLS12_377* Groth16 `Proof` inside a *BW6_761* circuit
+
     ```go
     type verifierCircuit struct {
         InnerProof Proof
