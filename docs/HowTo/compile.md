@@ -13,4 +13,4 @@ var myCircuit Circuit
 r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &myCircuit)
 ```
 
-We must specify `zkpID` (`Groth16` or `PLONK`) at this stage, as the `CompiledConstraintSystem` (ie the *arithmetic representation*) is strongly typed towards a proving scheme.
+We must specify `zkpID` (`Groth16` or `PLONK`) at this stage, as the `CompiledConstraintSystem` (for instance the *arithmetic representation*) is strongly typed towards a proving scheme.

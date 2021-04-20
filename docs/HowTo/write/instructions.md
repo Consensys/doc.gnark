@@ -12,6 +12,7 @@ Use standard `for` loops inside circuit definition.
     `for` loop impact on the constraint system is identical to unrolling its content
 
 !!! example "check that `X*X*X*X*X... == Y`"
+
     ```go
     func (circuit *Circuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
         for i := 0; i < n; i++ {
@@ -26,7 +27,8 @@ Use standard `for` loops inside circuit definition.
 
 In an imperative programming language, that would be a `if` / `else`.
 
-However, it doesn't translate well in a *declarative* API to define the circuit, as the output of the `frontend.Compile` method is an arithmetic representation that must **encode** the various branches.
+However, it doesn't translate well in a *declarative* API to define the circuit,
+as the output of the `frontend.Compile` method is an arithmetic representation that must **encode** the various branches.
 
 `gnark` offers `cs.Select(...)` API, which is similar to Prolog-like languages.
 

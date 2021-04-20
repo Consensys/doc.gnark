@@ -24,11 +24,14 @@ cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
 ```
 
 !!! info
-    APIs, when possible, will take a variadic list of  `frontend.Variable` and / or `interface{}`. This allow flexibility on the circuit definition side to write for example
+    APIs, when possible, will take a variadic list of  `frontend.Variable` and / or `interface{}`.
+    This allows flexibility on the circuit definition side to write for example
+
     ```go
     cs.Mul(X, 2, cs.Add(Y, Z, 42))
     ```
-    Constants bigger than base field modulus will be reduced mod r.
+
+    Constants bigger than base field modulus will be reduced $\mod n$.
 
 ## Reusing circuit components (aka *gadgets*)
 

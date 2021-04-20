@@ -41,9 +41,9 @@ Circuits must be stored in a separate folder, under a curve subfolder.
 
 `gnarkd` listens on 2 distinct TCP connections: one for gRPC, one for receiving large witnesses on async calls.
 
-On this second connection, the server expects: `jobID` | `witness`
+On this second connection, the server expects: `jobID`|`witness`
 
-* `jobID` is returned by `CreateProveJob` and is a standard UUID (RFC 4122) on 16 byte (server impl uses `github.com/google/uuid`)
+* `jobID` is returned by `CreateProveJob` and is a ([standard RFC 4122 UUID](https://tools.ietf.org/html/rfc4122)) on 16 byte (server impl uses `github.com/google/uuid`)
 * `gnarkd` knows which witness size to expect (via `r1cs.GetNbPublicWires`, `r1cs.GetNbSecretWires` and `r1cs.SizeFrElement`)
 
 ## APIs
@@ -95,6 +95,7 @@ protoc --experimental_allow_proto3_optional --go_out=. --go_opt=paths=source_rel
 ## Example client (Go)
 
 !!!example "Example From [gnark/gnarkd/client/example.go]()."
+
     ```go
     // Set up a connection to the server.
     conn, err := grpc.Dial(address, grpc.WithTransportCredentials(credentials.NewTLS(config)))
