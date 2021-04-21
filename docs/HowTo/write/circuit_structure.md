@@ -4,7 +4,7 @@ description: gnark circuit structure
 
 # Circuit structure
 
-A `gnark` circuit must implement the `frontend/Circuit` interface
+A `gnark` circuit must implement the `frontend/Circuit` interface:
 
 ```go
 type Circuit interface {
@@ -13,7 +13,8 @@ type Circuit interface {
 }
 ```
 
-and must declare its [public and secret inputs]() as `frontend.Variable`:
+The circuit must declare its
+[public and secret inputs](../../Concepts/zkp.md#public-and-secret-inputs) as `frontend.Variable`:
 
 ```go
 type MyCircuit struct {
@@ -30,12 +31,15 @@ func (circuit *MyCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) 
 }
 ```
 
-At compile time, `frontend.Compile(...)` (recursively) parses the struct fields that contains `frontend.Variable` to build the `frontend.ConstraintSystem`.
+At compile time, `frontend.Compile(...)` recursively parses the struct fields that contains
+`frontend.Variable` to build the `frontend.ConstraintSystem`.
 
-**By default, a `frontend.Variable` has the `gnark:",secret"` visibility**.
+By default, a `frontend.Variable` can view `gnark:",secret"`.
 
-!!!note "Struct tags"
-    Similarly to standard Go packages (like `encoding/json`), struct fields can have tags, which adds important metadata to input declaration.
+!!! note "Struct tags"
+
+    Similar to standard Go packages (like `encoding/json`), struct fields can have tags which
+    adds important metadata to input declarations.
 
     Other tag options:
 

@@ -6,10 +6,11 @@ description: How to use conditional and loops in a gnark circuit
 
 ## Loops
 
-Use standard `for` loops inside circuit definition.
+Use standard `for` loops inside a circuit definition.
 
-!!!note
-    `for` loop impact on the constraint system is identical to unrolling its content
+!!! note
+
+    The `for` loop impact on the constraint system is identical to unrolling its content.
 
 !!! example "check that `X*X*X*X*X... == Y`"
 
@@ -25,10 +26,10 @@ Use standard `for` loops inside circuit definition.
 
 ## Conditionals statements
 
-In an imperative programming language, that would be a `if` / `else`.
-
-However, it doesn't translate well in a *declarative* API to define the circuit,
-as the output of the `frontend.Compile` method is an arithmetic representation that must **encode** the various branches.
+In an imperative programming language, conditionals would use `if` and `else` statements. However,
+this doesn't translate well in a *declarative* API to define the circuit, because the output
+of the `frontend.Compile` method is an arithmetic representation that must encode the various
+branches.
 
 `gnark` offers `cs.Select(...)` API, which is similar to Prolog-like languages.
 
@@ -37,5 +38,6 @@ as the output of the `frontend.Compile` method is an arithmetic representation t
 func (cs *ConstraintSystem) Select(b Variable, i1, i2 interface{}) Variable {
 ```
 
-!!!note
-    Work is ongoing to provide a `if` like statement. [Github issue](https://github.com/ConsenSys/gnark/issues/81)
+!!! note
+
+    Work is ongoing to provide a `if` like statement. [Github issue](https://github.com/ConsenSys/gnark/issues/81).

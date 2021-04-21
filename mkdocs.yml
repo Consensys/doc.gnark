@@ -54,17 +54,17 @@ theme:
 nav:
     - How to:
         - Add gnark to your project: HowTo/get_started.md
-        - Write Circuits:
+        - Write circuits:
             - Design considerations: HowTo/write/design_considerations.md
-            - Circuit Structure: HowTo/write/circuit_structure.md
+            - Circuit structure: HowTo/write/circuit_structure.md
             - Circuit API: HowTo/write/circuit_api.md
             - Standard library: HowTo/write/standard_library.md
-            - Conditional and loops: HowTo/write/instructions.md
+            - Conditionals and loops: HowTo/write/instructions.md
         - Compile Circuits: HowTo/compile.md
-        - Create and Verify Proofs: HowTo/prove.md
+        - Create and verify proofs: HowTo/prove.md
         - Serialize: HowTo/serialize.md
         - Use gnark as a service:
-            - gnarkd (experimental): HowTo/use/gnarkd.md
+            - gnarkd: HowTo/use/gnarkd.md
     - Concepts:
         - zk-SNARK: Concepts/zkp.md
         - Circuits and Constraint Systems: Concepts/circuits.md

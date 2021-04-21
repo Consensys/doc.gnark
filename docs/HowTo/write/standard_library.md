@@ -5,13 +5,11 @@ description: gnark standard library
 # `gnark` standard library
 
 !!! note
-     `gnark/std` will be strengthened in upcoming `v0.5.0` release. See this [Github issue](https://github.com/ConsenSys/gnark/issues/80) for more details.
 
-Other zk-SNARK libraries introduced the term *gadget* to describe circuit composition.
+    `gnark/std` will be improved in the `v0.5.0` release. See this
+    [Github issue](https://github.com/ConsenSys/gnark/issues/80) for more details.
 
-With `gnark` there is no need for *gadgets*, as you can just use functions, that can live, be versionned and tested in a Go package like any other piece of code.
-
-We provide in `gnark/std` the following functions:
+We provide the following functions in `gnark/std`:
 
 === "MiMC hash"
 
@@ -59,7 +57,7 @@ We provide in `gnark/std` the following functions:
 
 === "zk-SNARK verifier"
 
-    enables verifying a *BLS12_377* Groth16 `Proof` inside a *BW6_761* circuit
+    Enables verifying a *BLS12_377* Groth16 `Proof` inside a *BW6_761* circuit
 
     ```go
     type verifierCircuit struct {

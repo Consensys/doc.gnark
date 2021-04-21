@@ -5,61 +5,72 @@ description: gnark circuit design considerations
 # Design considerations
 
 !!! info
-    Checkout the [Concepts section](../../Concepts/zkp.md) if you're not familiar with:
+
+    Refer to the conceptual documentation if you're not familiar with:
 
     * [zk-SNARKs](../../Concepts/zkp.md)
-    * [circuit or a constraint system](../../Concepts/circuits.md)
-    * [how to choose a proving scheme and a curve](../../Concepts/schemes_curves.md)
+    * [Circuits or a constraint system](../../Concepts/circuits.md)
+    * [How to choose a proving scheme and curve](../../Concepts/schemes_curves.md).
 
 ## Programmability
 
-!!!warning
+!!! warning
 
-    [`Circuits`](../../Concepts/circuits.md) are programmable but you can't (*practically* and *efficiently*) prove any algorithm.
+    [`Circuits`](../../Concepts/circuits.md) are programmable but can't be used to prove any algorithm.
+    Some things are more natural ("snark-friendly") than others to do in a circuit, and it depends
+    on how constraints are represented in the [constraint system](../../Concepts/circuits.md).
 
-    Some things are more *natural* ("snark-friendly") than others to do in a circuit, and it all comes down to how constraints are represented in the [constraint system](../../Concepts/circuits.md).
+    Numbers used in constraints are not integers or floats, but finite field elements
+    (for example big numbers modulo or big primes $p$).
 
-    The *numbers* used in the constraints are not integers or floats, but finite field elements (for instance big numbers modulo a big prime $p$).
+    So when writing `a = b * c`, not only don't you have the liberty to specify *types* for these
+    variables (for example `float` or `int`), but you must also consider field overflow.
 
-    So when you write `a = b * c`, not only you don't have the liberty to specify *types* for these variables (for instance `float`, `int`, ...) but you must worry about field overflow.
+    Some cryptographic constructs, like MiMC hash or EdDSA signature scheme were designed to work
+    on those field elements, and are well suited to be used with zk-SNARKs. Which is why zk-SNARKs
+    are mostly used to verify hashes, signatures or other "snark friendly" cryptographic primitives.
 
-    Some cryptographic constructs, like MiMC hash or EdDSA signature scheme, where designed to work on those field elements, and are particularly suited to be used in a zk-SNARK setting.
+    Examples of programing concepts used in a traditional programming language, but are un-natural in
+    most zk-SNARK constructs are:
 
-    **That is why zk-SNARKs are mostly used to verify hashes, signatures or other "snark friendly" cryptographic primitives.**
+    * Using floating numbers
+    * Using conditional statements (`if` and `else`)
+    * Managing memory.
 
-    Here is a (non-exhaustive) list of things that you may be used to do in a traditional programming language, but are un-natural in most zk-SNARK constructs:
+!!! info
 
-    * Using `float`
-    * Doing conditional (`if` / `else` statements)
-    * Managing memory
-    * ...
+    Like other projects in the zk-SNARK or blockchain space, we're actively researching ways to make
+    zk-SNARKs more programmable. For example through using of proof recursion, proof verifying
+    proof(s), or zk-virtual machines.
 
-!!!info
-    Like other projects in the zk-SNARK/Blockchain space, we're actively researching ways to make zk-SNARKs more programmable,
-    through use of proof recursion -- proof verifying proof(s) -- or zk-virtual machines, for example.
-
-    One of `gnark` goal is to enable ZK² rollups -- for example have fully programmable rollups (L2) anchored on a blockchain (L1).
+    A goal of `gnark` is to enable ZK² rollups. For example having fully programmable rollups (L2)
+    anchored on a blockchain (L1).
 
 ## Performance
 
-The [Proving schemes and curves](../../Concepts/schemes_curves.md) section gives some insight into `Prover` and `Verifier` performance, accross scheme and curve choices.
+The [Proving schemes and curves](../../Concepts/schemes_curves.md) section provides more insight into
+`Prover` and `Verifier` performance, across scheme and curve choices.
 
-In a `Circuit` one wants to minimize the number of constraints. The `frontend` package does a lot of work behind the scenes to,
-for example **lazily evaluate linear expressions to minimize constraints**.
-That part is transparent for the circuit developer.
+In a `Circuit` you want to minimize the number of constraints. The `frontend` package does a lot of
+work behind the scenes . For example to perform lazy evaluations of linear expressions to minimize
+the number of constraints. That part is transparent for the circuit developer.
 
-!!!tip "Division (`a = b / c`)"
-    Performing a field division *outside* a `Circuit` is something algorithms tend to avoid as it is very costly.
+!!! tip "Division (`a = b / c`)"
+
+    Performing a field division outside a `Circuit` is something algorithms tend to avoid because it
+    is costly.
 
     However, doing that in a `Circuit` is cheap.
     Writing `a = b / c` will be encoded into a constraint `assert(c * a == b)`
     (for example one multiplicative constraint only).
 
-!!!tip "Range check (`assert(a < c)`)"
-    The seamingly simple operation of a range check (`assert(a < c)`) is costly as it involves decomposing the variables into bits
-    (still represented on large field elements!).
+!!! tip "Range check (`assert(a < c)`)"
 
-!!!tip "Large variable (`variable > modulus p`)"
-    If one needs variables which exceed the modulus $p$, a standard method is to split the variable in a smaller basis that $p$
-    (for instance $(p-1)/2$), and write the concerned variables in this basis.
-    Each digit of the resulting decomposition will be smaller than $p$, and therefore will not be reduced.
+    The range check operation (`assert(a < c)`) is costly because it involves
+    decomposing the variables into bits (still represented on large field elements).
+
+!!! tip "Large variable (`variable > modulus p`)"
+
+    If you need variables that exceed the modulus $p$, a standard method is to split the variable into
+    a smaller basis than $p$ (for example $(p-1)/2$), and write the variables in this basis.
+    Each digit of the resulting decomposition is smaller than $p$, and therefore is not reduced.

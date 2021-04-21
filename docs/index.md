@@ -38,7 +38,7 @@ Users write their zk-SNARK circuits in plain Go. `gnark` uses Go because:
 
 `gnark` exposes its APIs like any conventional cryptographic library. Complex solutions need API
 flexibility. For example gRPC and REST APIs, serialization protocols, monitoring, and logging can be
-implemented.
+easily added.
 
 !!! example "Example of how to prove knowledge of a pre-image"
 
