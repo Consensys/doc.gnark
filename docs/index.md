@@ -5,33 +5,40 @@ description: gnark is a fast, open-source zk-SNARK library written in Go
 
 # gnark
 
-## What is `gnark`?
+## What's `gnark`?
 
-`gnark` is a [zk-SNARK](Concepts/zkp.md) library.
-It offers a [high-level API](HowTo/write/circuit_api.md) to easily design [circuits](Concepts/circuits.md) and fast implementation of state of the art zk-SNARKs.
+`gnark` is a fast [zk-SNARK] library that offers a [high-level API] to design [circuits]. The library
+is open source and developed under the Apache 2.0 license
 
-1. In a typical workflow, start [implementing an algorithm](HowTo/write/circuit_api.md)
-   for which you want to prove and verify execution.
-1. Then, use `gnark/frontend` package to [translate this "high level program" into a set of mathematical constraints](HowTo/compile.md).
-1. Finally, use `gnark/backend` to [create and verify your **proof of knowledge**](HowTo/prove.md):
-   You prove that you know a list of **secret inputs** satisfying a set of mathematical constraints.
+### How does `gnark` work?
+
+In a typical workflow:
+
+1. [Implement an algorithm] for which you want to prove and verify execution.
+1. Use the `gnark/frontend` package to [translate the algorithm into a set of mathematical constraints].
+1. Use the `gnark/backend` package to [create and verify your **proof of knowledge**](HowTo/prove.md).
+     That is, you prove that you know a list of **secret inputs** satisfying a set of mathematical
+     constraints.
 
 !!! danger
     `gnark` has not been audited and is provided as-is, use at your own risk.
-    In particular, `gnark` makes no security guarantees such as constant time implementation or side-channel attack resistance.
+    In particular, `gnark` makes no security guarantees such as constant time implementation or
+    side-channel attack resistance.
 
 ### `gnark` circuits are written in Go
 
-`gnark` users write their zk-SNARK circuits in plain Go.
-In contrast to other zk-SNARK libraries, we chose to not develop our own language and compiler because:
+Users write their zk-SNARK circuits in plain Go. `gnark` uses Go because:
 
-- Go is a mature and widely used language with a robust toolchain.
-- Developers can **debug**, **document**, **test** and **benchmark** their circuits as they would with any other Go program.
-- Circuits can be versioned, unit-tested and used in standard continuous intecration and delivery (CI/CD) workflows.
+- Go is a mature and widely used language with a robust tool chain.
+- Developers can **debug**, **document**, **test** and **benchmark** circuits as they would with any
+    other Go program.
+- Circuits can be versioned, unit-tested and used in standard continuous integration and delivery
+    (CI/CD) workflows.
 - IDE integration.
 
-Moreover, `gnark` exposes its APIs like any conventional cryptographic library (think `aes.encrypt([]byte)`).
-Complex solutions need API flexibility: gRPC/REST APIs, serialization protocols, monitoring, logging, are all few lines of code away.
+`gnark` exposes its APIs like any conventional cryptographic library. Complex solutions need API
+flexibility. For example gRPC and REST APIs, serialization protocols, monitoring, and logging can be
+implemented.
 
 !!! example "Example of how to prove knowledge of a pre-image"
 
@@ -101,14 +108,14 @@ Complex solutions need API flexibility: gRPC/REST APIs, serialization protocols,
 
 ### `gnark` is fast
 
-!!!info
+!!! info
+
     It is difficult to fairly and accurately compare benchmarks among libraries.
     Some implementations may excel in conditions where others may not.
     Results depend on target or available instruction set, CPUs and RAM.
 
-    Nonetheless, **it appears that `gnark` is faster than state-of-the-art**.
-
-The same circuit is benchmarked using `gnark`, `bellman` (bls12_381, ZCash), `bellman_ce` (bn254, matterlabs).
+Here we benchmark the same circuit using `gnark`, `bellman` (BLS12_381), and
+`bellman_ce` (BN254).
 
 #### BN254
 
@@ -116,7 +123,7 @@ The same circuit is benchmarked using `gnark`, `bellman` (bls12_381, ZCash), `be
 |-----------------------|--------|----------|----------|
 | bellman_ce (s/op)     | 0.43   | 106      | 214.8    |
 | gnark (s/op)          | 0.16   | 33.9     | 63.4     |
-| speedup               | x2.6   | x3.1     | x3.4     |
+| _Speed improvement_   | _x2.6_ | _x3.1_   | _x3.4_   |
 
 On large circuits, that's **over 1 million constraints per second**.
 
@@ -126,13 +133,21 @@ On large circuits, that's **over 1 million constraints per second**.
 |-----------------------|--------|----------|----------|
 | bellman (s/op)        | 0.6    | 158      | 316.8    |
 | gnark (s/op)          | 0.23   | 47.6     | 90.7     |
-| speedup               | x2.7   | x3.3     | x3.5     |
+| _Speed improvement_   | _x2.7_ | _x3.3_   | _x3.5_   |
 
-!!!note
-    These benchmarks ran on a AWS `c5a.24xlarge` instance, with hyper-threading disabled.
+!!! note
+
+    These benchmarks were executed on an AWS `c5a.24xlarge` instance, with hyper-threading disabled.
 
     Results are not recent and [will be updated](https://github.com/ConsenSys/gnark/issues/83).
 
 ## Proving schemes and curves
 
 Refer to the [Proving schemes and curves](Concepts/schemes_curves.md) section.
+
+<!--links-->
+[zk-SNARK]: Concepts/zkp.md
+[high-level API]: HowTo/write/circuit_api.md
+[circuits]: Concepts/circuits.md
+[Implement an algorithm]: HowTo/write/circuit_api.md
+[translate the algorithm into a set of mathematical constraints]: HowTo/compile.md
