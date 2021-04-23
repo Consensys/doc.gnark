@@ -11,7 +11,7 @@ leaking any information on the inputs (**Zero Knowledge**).
 In addition, verifying a proof is a computational operation which is at worst logarithmic in the
 size of the mathematical statement (**Succint**), and the procedure of proving and verifying a proof
 requires no interaction between the prover and the verifier, except passing the proof to the
-verifier (non-interactive).
+verifier (**non-interactive**).
 
 If we don't consider **Succintness**, and if we slightly modify the notion of **Zero knowledge**
 to **Honest Verifier Zero Knowledge** (which is weaker than the **Zero Knowledge** property), examples

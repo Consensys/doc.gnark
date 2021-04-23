@@ -21,7 +21,7 @@ description: gnark circuit design considerations
     ("snark-friendly") to do than others.
 
     Numbers used in constraints are not integers or floats, but finite field elements
-    (for example big numbers modulo or big primes $p$).
+    (big numbers modulo a prime $p$).
 
     So when writing `a = b * c`, not only don't you have the liberty to specify *types* for these
     variables (for example `float` or `int`), but you must also consider field overflow.
@@ -59,7 +59,7 @@ the number of constraints. That part is transparent for the circuit developer.
 
     However, doing that in a `Circuit` is cheap.
     Writing `a = b / c` will be encoded into a constraint `assert(c * a == b)`
-    (for example one multiplicative constraint only).
+    (one multiplicative constraint only).
 
 !!! tip "Range check (`assert(a < c)`)"
 

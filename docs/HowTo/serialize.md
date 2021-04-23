@@ -19,7 +19,7 @@ var buf bytes.Buffer
 cs.WriteTo(&buf)
 ```
 
-To deserialize, first instantiate a *curve-typed* object, and per `gnark` API design
+To deserialize, first instantiate a *curve-typed* object, as per `gnark` API design
 choices, these objects are not directly accessible (under `internal/`).
 
 ```go
@@ -117,7 +117,7 @@ A valid witness would be:
 
 ### Example in Go
 
-This example is intended for a multi-process usage of `gnark` where [`gnarkd`](use/gnarkd.md) needs
+This example is intended for a multi-process usage of `gnark` where you need
 to construct the witness in one process and deserialize it in another.
 
 !!! tip
