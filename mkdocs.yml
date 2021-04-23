@@ -60,7 +60,7 @@ nav:
             - Circuit API: HowTo/write/circuit_api.md
             - Standard library: HowTo/write/standard_library.md
             - Conditionals and loops: HowTo/write/instructions.md
-        - Compile Circuits: HowTo/compile.md
+        - Compile circuits: HowTo/compile.md
         - Create and verify proofs: HowTo/prove.md
         - Serialize: HowTo/serialize.md
         - Use gnark as a service:

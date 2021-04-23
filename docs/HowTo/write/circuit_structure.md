@@ -34,7 +34,7 @@ func (circuit *MyCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) 
 At compile time, `frontend.Compile(...)` recursively parses the struct fields that contains
 `frontend.Variable` to build the `frontend.ConstraintSystem`.
 
-By default, a `frontend.Variable` can view `gnark:",secret"`.
+By default, a `frontend.Variable` has the `gnark:",secret"` visibility.
 
 !!! note "Struct tags"
 

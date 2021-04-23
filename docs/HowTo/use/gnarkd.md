@@ -2,19 +2,26 @@
 description: gnarkd, a gnark proving and verifying server
 ---
 
-# `gnarkd`: a `gnark` proving and verifying server
+# `gnarkd`
+
+For multiple reasons (resource allocation, security, architecture) it may be useful to isolate
+`gnark` as a service. We provide a minimalist daemon, [`gnarkd`](`github.com/consensys/gnark/gnarkd`),
+which exposes synchronous and asynchronous gRPC APIs to create and verify proofs.
 
 !!! warning
-    `gnarkd` is experimental and might not stay in `gnark` main repository in the future
+
+    `gnarkd` is experimental and might not stay in `gnark` main repository in the future.
 
 !!! note
-    `gnarkd` only support Groth16 proofs. [Support for PlonK](https://github.com/ConsenSys/gnark/issues/82) is planned for `v0.5.0` release.
 
-For multiple reasons (resource allocation, security, architecture ...) it may be useful to isolate `gnark` as a service.
+    `gnarkd` only support Groth16 proofs. [Support for PlonK](https://github.com/ConsenSys/gnark/issues/82)
+    is planned for `v0.5.0` release.
 
-We provide a minimalist daemon, `gnarkd` (`github.com/consensys/gnark/gnarkd`), which exposes synchronous and asynchronous gRPC APIs to create and verify proofs.
+
 
 ## Starting `gnarkd`
+
+To start `gnarkd` from the command line:
 
 ```bash
 cd gnark/gnarkd
@@ -22,7 +29,7 @@ go build
 ./gnarkd
 ```
 
-or through a Docker image
+To start `gnarkd` using a Docker image:
 
 ```bash
 cd gnark/gnarkd
@@ -30,25 +37,30 @@ docker build -f gnarkd/Dockerfile.example -t gnarkd .
 docker run -it --rm  -p9002:9002 -p9001:9001 --mount type=bind,source="$(pwd)"/circuits,target=/root/circuits --mount type=bind,source="$(pwd)"/certs,target=/root/certs gnarkd:latest
 ```
 
-When `gnarkd` starts, it loads the circuits defined in `circuits/` folder.
+When `gnarkd` starts, it loads the circuits defined in `circuits/` folder. Circuits must be stored
+in a separate folder, under a curve subfolder.
 
-Circuits must be stored in a separate folder, under a curve subfolder.
+!!! example
 
-!!!example
-    `circuits/bn254/cubic` will contain `cubic.pk`, `cubic.vk` and `cubic.r1cs`
+    `circuits/bn254/cubic` will contain `cubic.pk`, `cubic.vk`, and `cubic.r1cs`.
 
     `circuitID` (as needed in the APIs) is then `bn254/cubic`
 
-`gnarkd` listens on 2 distinct TCP connections: one for gRPC, one for receiving large witnesses on async calls.
+`gnarkd` listens on 2 distinct TCP connections for the following:
 
-On this second connection, the server expects: `jobID`|`witness`
+* gRPC calls
+* Receiving large witnesses on async calls.
 
-* `jobID` is returned by `CreateProveJob` and is a ([standard RFC 4122 UUID](https://tools.ietf.org/html/rfc4122)) on 16 byte (server impl uses `github.com/google/uuid`)
-* `gnarkd` knows which witness size to expect (via `r1cs.GetNbPublicWires`, `r1cs.GetNbSecretWires` and `r1cs.SizeFrElement`)
+When receiving witnesses on async calls, the server expects `jobID`|`witness`.
+
+* `jobID` is returned by `CreateProveJob` and is a
+    ([standard RFC 4122 UUID](https://tools.ietf.org/html/rfc4122)) on 16 byte (server impl uses `github.com/google/uuid`)
+* `gnarkd` knows which witness size to expect via `r1cs.GetNbPublicWires`, `r1cs.GetNbSecretWires`,
+    and `r1cs.SizeFrElement`.
 
 ## APIs
 
-Here is the `protobuf` service (from [gnark/gnarkd/pb/gnarkd.proto]()):
+The following is the `protobuf` service from [gnark/gnarkd/pb/gnarkd.proto]():
 
 ```protobuf
 /*
@@ -85,16 +97,16 @@ service Groth16 {
 
 ## Generating SDKs
 
-gRPC clients can be generated for multiple languages (Go, Rust, ...) see `protoc` doc for more info.
-For Go:
+gRPC clients can be generated for multiple languages (for example Go, or Rust) see the `protoc`
+document for more info. For Go:
 
 ```bash
 protoc --experimental_allow_proto3_optional --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative  pb/gnarkd.proto
 ```
 
-## Example client (Go)
+## Example client
 
-!!!example "Example From [gnark/gnarkd/client/example.go]()."
+!!!example "Example from [gnark/gnarkd/client/example.go]()."
 
     ```go
     // Set up a connection to the server.

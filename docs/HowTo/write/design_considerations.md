@@ -16,9 +16,9 @@ description: gnark circuit design considerations
 
 !!! warning
 
-    [`Circuits`](../../Concepts/circuits.md) are programmable but can't be used to prove any algorithm.
-    Some things are more natural ("snark-friendly") than others to do in a circuit, and it depends
-    on how constraints are represented in the [constraint system](../../Concepts/circuits.md).
+    [`Circuits`](../../Concepts/circuits.md) are programmable but can't (practically and efficiently)
+    prove any algorithm. The way constraints are represented make some things more natural
+    ("snark-friendly") to do than others.
 
     Numbers used in constraints are not integers or floats, but finite field elements
     (for example big numbers modulo or big primes $p$).
@@ -40,11 +40,8 @@ description: gnark circuit design considerations
 !!! info
 
     Like other projects in the zk-SNARK or blockchain space, we're actively researching ways to make
-    zk-SNARKs more programmable. For example through using of proof recursion, proof verifying
-    proof(s), or zk-virtual machines.
-
-    A goal of `gnark` is to enable ZK² rollups. For example having fully programmable rollups (L2)
-    anchored on a blockchain (L1).
+    zk-SNARKs more programmable. For example through using of proof recursion or zk-virtual
+    machines.
 
 ## Performance
 
@@ -52,7 +49,7 @@ The [Proving schemes and curves](../../Concepts/schemes_curves.md) section provi
 `Prover` and `Verifier` performance, across scheme and curve choices.
 
 In a `Circuit` you want to minimize the number of constraints. The `frontend` package does a lot of
-work behind the scenes . For example to perform lazy evaluations of linear expressions to minimize
+work behind the scenes . For example, it performs lazy evaluations of linear expressions to minimize
 the number of constraints. That part is transparent for the circuit developer.
 
 !!! tip "Division (`a = b / c`)"
