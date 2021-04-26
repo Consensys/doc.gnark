@@ -104,8 +104,8 @@ precompiles. EIPs for other curves exist but are not integrated yet:
 For applications that target Ethereum 2.0, use BLS12-381.
 
 For platform-agnostic applications, the choice requires a tradeoff between performance
-(BN254) and security (BLS12-381). We recommend choosing BLS12-381 as it offers a conservatively more
-secure and fast instantiation of zk-SNARKs.
+(BN254) and security (BLS12-381). We recommend choosing BLS12-381 as it is more secure, still fast
+enough to be practical, but slower than BN254.
 
 ### What about BLS12-377 and BW6-761?
 

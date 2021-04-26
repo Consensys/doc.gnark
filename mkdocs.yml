@@ -68,7 +68,7 @@ nav:
             - gnarkd: HowTo/use/gnarkd.md
     - Concepts:
         - zk-SNARK: Concepts/zkp.md
-        - Circuits and Constraint Systems: Concepts/circuits.md
+        - Circuits and constraint systems: Concepts/circuits.md
         - Proving schemes and curves: Concepts/schemes_curves.md
     - Tutorials:
         - EdDSA: Tutorials/eddsa.md

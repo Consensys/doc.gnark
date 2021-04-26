@@ -6,37 +6,41 @@ description: How to debug and test gnark circuits
 
 ## Debug
 
-The most common error you may get while trying to create a proof is 
+The most common error you may get while trying to create a proof is:
 
 ```
 constraint is not satisfied: [(.. * ..) != (.. * ..) + (.. * ..) + (.. * ..)]
 ```
 
-which means the solver couldn't satify at least one of the constraints with the provided witness. 
+The error means the solver couldn't satisfy at least one of the constraints with the provided
+witness.
 
+!!! note
 
-!!!note
-    In some cases, you may encounter a `couldn't solve computational constraint` error, which means the solver couldn't perform an operation needed to verify a constriant. For example, a division by 0. 
+    In some cases, you may encounter a `couldn't solve computational constraint` error, which means
+    the solver couldn't perform an operation needed to verify a constraint.
+    For example, a division by 0.
 
-### `cs.Println()`
+### Print values
 
-The easiest way to debug a circuit is to use `cs.Println()`.
-`cs.Println()` behaves `fmt.Println`, except it will output the values at proving time (when they are solved).
-
+The easiest way to debug a circuit is to use `cs.Println()`, which behaves like `fmt.Println`, except
+it outputs the values at proving time (when they are solved). For example:
 
 ```go
 cs.Println("A.X", pubKey.A.X)
 ```
 
-!!!note 
+!!! note
+
     With errors and prints, `gnark` outputs a stack strace including line number in the circuit code.
 
 
 ## Test
 
-Tests can be implemetend as Go unit tests, in a `_test.go` file. 
+Tests can be implementend as Go unit tests, in a `_test.go` file.
 
 !!! example "Example unit test"
+
     ```go
     assert := groth16.NewAssert(t)
 

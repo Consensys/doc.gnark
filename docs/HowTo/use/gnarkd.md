@@ -60,7 +60,8 @@ When receiving witnesses on async calls, the server expects `jobID`|`witness`.
 
 ## APIs
 
-The following is the `protobuf` service from [gnark/gnarkd/pb/gnarkd.proto]():
+The following is the `protobuf` service from
+[`gnarkd.proto`](https://github.com/ConsenSys/gnark/blob/master/gnarkd/pb/gnarkd.proto):
 
 ```protobuf
 /*
@@ -106,7 +107,7 @@ protoc --experimental_allow_proto3_optional --go_out=. --go_opt=paths=source_rel
 
 ## Example client
 
-!!!example "Example from [gnark/gnarkd/client/example.go]()."
+!!!example "Example from [`example.go`](https://github.com/ConsenSys/gnark/blob/master/gnarkd/client/example.go)."
 
     ```go
     // Set up a connection to the server.
