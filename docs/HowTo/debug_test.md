@@ -4,7 +4,7 @@ description: How to debug and test gnark circuits
 
 # Debug and test circuits
 
-## Debug
+## Common errors
 
 The most common error you may get while trying to create a proof is:
 
