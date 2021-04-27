@@ -30,21 +30,25 @@ cs.Println("A.X", pubKey.A.X)
 ```
 
 !!! note
-    With errors and prints, `gnark` outputs a stack strace including line number in the circuit code.
+    With solving errors and `cs.Println`, `gnark` outputs a stack trace which contain the exact line number to refer to in the circuit definition.
 
 ## Test
 
 You can implement tests as Go unit tests, in a `_test.go` file. For example:
 
 ```go
+// assert object wrapping testing.T
 assert := groth16.NewAssert(t)
 
+// declare the circuit
 var mimcCircuit Circuit
 
+// compile the circuit into a R1CS
 r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &mimcCircuit)
 assert.NoError(err)
 
 {
+    // assign invalid values to a witness, ensure the proof fails
     var witness Circuit
     witness.Hash.Assign(42)
     witness.PreImage.Assign(42)
@@ -52,6 +56,7 @@ assert.NoError(err)
 }
 
 {
+    // assign valid values to a witness, ensure the proof is valid
     var witness Circuit
     witness.PreImage.Assign(35)
     witness.Hash.Assign("16130099170765464552823636852555369511329944820189892919423002775646948828469")
