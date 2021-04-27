@@ -17,7 +17,6 @@ go get github.com/consensys/gnark@{{content_vars.gnark_version}}
 ```
 
 !!! note
-
     If you use Go modules, in `go.mod` the module path is case sensitive
     (use `consensys` and not `ConsenSys`).
 

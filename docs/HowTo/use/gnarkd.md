@@ -17,8 +17,6 @@ which exposes synchronous and asynchronous gRPC APIs to create and verify proofs
     `gnarkd` only support Groth16 proofs. [Support for PlonK](https://github.com/ConsenSys/gnark/issues/82)
     is planned for `v0.5.0` release.
 
-
-
 ## Starting `gnarkd`
 
 To start `gnarkd` from the command line:
@@ -37,8 +35,8 @@ docker build -f gnarkd/Dockerfile.example -t gnarkd .
 docker run -it --rm  -p9002:9002 -p9001:9001 --mount type=bind,source="$(pwd)"/circuits,target=/root/circuits --mount type=bind,source="$(pwd)"/certs,target=/root/certs gnarkd:latest
 ```
 
-When `gnarkd` starts, it loads the circuits defined in `circuits/` folder. Circuits must be stored
-in a separate folder, under a curve subfolder.
+When `gnarkd` starts, it loads the circuits defined in `circuits/` directory. Circuits must be stored
+in a separate directory, under a curve subdirectory.
 
 !!! example
 
@@ -49,9 +47,9 @@ in a separate folder, under a curve subfolder.
 `gnarkd` listens on 2 distinct TCP connections for the following:
 
 * gRPC calls
-* Receiving large witnesses on async calls.
+* Receiving large witnesses on asynchronous calls.
 
-When receiving witnesses on async calls, the server expects `jobID`|`witness`.
+When receiving witnesses on asynchronous calls, the server expects `jobID`|`witness`.
 
 * `jobID` is returned by `CreateProveJob` and is a
     ([standard RFC 4122 UUID](https://tools.ietf.org/html/rfc4122)) on 16 byte (server impl uses `github.com/google/uuid`)

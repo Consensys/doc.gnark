@@ -2,13 +2,15 @@
 description: Proving schemes and curves
 ---
 
+# Prove schemes and curves
+
 `gnark` supports two proving schemes [Groth16](https://eprint.iacr.org/2016/260.pdf) and
 [PlonK](https://eprint.iacr.org/2019/953.pdf). These schemes can be instantiated with any of the
 following four elliptic curves: *BN254*, *BLS12-381*, *BLS12-377* or *BW6-761*.
 
 An ID is supplied to `gnark` to choose the proving scheme and the instantiating curve.
 
-## Which proving system should I choose for my application?
+## Choosing a proving system
 
 !!! info "Quick system guide"
 
@@ -43,7 +45,7 @@ PlonK is a universal preprocessing general-purpose zk-SNARK construction introdu
 A. Gabizon, Z. Williamson and O. Ciobotaru in 2019.
 
 It is a recent proving scheme that attracted a lot of attention in several blockchain projects due
-to its universal and updatable preprocessing phase, and its short and constant verifier time. On the
+to its universal and updateable preprocessing phase, and its short and constant verifier time. On the
 downside, PlonK proofs are bigger and slower to generate compared to Groth16.
 
 !!! info
@@ -58,22 +60,22 @@ downside, PlonK proofs are bigger and slower to generate compared to Groth16.
     PlonK comes in different version according to the chosen polynomial commitment scheme.
     For example:
 
-    * [KZG](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf)
-    * [Pedersen-Bulletproofs](http://web.stanford.edu/~buenz/pubs/bulletproofs.pdf)
-    * [FRI-based](https://eprint.iacr.org/2019/1020.pdf)
-    * [DARK](https://eprint.iacr.org/2019/1229.pdf)
+    - [KZG](https://www.iacr.org/archive/asiacrypt2010/6477178/6477178.pdf)
+    - [Pedersen-Bulletproofs](http://web.stanford.edu/~buenz/pubs/bulletproofs.pdf)
+    - [FRI-based](https://eprint.iacr.org/2019/1020.pdf)
+    - [DARK](https://eprint.iacr.org/2019/1229.pdf)
 
     There are also versions for the prover/verifier tradeoff. For example
     "fast-prover-but-slow-verifier" or "slow-prover-but-fast-verifier" settings.
 
     There are also different optimizations. For example:
 
-    * [TurboPlonK](https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-turbo_plonk.pdf),
-    * [Plookup](https://eprint.iacr.org/2020/315.pdf)).
+    - [TurboPlonK](https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-turbo_plonk.pdf),
+    - [Plookup](https://eprint.iacr.org/2020/315.pdf)).
 
     Currently, `gnark` supports PlonK with KZG polynomial commitment.
 
-## Which elliptic curve should I choose for my application?
+## Choosing an elliptic curve
 
 Both Groth16 and PlonK (with KZG scheme) need to be instantiated with an elliptic curve.
 `gnark` supports four elliptic curves: BN254, BLS12-381, BLS12-377 and BW6-761.
@@ -92,14 +94,14 @@ To work with Groth16 and PlonK, the curves must:
     BLS12-381 in Ethereum 2.0, ZCash Sapling, Algorand, Dfinity, Chia, and Filecoin,
     and BLS12-377/BW6-761 in Celo, Aleo and EY.
 
-### BN254 or BLS12-381?
+### BN254 and BLS12-381 curves
 
-For applications that target Ethereum 1.x mainnet, BN254 is the only supported curve through
-precompiles. EIPs for other curves exist but are not integrated yet:
+For applications that target Ethereum 1.x mainnet, BN254 is the only supported curve. EIPs for other
+curves exist but are not integrated yet:
 
-* [`EIP-2539`](https://eips.ethereum.org/EIPS/eip-2539)
-* [`EIP-2537`](https://eips.ethereum.org/EIPS/eip-2537)
-* [`EIP-3026`](https://eips.ethereum.org/EIPS/eip-3026).
+- [`EIP-2539`](https://eips.ethereum.org/EIPS/eip-2539)
+- [`EIP-2537`](https://eips.ethereum.org/EIPS/eip-2537)
+- [`EIP-3026`](https://eips.ethereum.org/EIPS/eip-3026).
 
 For applications that target Ethereum 2.0, use BLS12-381.
 
@@ -107,7 +109,7 @@ For platform-agnostic applications, the choice requires a tradeoff between perfo
 (BN254) and security (BLS12-381). We recommend choosing BLS12-381 as it is more secure, still fast
 enough to be practical, but slower than BN254.
 
-### What about BLS12-377 and BW6-761?
+### BLS12-377 and BW6-761 curves
 
 Applications that require one-layer proof composition (a proof of proofs) cannot use BN254 or
 BLS12-381 as they are quite inefficient for this purpose.
@@ -131,4 +133,3 @@ BLS12-377 and BW6-761 curves satisfy these conditions, while having fast impleme
     implementations against `gnark-crypto`.
 
     Some applications that use one-layer proof composition include ZEXE, Celo, Aleo, and Zecale.
-

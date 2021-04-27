@@ -7,7 +7,7 @@ description: How to create and verify proofs
 ## Use `gnark/backend`
 
 Once the [circuit](write/circuit_structure.md) is [compiled](compile.md), you can run the three
-algorithms of a zk-SNARK backend:
+algorithms of a zk-SNARK back end:
 
 * `Setup`
 * `Prove`
@@ -18,7 +18,7 @@ algorithms of a zk-SNARK backend:
     Supported zk-SNARK backends are under `gnark/backend`.
     `gnark` currently implements `Groth16` and an experimental version of `PlonK`.
 
-!!!example "Use a zk-SNARK backend"
+!!!example "Use a zk-SNARK back end"
 
     === "Groth16"
 

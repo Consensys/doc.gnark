@@ -75,9 +75,9 @@ There are two types of witnesses:
 * **Full witness**: contains public and secret inputs, needed by `Prove`
 * **Public witness**: contains public inputs only, needed by `Verify`
 
-**Binary protocol**
+### Binary protocol
 
-```
+```no-lang
 // Full witness     ->  [uint32(nbElements) | publicVariables | secretVariables]
 // Public witness   ->  [uint32(nbElements) | publicVariables ]
 ```
@@ -88,7 +88,7 @@ Where:
 * each variable (a *field element*) is encoded as a big-endian byte array, where
 `len(bytes(variable)) == len(bytes(modulus))`
 
-**Ordering**
+### Ordering
 
 The ordering sequence is first, `publicVariables`, then `secretVariables`.
 Each subset is ordered from the order of definition in the circuit structure.
@@ -115,7 +115,7 @@ A valid witness would be:
 
     See this [Github issue](https://github.com/ConsenSys/gnark/issues/70).
 
-### Example in Go
+### Example
 
 This example is intended for a multi-process usage of `gnark` where you need
 to construct the witness in one process and deserialize it in another.

@@ -9,19 +9,19 @@ A zk-SNARK is a cryptographic construction that allows you to provide a proof of
 leaking any information on the inputs (**Zero Knowledge**).
 
 In addition, verifying a proof is a computational operation which is at worst logarithmic in the
-size of the mathematical statement (**Succint**), and the procedure of proving and verifying a proof
+size of the mathematical statement (**Succinct**), and the procedure of proving and verifying a proof
 requires no interaction between the prover and the verifier, except passing the proof to the
 verifier (**non-interactive**).
 
-If we don't consider **Succintness**, and if we slightly modify the notion of **Zero knowledge**
+If we don't consider **Succinctness**, and if we slightly modify the notion of **Zero knowledge**
 to **Honest Verifier Zero Knowledge** (which is weaker than the **Zero Knowledge** property), examples
 of (HV)ZK-NARK are digital signatures algorithms ECDSA and EDDSA, which are in fact applications of
-the Schnorr identification protocol. It is essentially an argument of knowledge to prove knowledge
+the Schnorr Identification Protocol. It is essentially an argument of knowledge to prove knowledge
 of the discrete log of a point in a group where the discrete log is hard. Verifying such signatures
-is not computationally costly, but does not verify the **Succintness** property as it was previously
+is not computationally costly, but does not verify the **Succinctness** property as it was previously
 defined.
 
-The signature schemes are very specific mathematical statements, or [**circuits**](circuits.md).
+The signature schemes are specific mathematical statements, or [**circuits**](circuits.md).
 
 With `gnark`, you can write any circuit using the [gnark API](../HowTo/write/circuit_api.md).
 An instance of such a circuit is $hash(x)=y$, where $y$ is public and $x$ secret.
@@ -41,8 +41,8 @@ of valid couples (signature, secret key).
 
 ## zk-SNARK activity
 
-zk-SNARK is a very active area of academic research with improvments and new protocols announced
-week-by-week. For example, according to
+zk-SNARK is a very active area of academic research with improvements and new protocols announced
+weekly. For example, according to
 ["A Cambrian Explosion of Crypto Proofs" overview article on Nakamoto.com](https://nakamoto.com/cambrian-explosion-of-crypto-proofs/)
 we saw the following new zk-SNARK protocols in 2019: Libra, Sonic, SuperSonic, PlonK, SLONK, Halo,
 Marlin, Fractal, Spartan, Succinct Aurora, RedShift, AirAssembly.

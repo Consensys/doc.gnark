@@ -102,10 +102,10 @@ What variables are needed (the witness) to verify the EdDSA signature?
     $R$ is a point $(x,y)$ on the twisted Edwards curve, and $S$ is a scalar.
     The scalar $S$ is used to perform a scalar multiplication on the twisted Edwards curve.
 
-    **Problem**: remember that the variables in a circuit lives in $\mathbb{F}_r$.
-    So do the points on the twisted Edwards curve. However the scalar $S$ does not belong to this field.
-    It is reduced modulo $q$, the number of points of the twisted Edwards curve, can be greater than $r$.
-    So when $S$ is passed as a witness to the circuit, $S$ is implicitly reduced to modulo $r$.
+    **Problem**: Remember that the variables in a circuit, and the points on the twisted Edwards
+    curve live in $\mathbb{F}_r$. However the scalar $S$ does not belong to this field.
+    It is reduced modulo $q$, the number of points of the twisted Edwards curve, can be greater than
+    $r$. When $S$ is passed as a witness to the circuit, $S$ is implicitly reduced to modulo $r$.
     If $S < r$, there is no problem. However, if $S>r$, $S$ is reduced to $S'=S[r]$ and
     $S'[q]\neq S[q]$, it leads to a bug.
 
@@ -305,7 +305,7 @@ func (circuit *eddsaCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSyste
 To test the circuit, you need to generate an EdDSA signature, assign the signature on the circuit's
 witnesses, and verify that the circuit has been correctly solved.
 
-To generate the signature, use the 
+To generate the signature, use the
 `github.com/consensys/gnark-crypto/ecc/bn254/twistededwards/eddsa` package.
 
 There is an implementation of EdDSA for several curves, here you will choose BN254.
