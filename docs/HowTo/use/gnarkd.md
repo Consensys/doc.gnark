@@ -52,7 +52,8 @@ in a separate directory, under a curve subdirectory.
 When receiving witnesses on asynchronous calls, the server expects `jobID`|`witness`.
 
 * `jobID` is returned by `CreateProveJob` and is a
-    ([standard RFC 4122 UUID](https://tools.ietf.org/html/rfc4122)) on 16 byte (server impl uses `github.com/google/uuid`)
+    ([standard RFC 4122 UUID](https://tools.ietf.org/html/rfc4122)) on 16 byte server implementation
+    using [`github.com/google/uuid`](https://github.com/google/uuid).
 * `gnarkd` knows which witness size to expect via `r1cs.GetNbPublicWires`, `r1cs.GetNbSecretWires`,
     and `r1cs.SizeFrElement`.
 
