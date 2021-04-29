@@ -28,10 +28,10 @@ An ID is supplied to `gnark` to choose the proving scheme and the instantiating 
 
 ### Groth16
 
-Groth16 is a circuit-specific preprocessing general-purpose zk-SNARK construction introduced by
-Jens Groth in 2016. It has become since a de-facto standard used in several blockchain projects due
-to the constant size of its proof and its appealing verifier time. On the downside, Groth16 needs a
-circuit-specific trusted setup for its preprocessing phase.
+Groth16 is a circuit-specific preprocessing general-purpose zk-SNARK construction. It has become
+a de-facto standard used in several blockchain projects due to the constant size of its proof, and
+its appealing verifier time. On the downside, Groth16 needs a circuit-specific trusted setup for its
+preprocessing phase.
 
 !!! info
 
