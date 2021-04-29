@@ -69,11 +69,18 @@ jobs:
       - run:
           name: Run Vale
           command: |
-            ./bin/vale --config ./common/build_tools/vale/.vale.ini --glob='*.{md}' . | tee ./vale.out
+            ./bin/vale --minAlertLevel warning --no-exit --config ./common/build_tools/vale/.vale.ini --glob='*.{md}' . | tee ./vale-warnings.out
+      - run:
+          name: Run Vale
+          command: |
+            ./bin/vale --minAlertLevel error --config ./common/build_tools/vale/.vale.ini --glob='*.{md}' . | tee ./vale-errors.out
       - notify
       - store_artifacts:
-          path: ./vale.out
-          destination: ./vale.out
+          path: ./vale-warnings.out
+          destination: ./vale-warnings.out
+      - store_artifacts:
+          path: ./vale-errors.out
+          destination: ./vale-errors.out
 
   linkchecker:
     executor: node_executor

@@ -43,7 +43,9 @@ of valid couples (signature, secret key).
 
 zk-SNARK is an active area of academic research with improvements and new protocols announced
 weekly. For example, according to
+<!-- vale off -->
 ["A Cambrian Explosion of Crypto Proofs" overview article on Nakamoto.com](https://nakamoto.com/cambrian-explosion-of-crypto-proofs/)
+<!-- vale on -->
 we saw the following new zk-SNARK protocols in 2019: Libra, Sonic, SuperSonic, PlonK, SLONK, Halo,
 Marlin, Fractal, Spartan, Succinct Aurora, RedShift, AirAssembly.
 

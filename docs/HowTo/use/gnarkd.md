@@ -5,7 +5,7 @@ description: gnarkd, a gnark proving and verifying server
 # `gnarkd`
 
 For multiple reasons (resource allocation, security, architecture) it may be useful to isolate
-`gnark` as a service. We provide a minimalist daemon, [`gnarkd`](`github.com/consensys/gnark/gnarkd`),
+`gnark` as a service. We provide a minimalist `gnarkd` daemon (Go package `github.com/consensys/gnark/gnarkd`),
 which exposes synchronous and asynchronous gRPC APIs to create and verify proofs.
 
 !!! warning
