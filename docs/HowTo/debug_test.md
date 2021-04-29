@@ -23,7 +23,7 @@ witness.
 ### Print values
 
 The easiest way to debug a circuit is to use `cs.Println()`, which behaves like `fmt.Println`, except
-it outputs the values at proving time (when they are solved). For example:
+it outputs the values when they are solved. For example:
 
 ```go
 cs.Println("A.X", pubKey.A.X)
