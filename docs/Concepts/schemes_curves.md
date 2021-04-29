@@ -41,12 +41,11 @@ circuit-specific trusted setup for its preprocessing phase.
 
 ### PlonK
 
-PlonK is a universal preprocessing general-purpose zk-SNARK construction introduced by
-A. Gabizon, Z. Williamson and O. Ciobotaru in 2019.
+PlonK is a universal preprocessing general-purpose zk-SNARK construction.
 
-It is a recent proving scheme that attracted a lot of attention in several blockchain projects due
-to its universal and updateable preprocessing phase, and its short and constant verifier time. On the
-downside, PlonK proofs are bigger and slower to generate compared to Groth16.
+It's a proving scheme with a preprocessing phase that can be updated, and has a short and
+constant verification time. On the downside, PlonK proofs are bigger and slower to generate compared
+to Groth16.
 
 !!! info
 

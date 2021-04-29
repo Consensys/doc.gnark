@@ -70,7 +70,7 @@ While there is no standard yet, we followed similar patterns used by other zk-SN
 
 For performance reason (witnesses can be large), witnesses are encoded using a binary protocol.
 
-There are two types of witnesses:
+Two types of witnesses exist:
 
 * **Full witness**: contains public and secret inputs, needed by `Prove`
 * **Public witness**: contains public inputs only, needed by `Verify`

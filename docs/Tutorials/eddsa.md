@@ -308,7 +308,7 @@ witnesses, and verify that the circuit has been correctly solved.
 To generate the signature, use the
 `github.com/consensys/gnark-crypto/ecc/bn254/twistededwards/eddsa` package.
 
-There is an implementation of EdDSA for several curves, here you will choose BN254.
+Implementations of EdDSA exist for several curves, here you will choose BN254.
 
 ```go
 func main() {
