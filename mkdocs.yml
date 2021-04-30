@@ -45,12 +45,14 @@ repo_url: https://github.com/ConsenSys/gnark
 theme:
   name: material
   custom_dir: common/custom_theme
+  palette:
+    scheme: consensys-protocol
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
   language: 'en'
-  logo: 'Images/gnark_white.svg'
-  favicon: 'Images/gnark_favicon.svg'
+  logo: 'Images/logo.svg'
+  favicon: 'Images/favicon.svg'
 nav:
     - How to:
         - Add gnark to your project: HowTo/get_started.md
