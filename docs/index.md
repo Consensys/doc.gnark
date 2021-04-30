@@ -1,25 +1,153 @@
 ---
 title: gnark
-description: gnark
+description: gnark is a fast, open-source zk-SNARK library written in Go
 ---
 
 # gnark
 
-## What is gnark?
+## What's `gnark`?
 
-!!! important
+`gnark` is a fast [zk-SNARK] library that offers a [high-level API] to design [circuits]. The library
+is open source and developed under the Apache 2.0 license
 
-    TODO
+### How does `gnark` work?
 
-!!! Example "Example usage of variables in markdown with Extradata"
+In a typical workflow:
 
-    {{ sample_data.my_custom_value }}
+1. [Implement an algorithm] for which you want to prove and verify execution.
+1. Use the `gnark/frontend` package to [translate the algorithm into a set of mathematical constraints].
+1. Use the `gnark/backend` package to [create and verify your **proof of knowledge**](HowTo/prove.md).
+     That is, you prove that you know a list of **secret inputs** satisfying a set of mathematical
+     constraints.
 
-!!! example "Example UML diagram"
+!!! danger
+    `gnark` has not been audited and is provided as-is, use at your own risk.
+    In particular, `gnark` makes no security guarantees such as constant time implementation or
+    side-channel attack resistance.
 
-    ```plantuml format="svg" alt="Plantum diagram example" title="My super diagram"
-      Actor1 ->  Actor2: calls
-      Actor1 <-- Actor2: responds
-    ```
+### `gnark` circuits are written in Go
 
-    Rendered using https://pypi.org/project/plantuml-markdown/ and https://plantuml.com/ syntax.
+Users write their zk-SNARK circuits in plain Go. `gnark` uses Go because:
+
+- Go is a mature and widely used language with a robust tool chain.
+- Developers can **debug**, **document**, **test** and **benchmark** circuits as they would with any
+    other Go program.
+- Circuits can be versioned, unit-tested and used in standard continuous integration and delivery
+    (CI/CD) workflows.
+- IDE integration.
+
+`gnark` exposes its APIs like any conventional cryptographic library. Complex solutions need API
+flexibility. For example gRPC and REST APIs, serialization protocols, monitoring, and logging can be
+easily added.
+
+!!! example "Example of how to prove knowledge of a pre-image"
+
+    === "1. define circuit"
+
+        ```go
+        // Circuit defines a pre-image knowledge proof
+        // mimc(secret preImage) = public hash
+        type Circuit struct {
+            PreImage frontend.Variable
+            Hash     frontend.Variable `gnark:",public"`
+        }
+
+        // Define declares the circuit's constraints
+        func (circuit *Circuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+            // hash function
+            mimc, err := mimc.NewMiMC("seed", curveID)
+
+            // specify constraints
+            // mimc(preImage) == hash
+            cs.AssertIsEqual(circuit.Hash, mimc.Hash(cs, circuit.PreImage))
+
+            return nil
+        }
+        ```
+
+    === "2. compile circuit"
+
+        ```go
+        var mimcCircuit Circuit
+        r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &mimcCircuit)
+        ```
+
+    === "3. create proof"
+
+        ```go
+        pk, vk, err := groth16.Setup(r1cs)
+        proof, err := groth16.Prove(r1cs, pk, witness)
+        err := groth16.Verify(proof, vk, publicWitness)
+        ```
+
+    === "4. unit test"
+
+        ```go
+        assert := groth16.NewAssert(t)
+
+        var mimcCircuit Circuit
+
+        r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &mimcCircuit)
+        assert.NoError(err)
+
+        {
+            var witness Circuit
+            witness.Hash.Assign(42)
+            witness.PreImage.Assign(42)
+            assert.ProverFailed(r1cs, &witness)
+        }
+
+        {
+            var witness Circuit
+            witness.PreImage.Assign(35)
+            witness.Hash.Assign("16130099170765464552823636852555369511329944820189892919423002775646948828469")
+            assert.ProverSucceeded(r1cs, &witness)
+        }
+
+        ```
+
+### `gnark` is fast
+
+!!! info
+
+    It is difficult to fairly and accurately compare benchmarks among libraries.
+    Some implementations may excel in conditions where others may not.
+    Results depend on target or available instruction set, CPUs and RAM.
+
+Here we benchmark the same circuit using `gnark`, `bellman` (BLS12_381), and
+`bellman_ce` (BN254).
+
+#### BN254
+
+| Number of constraints | 100000 | 32000000 | 64000000 |
+|-----------------------|--------|----------|----------|
+| `bellman_ce` (s/op)   | 0.43   | 106      | 214.8    |
+| `gnark` (s/op)        | 0.16   | 33.9     | 63.4     |
+| _Speed improvement_   | _x2.6_ | _x3.1_   | _x3.4_   |
+
+On large circuits, that's **over 1 million constraints per second**.
+
+#### BLS12_381
+
+| Number of constraints | 100000 | 32000000 | 64000000 |
+|-----------------------|--------|----------|----------|
+| `bellman` (s/op)      | 0.6    | 158      | 316.8    |
+| `gnark` (s/op)        | 0.23   | 47.6     | 90.7     |
+| _Speed improvement_   | _x2.7_ | _x3.3_   | _x3.5_   |
+
+!!! note
+
+    These benchmarks were executed on an AWS `c5a.24xlarge` instance, with hyper-threading disabled.
+
+    Results are not recent and [will be updated](https://github.com/ConsenSys/gnark/issues/83).
+
+## Proving schemes and curves
+
+Refer to the [Proving schemes and curves](Concepts/schemes_curves.md) section.
+
+<!--links-->
+[zk-SNARK]: Concepts/zkp.md
+[high-level API]: HowTo/write/circuit_api.md
+[circuits]: Concepts/circuits.md
+[Implement an algorithm]: HowTo/write/circuit_api.md
+[translate the algorithm into a set of mathematical constraints]: HowTo/compile.md

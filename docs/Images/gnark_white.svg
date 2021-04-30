@@ -1,0 +1,9 @@
+<svg width="1300" height="500" viewBox="0 0 1300 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="275" y="125" width="35" height="35" transform="rotate(45 275 125)" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M250 150L150 150V250L100 300C100 327.614 122.386 350 150 350H250L250 400L300 350C300 322.386 277.614 300 250 300H150L150 250L250 250L250 150Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M400 200H500V350H550V200H500V150H400V200ZM400 200V350H350V200H400Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1000 100H1050V250V350H1000V100ZM1150 300L1100 250L1150 200H1100L1050 250L1100 300L1150 350H1200L1150 300Z" fill="white"/>
+<rect x="1075.08" y="225" width="35.4658" height="35.4658" transform="rotate(45 1075.08 225)" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M900 200H950V150H900V200ZM900 200V350H850V200H900Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M717.677 150L800 350H751.219L700.001 217L648.784 350H600L682.323 150H717.677Z" fill="white"/>
+</svg>

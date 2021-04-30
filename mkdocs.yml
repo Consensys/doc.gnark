@@ -18,8 +18,8 @@ copyright: gnark and its documentation are licensed under Apache 2.0 license
 
 #extra project info and template customisation
 extra:
-  sample_data:
-    my_custom_value: "This is a custom value defined in the extra section of mkdocs.yml"
+  content_vars:
+    gnark_version: "v0.4.0" # this is used in external URL (godoc, ...)
   logo_is_text: true
   latest_version_warning:
     url_contains: /latest/
@@ -27,10 +27,10 @@ extra:
     some displayed features may not be available in the stable release.
     You can switch to stable version using the version box at screen bottom.'
   support:
-    tool: Discord
-    channel: https://discord.gg/5U9Jwp7
-    email: quorum@consensys.net
-    website: https://consensys.net/quorum/developers
+    tool: discussions
+    channel: https://github.com/ConsenSys/gnark/discussions
+    email: zkteam@consensys.net
+    website: https://github.com/Consensys/gnark
     company: Consensys
     issues: https://github.com/Consensys/gnark/issues
   google:
@@ -39,33 +39,43 @@ extra:
 
 
 # Software Repository
-repo_name: Consensys/gnark
-repo_url: https://github.com/Consensys/gnark
+repo_name: ConsenSys/gnark
+repo_url: https://github.com/ConsenSys/gnark
 
 theme:
   name: material
   custom_dir: common/custom_theme
   palette:
-    primary: deep-orange
-    accent: teal
+    scheme: consensys-protocol
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  language: 'en'
   logo: 'Images/logo.svg'
   favicon: 'Images/favicon.svg'
 nav:
     - How to:
-        - Get started with gnark:
-            - Install binary distribution: HowTo/Get-Started/Install-Binaries.md
-            - Run gnark from Docker image: HowTo/Get-Started/Use-Docker.md
-            - Build from source: HowTo/Get-Started/Build-From-Source.md
-            - Start gnark: HowTo/Get-Started/Start.md
+        - Add gnark to your project: HowTo/get_started.md
+        - Write circuits:
+            - Design considerations: HowTo/write/design_considerations.md
+            - Circuit structure: HowTo/write/circuit_structure.md
+            - Circuit API: HowTo/write/circuit_api.md
+            - Standard library: HowTo/write/standard_library.md
+            - Conditionals and loops: HowTo/write/instructions.md
+        - Compile circuits: HowTo/compile.md
+        - Debug and test circuits: HowTo/debug_test.md
+        - Create and verify proofs: HowTo/prove.md
+        - Serialize: HowTo/serialize.md
+        - Use gnark as a service:
+            - gnarkd: HowTo/use/gnarkd.md
     - Concepts:
-        - Overview: Concepts/Overview.md
+        - zk-SNARK: Concepts/zkp.md
+        - Circuits and constraint systems: Concepts/circuits.md
+        - Proving schemes and curves: Concepts/schemes_curves.md
     - Tutorials:
-        - Overview: Tutorials/Overview.md
+        - EdDSA: Tutorials/eddsa.md
     - Reference:
-        - Command Line:
-            - Options: Reference/CLI/CLI-Syntax.md
-            - Subcommands: Reference/CLI/CLI-Subcommands.md
-        - REST API methods: Reference/Rest.md
+        - API: Reference/api.md
 
 markdown_extensions:
   - toc:
@@ -100,8 +110,18 @@ markdown_extensions:
 plugins:
   - search:
       lang: 'en'
-      separator: '[\s]+'
+      separator: '[\s\-\.\_]+'
   - markdownextradata
+  - exclude:
+      glob:
+        - global/*
+  - git-revision-date-localized:
+      locale: en
+  - minify:
+      minify_html: true
+      minify_js: true
+      htmlmin_opts:
+        remove_comments: true
   - redirects:
       redirect_maps:
         # Configure redirects using key:value pairs:

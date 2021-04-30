@@ -10,13 +10,13 @@ executors:
       - image: circleci/python:3.7.4
         auth:
           username: $DOCKER_USER_RO
-          password: $DOCKER_PASSWORD_RO          
+          password: $DOCKER_PASSWORD_RO
   node_executor:
     docker:
-      - image: circleci/node:12.9.0-stretch
+      - image: circleci/node:lts-buster
         auth:
           username: $DOCKER_USER_RO
-          password: $DOCKER_PASSWORD_RO          
+          password: $DOCKER_PASSWORD_RO
 
 commands:
   prepare:
@@ -31,7 +31,7 @@ commands:
     steps:
       - slack/status:
           fail_only: true
-          only_for_branches: 'master'
+          only_for_branches: 'main'
 
 jobs:
   build:
@@ -69,11 +69,18 @@ jobs:
       - run:
           name: Run Vale
           command: |
-            ./bin/vale --config ./common/build_tools/vale/.vale.ini --glob='*.{md}' . | tee ./vale.out
+            ./bin/vale --minAlertLevel warning --no-exit --config ./common/build_tools/vale/.vale.ini --glob='*.{md}' . | tee ./vale-warnings.out
+      - run:
+          name: Run Vale
+          command: |
+            ./bin/vale --minAlertLevel error --config ./common/build_tools/vale/.vale.ini --glob='*.{md}' . | tee ./vale-errors.out
       - notify
       - store_artifacts:
-          path: ./vale.out
-          destination: ./vale.out
+          path: ./vale-warnings.out
+          destination: ./vale-warnings.out
+      - store_artifacts:
+          path: ./vale-errors.out
+          destination: ./vale-errors.out
 
   linkchecker:
     executor: node_executor
@@ -137,16 +144,16 @@ workflows:
     jobs:
       - build:
           context:
-            - dockerhub-quorumengineering-ro      
+            - dockerhub-quorumengineering-ro
       - vale:
           context:
-            - dockerhub-quorumengineering-ro      
+            - dockerhub-quorumengineering-ro
       - markdownlint:
           context:
-            - dockerhub-quorumengineering-ro      
+            - dockerhub-quorumengineering-ro
       - linkchecker:
           context:
-            - dockerhub-quorumengineering-ro      
+            - dockerhub-quorumengineering-ro
   nightly:
     triggers:
       - schedule: # GMT
@@ -154,7 +161,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
     jobs:
       - linkchecker:
           context:
