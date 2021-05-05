@@ -34,8 +34,8 @@ extra:
     company: Consensys
     issues: https://github.com/Consensys/gnark/issues
   google:
-    site_verification: TODO # Google Search Console verif code
-    tag_manager: TODO # Google tag manager code
+    site_verification: 'VL2MgMm7Gj-fEOH3SkAuP4eXOY7rIShFFbTI5RktuA0' # Google Search Console verif code
+    tag_manager: 'GTM-M9FMRZ7' # Google tag manager code
 
 
 # Software Repository
