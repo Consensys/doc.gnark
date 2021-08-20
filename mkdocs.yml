@@ -66,8 +66,6 @@ nav:
         - Debug and test circuits: HowTo/debug_test.md
         - Create and verify proofs: HowTo/prove.md
         - Serialize: HowTo/serialize.md
-        - Use gnark as a service:
-            - gnarkd: HowTo/use/gnarkd.md
     - Concepts:
         - zk-SNARK: Concepts/zkp.md
         - Circuits and constraint systems: Concepts/circuits.md
