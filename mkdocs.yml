@@ -127,3 +127,4 @@ plugins:
         # you can't use an already redirected path as an old_path.
         # new_path can be a file inside the docs/ folder or any URL (http://...)
         # Reference/EthSigner-CLI.md: Reference/CLI/CLI-Syntax.md
+        HowTo/use/gnarkd.md: index.md
