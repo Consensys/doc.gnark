@@ -77,7 +77,7 @@ to Groth16.
 ## Choosing an elliptic curve
 
 Both Groth16 and PlonK (with KZG scheme) need to be instantiated with an elliptic curve.
-`gnark` supports six elliptic curves: BN254, BLS12-381, BLS12-377, BW6-761, BLS24-315 and BW6-633.
+`gnark` supports six elliptic curves: BN254, BLS12-381, BLS12-377, BW6-761, BLS24-315, and BW6-633.
 All these curves are defined over a finite field $\mathbb{F}_p$ and have an equation of the form
 $y^2=x^3+b$ ($b\in \mathbb{F}_p$).
 
@@ -135,12 +135,15 @@ BLS12-377 and BW6-761 curves satisfy these conditions, while having fast impleme
 
 ### BLS24-315 and BW6-633 curves
 
-In Groth16, elliptic curve operations take place in three different groups: $G_1$, $G_2$ and $G_T$, whereas in PlonK (with KZG) operations take place only in $G_1$ and $G_T$. While BN254, BLS12-381 and BLS12-377 are optimized for all the three groups, BLS24-315 is better optimized for $G_1$ only while still competitively optimized for $G_T$. Moreover, it comes in a 2-chain setting with BW6-633 to enable PlonK one-layer proof composition efficiently.
+In Groth16, elliptic curve operations take place in three different groups: $G_1$, $G_2$ and $G_T$, whereas in
+PlonK (with KZG) operations take place only in $G_1$ and $G_T$. While BN254, BLS12-381 and BLS12-377 are optimized
+for all the three groups, BLS24-315 is better optimized for $G_1$ only while still competitively optimized for $G_T$.
+Moreover, it comes in a 2-chain setting with BW6-633 to enable PlonK one-layer proof composition efficiently.
 
 In summary, (BLS24-315, BW6-633) is a pair of elliptic curves that:
 
-- Are secure, for proof soundness
-- Are pairing-friendly, for proof verification
-- Are optimized for KZG-based SNARKs (i.e. PlonK)
+- Are secure, for proof soundness.
+- Are pairing-friendly, for proof verification.
+- Are optimized for KZG-based SNARKs (for example, PlonK).
 - Have a highly 2-adic subgroup order, for efficient proof generation.
-- BW6-633 has a subgroup order equal to BLS24-315's field characteristic, for efficient proof composition.
+- For efficient proof composition, BW6-633 has a subgroup order equal to BLS24-315's field characteristic.
