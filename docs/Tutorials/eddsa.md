@@ -109,9 +109,18 @@ What variables are needed (the witness) to verify the EdDSA signature?
     If $S < r$, there is no problem. However, if $S>r$, $S$ is reduced to $S'=S[r]$ and
     $S'[q]\neq S[q]$, it leads to a bug.
 
+<<<<<<< HEAD
     **Solution**: The solution is to split $S$ in a small base, like $2^{128}$ if $r$ is $256$-bits
     for example, and write $S=2^{128}*S_1+S_2$. This way, $S_1$ and $S_2$ are not reduced to modulo
     $r$ and the bug is fixed.
+=======
+        The $S$ of the signature is a number reduced modulo $l$, the order of the base point of the twisted Edwards
+        curve. In a SNARK circuit, $S$ is also reduced modulo $r$ because the variables in the SNARK circuit live in $\mathbb{F}_r$.
+        We need to ensure that there is no inconsistency between reduction modulo $l$ and reduction modulo $r$. If $l<r$, there
+        will be no problem since $S[l]$ will be less than $r$. A twisted Edwards on $\mathbb{F}_r$ has at most $N=r+2*sqrt(r)+3$
+        because there are $2$ points of multiplicity $2$. The group that is used for eddsa contains at most $N/2$ points because there
+        is a point of order $2$ on the twisted Edwards. Therefore $l<r$.
+>>>>>>> d1cebd9... fix: typo eddsa
 
     Now you can define the structure for storing a signature:
 
