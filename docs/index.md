@@ -122,18 +122,18 @@ Here we benchmark the same circuit using `gnark`, `bellman` (BLS12_381), and
 | Number of constraints | 100000 | 32000000 | 64000000 |
 |-----------------------|--------|----------|----------|
 | `bellman_ce` (s/op)   | 0.43   | 106      | 214.8    |
-| `gnark` (s/op)        | 0.16   | 33.9     | 63.4     |
-| _Speed improvement_   | _x2.6_ | _x3.1_   | _x3.4_   |
+| `gnark` (s/op)        | 0.12   | 27.1     | 53.9     |
+| _Speed improvement_   | _x3.6_ | _x3.9_   | _x4.0_   |
 
-On large circuits, that's **over 1 million constraints per second**.
+On large circuits, that's **over 1.18 million constraints per second**.
 
 #### BLS12_381
 
 | Number of constraints | 100000 | 32000000 | 64000000 |
 |-----------------------|--------|----------|----------|
 | `bellman` (s/op)      | 0.6    | 158      | 316.8    |
-| `gnark` (s/op)        | 0.23   | 47.6     | 90.7     |
-| _Speed improvement_   | _x2.7_ | _x3.3_   | _x3.5_   |
+| `gnark` (s/op)        | 0.19   | 41.4     | 80.6     |
+| _Speed improvement_   | _x3.1_ | _x3.8_   | _x3.9_   |
 
 !!! note
 
