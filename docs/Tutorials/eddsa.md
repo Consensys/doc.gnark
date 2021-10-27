@@ -149,7 +149,7 @@ It also needs a `frontend.ConstraintSystem` object, on which the functions from 
 [gnark API](../HowTo/write/circuit_api.md) are called.
 
 ```go
-func Verify(cs *frontend.ConstraintSystem, sig Signature, msg frontend.Variable, pubKey PublicKey) error {
+func Verify(api frontend.API, sig Signature, msg frontend.Variable, pubKey PublicKey) error {
     // ...
 }
 ```
@@ -165,7 +165,7 @@ import (
     "github.com/consensys/gnark/std/hash/mimc"
 )
 
-func Verify(cs *frontend.ConstraintSystem, sig Signature, msg frontend.Variable, pubKey PublicKey) error {
+func Verify(api frontend.API, sig Signature, msg frontend.Variable, pubKey PublicKey) error {
 
     // compute H(R, A, M)
     data := []frontend.Variable{
@@ -228,11 +228,11 @@ Next, continue the implementation with the computation of the right-hand side:
 
 !!! tip "Debugging"
 
-    You can print values using `cs.Println` that behaves like `fmt.Println`,
+    You can print values using `api.Println` that behaves like `fmt.Println`,
     except it will output the values at proving time (when they are solved).
 
     ```go
-    cs.Println("A.X", pubKey.A.X)
+    api.Println("A.X", pubKey.A.X)
     ```
 
 Until now, you have only used objects which are defined in the `gnark` standard library, for example,
@@ -244,8 +244,8 @@ Use the gnark API, to assert that the left-hand side is equal to the right-hand 
 
 ```go
     // ensures that lhs==rhs
-    cs.AssertIsEqual(lhs.X, rhs.X)
-    cs.AssertIsEqual(lhs.Y, rhs.Y)
+    api.AssertIsEqual(lhs.X, rhs.X)
+    api.AssertIsEqual(lhs.Y, rhs.Y)
 ```
 
 !!! info
@@ -287,7 +287,7 @@ import (
     "github.com/consensys/gnark-crypto/ecc"
 )
 
-func (circuit *eddsaCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+func (circuit *eddsaCircuit) Define(curveID ecc.ID, api frontend.API) error {
 
     params, err := twistededwards.NewEdCurve(curveID)
     if err != nil {

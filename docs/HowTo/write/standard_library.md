@@ -14,7 +14,7 @@ We provide the following functions in `gnark/std`:
 === "MiMC hash"
 
     ```go
-    func (circuit *mimcCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+    func (circuit *mimcCircuit) Define(curveID ecc.ID, api frontend.API) error {
         // ...
         hFunc, _ := mimc.NewMiMC("seed", curveID)
         computedHash := hFunc.Hash(cs, circuit.Data)
@@ -31,7 +31,7 @@ We provide the following functions in `gnark/std`:
         Message   frontend.Variable         `gnark:",public"`
     }
 
-    func (circuit *eddsaCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+    func (circuit *eddsaCircuit) Define(curveID ecc.ID, api frontend.API) error {
         edCurve, _ := twistededwards.NewEdCurve(curveID)
         circuit.PublicKey.Curve = edCurve
 
@@ -48,7 +48,7 @@ We provide the following functions in `gnark/std`:
         Path, Helper []frontend.Variable
     }
 
-    func (circuit *merkleCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+    func (circuit *merkleCircuit) Define(curveID ecc.ID, api frontend.API) error {
         hFunc, _ := mimc.NewMiMC("seed", curveID)
         merkle.VerifyProof(cs, hFunc, circuit.RootHash, circuit.Path, circuit.Helper)
         return nil
@@ -66,7 +66,7 @@ We provide the following functions in `gnark/std`:
         Hash       frontend.Variable
     }
 
-    func (circuit *verifierCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+    func (circuit *verifierCircuit) Define(curveID ecc.ID, api frontend.API) error {
         // pairing data
         var pairingInfo sw.PairingContext
         pairingInfo.Extension = fields.GetBLS377ExtensionFp12(cs)

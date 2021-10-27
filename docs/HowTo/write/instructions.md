@@ -15,11 +15,11 @@ Use standard `for` loops inside a circuit definition.
 !!! example "check that `X*X*X*X*X... == Y`"
 
     ```go
-    func (circuit *Circuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+    func (circuit *Circuit) Define(curveID ecc.ID, api frontend.API) error {
         for i := 0; i < n; i++ {
-            circuit.X = cs.Mul(circuit.X, circuit.X)
+            circuit.X = api.Mul(circuit.X, circuit.X)
         }
-        cs.AssertIsEqual(circuit.X, circuit.Y)
+        api.AssertIsEqual(circuit.X, circuit.Y)
         return nil
     }
     ```
@@ -31,7 +31,7 @@ this doesn't translate well in a *declarative* API to define the circuit, becaus
 of the `frontend.Compile` method is an arithmetic representation that must encode the various
 branches.
 
-`gnark` offers `cs.Select(...)` API, which is similar to Prolog-like languages.
+`gnark` offers `api.Select(...)` API, which is similar to Prolog-like languages.
 
 ```go
 // Select if b is true, yields i1 else yields i2

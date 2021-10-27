@@ -22,15 +22,15 @@ witness.
 
 ### Print values
 
-The easiest way to debug a circuit is to use `cs.Println()`, which behaves like `fmt.Println`, except
+The easiest way to debug a circuit is to use `api.Println()`, which behaves like `fmt.Println`, except
 it outputs the values when they are solved. For example:
 
 ```go
-cs.Println("A.X", pubKey.A.X)
+api.Println("A.X", pubKey.A.X)
 ```
 
 !!! note
-    With solving errors and `cs.Println`, `gnark` outputs a stack trace which contain the exact line number to refer to in the circuit definition.
+    With solving errors and `api.Println`, `gnark` outputs a stack trace which contain the exact line number to refer to in the circuit definition.
 
 ## Test
 
