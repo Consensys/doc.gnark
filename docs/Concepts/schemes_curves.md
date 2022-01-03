@@ -6,7 +6,7 @@ description: Proving schemes and curves
 
 `gnark` supports two proving schemes [Groth16](https://eprint.iacr.org/2016/260.pdf) and
 [PlonK](https://eprint.iacr.org/2019/953.pdf). These schemes can be instantiated with any of the
-following four elliptic curves: *BN254*, *BLS12-381*, *BLS12-377* or *BW6-761*.
+following elliptic curves: *BN254*, *BLS12-381*, *BLS12-377*, *BLS24-315*, *BW6-633* or *BW6-761*.
 
 An ID is supplied to `gnark` to choose the proving scheme and the instantiating curve.
 

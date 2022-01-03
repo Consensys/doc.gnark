@@ -20,6 +20,9 @@ witness.
     the solver couldn't perform an operation needed to verify a constraint.
     For example, a division by 0.
 
+!!! tip
+    You can run the program with `-tags=debug` to display a more verbose stack trace.
+
 ### Print values
 
 The easiest way to debug a circuit is to use `api.Println()`, which behaves like `fmt.Println`, except
@@ -41,7 +44,7 @@ You can implement tests as Go unit tests, in a `_test.go` file. For example:
 assert := test.NewAssert(t)
 
 // declare the circuit
-var mimcCircuit Circuit
+var cubicCircuit Circuit
 
 assert.ProverFailed(&cubicCircuit, &Circuit{
     PreImage:   frontend.Value(42),

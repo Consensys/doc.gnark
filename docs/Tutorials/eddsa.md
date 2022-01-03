@@ -419,5 +419,5 @@ Last step is to generate the proof and verify it.
     ```go
     assert := groth16.NewAssert(t)
     var witness Circuit
-    assert.ProverFailed(r1cs, &witness) // .ProverSucceeded
+    assert.ProverFailed(&circuit, &witness) // .ProverSucceeded
     ```

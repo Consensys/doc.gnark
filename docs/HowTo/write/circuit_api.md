@@ -31,28 +31,6 @@ api.AssertIsEqual(circuit.Y, api.Add(x3, circuit.X, 5))
 
     Constants bigger than base field modulus will be reduced $\mod n$.
 
-## Compiler hints
-
-Also known as "advice wires", hints are a way to tell the constraint solver how to compute a value.
-For example, to get the i-th bit of a variable, write:
-
-```go
-b[i] = cs.NewHint(hint.IthBit, a, i)
-```
-
-!!! warning
-
-    Circuit developer must constraint the hints. From the `Prover` point of view, one can see a hint as a user defined `frontend.Variable`.
-
-    For example, in most cases, to ensure the extracted bit is really the i-th bit of a variable, one must boolean constrain the bits, and constraint the weighted sum of the bits to be equal to `a`:
-
-    ```go
-    cs.AssertIsBoolean(b[i])
-    // Σ (2**i * b[i]) == a
-    // ... 
-    ```
-
-User-defined hints are possible, see `cs.NewHint()` and `backend/hint` for more details. 
 
 ## Reusing circuit components
 
