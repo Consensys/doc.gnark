@@ -7,11 +7,8 @@ description: How to write a gnark circuit
 As described in [Circuit structure](circuit_structure.md), `MyCircuit` implements:
 
 ```go
-func Define(curveID ecc.ID, api frontend.API) error
+func Define(api frontend.API) error
 ```
-
-* `curveID` is injected at compile time to handle different code paths depending on the curve
-    (for example, hash functions like MiMC have variations depending on the `curveID`)
 
 * `api` is the root object to manipulate when defining constraints.
 

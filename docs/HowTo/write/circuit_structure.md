@@ -9,7 +9,7 @@ A `gnark` circuit must implement the `frontend/Circuit` interface:
 ```go
 type Circuit interface {
     // Define declares the circuit's Constraints
-    Define(curveID ecc.ID, api frontend.API) error
+    Define(api frontend.API) error
 }
 ```
 
@@ -26,7 +26,7 @@ type myComponent struct {
     X frontend.Variable
 }
 
-func (circuit *MyCircuit) Define(curveID ecc.ID, api frontend.API) error {
+func (circuit *MyCircuit) Define(api frontend.API) error {
     // ... see Cicuit API section
 }
 ```

@@ -53,9 +53,9 @@ easily added.
         }
 
         // Define declares the circuit's constraints
-        func (circuit *Circuit) Define(curveID ecc.ID, api frontend.API) error {
+        func (circuit *Circuit) Define(api frontend.API) error {
             // hash function
-            mimc, err := mimc.NewMiMC("seed", curveID)
+            mimc, err := mimc.NewMiMC("seed", api.Curve())
 
             // specify constraints
             // mimc(preImage) == hash

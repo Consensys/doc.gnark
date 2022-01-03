@@ -15,7 +15,7 @@ Use standard `for` loops inside a circuit definition.
 !!! example "check that `X*X*X*X*X... == Y`"
 
     ```go
-    func (circuit *Circuit) Define(curveID ecc.ID, api frontend.API) error {
+    func (circuit *Circuit) Define(api frontend.API) error {
         for i := 0; i < n; i++ {
             circuit.X = api.Mul(circuit.X, circuit.X)
         }

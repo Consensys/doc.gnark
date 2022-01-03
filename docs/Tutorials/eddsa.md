@@ -294,9 +294,9 @@ import (
     "github.com/consensys/gnark-crypto/ecc"
 )
 
-func (circuit *eddsaCircuit) Define(curveID ecc.ID, api frontend.API) error {
+func (circuit *eddsaCircuit) Define(api frontend.API) error {
 
-    params, err := twistededwards.NewEdCurve(curveID)
+    params, err := twistededwards.NewEdCurve(api.Curve())
     if err != nil {
         return err
     }
