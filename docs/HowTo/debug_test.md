@@ -60,4 +60,4 @@ assert.ProverSucceeded(&cubicCircuit, &Circuit{
 
 See the [test package documentation](https://pkg.go.dev/github.com/consensys/gnark/test@v0.5.2) for more details.
 
-In particular, the default behavior of the assert helper is to test the circuit accross all supported curves and backends, ensure correct serialization, and cross-test the constraint system solver against a `big.Int` test execution engine.
+In particular, the default behavior of the assert helper is to test the circuit across all supported curves and backends, ensure correct serialization, and cross-test the constraint system solver against a `big.Int` test execution engine.
