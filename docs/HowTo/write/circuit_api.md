@@ -31,7 +31,6 @@ api.AssertIsEqual(circuit.Y, api.Add(x3, circuit.X, 5))
 
     Constants bigger than base field modulus will be reduced $\mod n$.
 
-
 ## Reusing circuit components
 
 Other zk-SNARK libraries introduced the term *gadget* to describe circuit composition.
