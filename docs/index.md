@@ -53,13 +53,13 @@ easily added.
         }
 
         // Define declares the circuit's constraints
-        func (circuit *Circuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+        func (circuit *Circuit) Define(api frontend.API) error {
             // hash function
-            mimc, err := mimc.NewMiMC("seed", curveID)
+            mimc, err := mimc.NewMiMC("seed", api.Curve())
 
             // specify constraints
             // mimc(preImage) == hash
-            cs.AssertIsEqual(circuit.Hash, mimc.Hash(cs, circuit.PreImage))
+            api.AssertIsEqual(circuit.Hash, mimc.Hash(cs, circuit.PreImage))
 
             return nil
         }

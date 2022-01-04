@@ -7,20 +7,17 @@ description: How to write a gnark circuit
 As described in [Circuit structure](circuit_structure.md), `MyCircuit` implements:
 
 ```go
-func Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error
+func Define(api frontend.API) error
 ```
 
-* `curveID` is injected at compile time to handle different code paths depending on the curve
-    (for example, hash functions like MiMC have variations depending on the `curveID`)
+* `api` is the root object to manipulate when defining constraints.
 
-* `cs` is the root object to manipulate when defining constraints.
-
-Use `x² := cs.Mul(x, x)` to write $x \times x$. For example, to prove that we know the solution to
+Use `x² := api.Mul(x, x)` to write $x \times x$. For example, to prove that we know the solution to
 the cubic equation $x^3 + x + 5 = y$, write:
 
 ```go
-x3 := cs.Mul(circuit.X, circuit.X, circuit.X)
-cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
+x3 := api.Mul(circuit.X, circuit.X, circuit.X)
+api.AssertIsEqual(circuit.Y, api.Add(x3, circuit.X, 5))
 ```
 
 !!! info
@@ -29,7 +26,7 @@ cs.AssertIsEqual(circuit.Y, cs.Add(x3, circuit.X, 5))
     This allows flexibility on the circuit definition side when coding, for example:
 
     ```go
-    cs.Mul(X, 2, cs.Add(Y, Z, 42))
+    api.Mul(X, 2, api.Add(Y, Z, 42))
     ```
 
     Constants bigger than base field modulus will be reduced $\mod n$.

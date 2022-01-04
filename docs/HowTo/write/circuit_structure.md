@@ -9,7 +9,7 @@ A `gnark` circuit must implement the `frontend/Circuit` interface:
 ```go
 type Circuit interface {
     // Define declares the circuit's Constraints
-    Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error
+    Define(api frontend.API) error
 }
 ```
 
@@ -26,13 +26,13 @@ type myComponent struct {
     X frontend.Variable
 }
 
-func (circuit *MyCircuit) Define(curveID ecc.ID, cs *frontend.ConstraintSystem) error {
+func (circuit *MyCircuit) Define(api frontend.API) error {
     // ... see Cicuit API section
 }
 ```
 
 At compile time, `frontend.Compile(...)` recursively parses the struct fields that contains
-`frontend.Variable` to build the `frontend.ConstraintSystem`.
+`frontend.Variable` to build the `frontend.constraintSystem`.
 
 By default, a `frontend.Variable` has the `gnark:",secret"` visibility.
 

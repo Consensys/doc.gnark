@@ -20,17 +20,20 @@ witness.
     the solver couldn't perform an operation needed to verify a constraint.
     For example, a division by 0.
 
+!!! tip
+    You can run the program with `-tags=debug` to display a more verbose stack trace.
+
 ### Print values
 
-The easiest way to debug a circuit is to use `cs.Println()`, which behaves like `fmt.Println`, except
+The easiest way to debug a circuit is to use `api.Println()`, which behaves like `fmt.Println`, except
 it outputs the values when they are solved. For example:
 
 ```go
-cs.Println("A.X", pubKey.A.X)
+api.Println("A.X", pubKey.A.X)
 ```
 
 !!! note
-    With solving errors and `cs.Println`, `gnark` outputs a stack trace which contain the exact line number to refer to in the circuit definition.
+    With solving errors and `api.Println`, `gnark` outputs a stack trace which contain the exact line number to refer to in the circuit definition.
 
 ## Test
 
@@ -38,28 +41,23 @@ You can implement tests as Go unit tests, in a `_test.go` file. For example:
 
 ```go
 // assert object wrapping testing.T
-assert := groth16.NewAssert(t)
+assert := test.NewAssert(t)
 
 // declare the circuit
-var mimcCircuit Circuit
+var cubicCircuit Circuit
 
-// compile the circuit into a R1CS
-r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &mimcCircuit)
-assert.NoError(err)
+assert.ProverFailed(&cubicCircuit, &Circuit{
+    PreImage:   frontend.Value(42),
+    Hash:       frontend.Value(42),
+})
 
-{
-    // assign invalid values to a witness, ensure the proof fails
-    var witness Circuit
-    witness.Hash.Assign(42)
-    witness.PreImage.Assign(42)
-    assert.ProverFailed(r1cs, &witness)
-}
+assert.ProverSucceeded(&cubicCircuit, &Circuit{
+    PreImage:   frontend.Value(35),
+    Hash:       frontend.Value("16130099170765464552823636852555369511329944820189892919423002775646948828469"),
+}, test.WithCurves(ecc.BN254))
 
-{
-    // assign valid values to a witness, ensure the proof is valid
-    var witness Circuit
-    witness.PreImage.Assign(35)
-    witness.Hash.Assign("16130099170765464552823636852555369511329944820189892919423002775646948828469")
-    assert.ProverSucceeded(r1cs, &witness)
-}
 ```
+
+See the [test package documentation](https://pkg.go.dev/github.com/consensys/gnark/test@v0.5.2) for more details.
+
+In particular, the default behavior of the assert helper is to test the circuit across all supported curves and backends, ensure correct serialization, and cross-test the constraint system solver against a `big.Int` test execution engine.
