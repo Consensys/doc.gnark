@@ -4,16 +4,15 @@ description: Using hints for off-circuit computations
 
 # Compiler hints
 
-Instead of computing some value within a circuit, it is sometimes more optimal
+Instead of computing some value within a circuit, it's sometimes more optimal
 to compute the value off-circuit and only verify the correctness of the
-computation in a circuit. `gnark` provides a way to provide such verifiable
-"advice wires" in the way of *hints*. From the prover point of view, these are
-essentially input variables which are provided by hint function instead of the
+computation in a circuit. `gnark` allows you to do this through *hints*. From the prover's point of view, hints are
+essentially input variables provided by a hint function instead of the
 user.
 
-For example, lets consider a decomposition of an integer `a` into bits. A naive
-way to do it would be to look at the binary representation of the integer and
-extract bits from this representation, but `gnark` does not currently provide
+For example, consider a decomposition of an integer `a` into bits. A naive
+way to decompose it is to look at the binary representation of the integer and
+extract bits from this representation, but `gnark` doesn't currently provide
 native bit operations. Instead, the hint function `hint.IthBit` can provide the
 bits as variables and the user must constrain these variables as a weighted sum
 which equals to `a`. In a circuit it would look like:
@@ -50,5 +49,5 @@ to the backend so that the backend could access the hint function.
 
 `gnark` also provides a constructor
 [`hint.NewStaticHint`](https://pkg.go.dev/github.com/consensys/gnark/backend/hint#NewStaticHint)
-for constructing simple hint functions which takes constant number of inputs and
-returns constant number of outputs.
+for constructing simple hint functions, which takes a constant number of inputs and
+returns a constant number of outputs.
