@@ -30,22 +30,19 @@ which equals to `a`. In a circuit it would look like:
   cs.AssertIsEqual(Σbi, a)
 ```
 
-This particular method is also implemented in the frontends as `ToBinary(...)`
+This method is also implemented in the front end as `ToBinary(...)`
 interface method.
 
-`gnark` provides a list of built-in hints. See [package
-documentation](https://pkg.go.dev/github.com/consensys/gnark/backend/hint#Function)
-for a list of built-int hint functions.
+`gnark` provides a [list of built-in hint functions](https://pkg.go.dev/github.com/consensys/gnark/backend/hint#Function).
 
-## Implementing hint functions
+## Implement hint functions
 
-In addition to built-in hint functions, the developer can also define their own
-hint functions. Any instance satisfying the
+You can define your own hint functions in addition to built-in hint functions.
+You can provide any instance satisfying the
 [`hint.Function`](https://pkg.go.dev/github.com/consensys/gnark/backend/hint#Function)
-can be provided to `api.NewHint(...)` method to compute the hint value.
-Additionally, the hint function has to be provided as a [`backend.WithHints`
-backend option](https://pkg.go.dev/github.com/consensys/gnark/backend#WithHints)
-to the backend so that the backend could access the hint function.
+to `api.NewHint(...)` method to compute the hint value.
+Additionally, you must provide the hint function as a [`backend.WithHints`](https://pkg.go.dev/github.com/consensys/gnark/backend#WithHints) option
+to the back end, so the back end can access the hint function.
 
 `gnark` also provides a constructor
 [`hint.NewStaticHint`](https://pkg.go.dev/github.com/consensys/gnark/backend/hint#NewStaticHint)
