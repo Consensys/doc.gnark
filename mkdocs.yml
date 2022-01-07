@@ -62,6 +62,7 @@ nav:
             - Circuit API: HowTo/write/circuit_api.md
             - Standard library: HowTo/write/standard_library.md
             - Conditionals and loops: HowTo/write/instructions.md
+            - Hints: HowTo/write/hints.md
         - Compile circuits: HowTo/compile.md
         - Debug and test circuits: HowTo/debug_test.md
         - Create and verify proofs: HowTo/prove.md
