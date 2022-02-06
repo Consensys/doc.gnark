@@ -367,10 +367,10 @@ from the previously computed `signature`.
 
 ```go
     // declare the witness
-    var witness eddsaCircuit
+    var assignment eddsaCircuit
 
     // assign message value
-    witness.Message.Assign(msg)
+    assignment.Message = msg
 
     // public key bytes
     _publicKey := publicKey.Bytes()
@@ -382,31 +382,34 @@ from the previously computed `signature`.
     p.SetBytes(_publicKey[:32])
     axb := p.X.Bytes()
     ayb := p.Y.Bytes()
-    witness.PublicKey.A.X.Assign(axb[:])
-    witness.PublicKey.A.Y.Assign(ayb[:])
+    assignment.PublicKey.A.X = axb[:]
+    assignment.PublicKey.A.Y = ayb[:]
 
     // assign signature values
     p.SetBytes(signature[:32])
     rxb := p.X.Bytes()
     ryb := p.Y.Bytes()
-    witness.Signature.R.X.Assign(rxb[:])
-    witness.Signature.R.Y.Assign(ryb[:])
+    assignment.Signature.R.X = rxb[:]
+    assignment.Signature.R.Y = ryb[:]
 
     // The S part of the signature is a 32 bytes scalar stored in signature[32:64].
     // As decribed earlier, we split is in S1, S2 such that S = 2^128*S1+S2 to prevent
     // overflowing the underlying representation in the circuit.
-    witness.Signature.S1.Assign(signature[32:48])
-    witness.Signature.S2.Assign(signature[48:])
+    assignment.Signature.S1 = signature[32:48]
+    assignment.Signature.S2 = signature[48:]
 ```
 
 Last step is to generate the proof and verify it.
 
 ```go
+    // witness
+    witness, err := frontend.NewWitness(&assignment, ecc.BN254)
+    publicWitness, err := witness.Public()
     // generate the proof
-    proof, err := groth16.Prove(r1cs, pk, &witness)
+    proof, err := groth16.Prove(r1cs, pk, witness)
 
     // verify the proof
-    err = groth16.Verify(proof, vk, &witness)
+    err = groth16.Verify(proof, vk, publicWitness)
     if err != nil {
         // invalid proof
     }
@@ -419,5 +422,5 @@ Last step is to generate the proof and verify it.
     ```go
     assert := groth16.NewAssert(t)
     var witness Circuit
-    assert.ProverFailed(&circuit, &witness) // .ProverSucceeded
+    assert.ProverFailed(&circuit, &assignment) // .ProverSucceeded
     ```

@@ -58,11 +58,13 @@ type Circuit struct {
     Y frontend.Variable `gnark:",public"`
 }
 
-var witness Circuit
-witness.X.Assign(3)
-witness.Y.Assign(35)
+assignment := &Circuit {
+    X: 3,
+    Y: 35,
+}
+witness, _ := frontend.NewWitness(assignment, ecc.BN254)
 // use the witness directly in zk-SNARK backend APIs
-groth16.Prove(cs, pk, &witness)
+groth16.Prove(cs, pk, witness)
 // test file --> assert.ProverSucceeded(cs, &witness)
 ```
 
