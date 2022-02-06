@@ -74,7 +74,6 @@ Two types of witnesses exist:
 For performance reason (witnesses can be large), witnesses should be encoded using a binary protocol.
 For convenience, gnark also support JSON encoding.
 
-
 ### Binary protocol
 
 While there is no standard yet, we followed similar patterns used by other zk-SNARK libraries.
@@ -110,7 +109,6 @@ A valid witness would be:
 * `[uint32(3)|bytes(Y)|bytes(X)|bytes(Z)]`
 * Hex representation with values `Y = 35`, `X = 3`, `Z = 2`
 `00000003000000000000000000000000000000000000000000000000000000000000002300000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000002`
-
 
 ### Example
 
