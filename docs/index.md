@@ -75,6 +75,13 @@ easily added.
     === "3. create proof"
 
         ```go
+        // witness 
+        assignment := &Circuit{
+            Hash: "16130099170765464552823636852555369511329944820189892919423002775646948828469",
+            PreImage: 35,
+        }
+        witness, _ := frontend.NewWitness(assignment, ecc.BN254)
+        publicWitness, _ := witness.Public()
         pk, vk, err := groth16.Setup(r1cs)
         proof, err := groth16.Prove(r1cs, pk, witness)
         err := groth16.Verify(proof, vk, publicWitness)
@@ -87,21 +94,18 @@ easily added.
 
         var mimcCircuit Circuit
 
-        r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &mimcCircuit)
-        assert.NoError(err)
-
         {
-            var witness Circuit
-            witness.Hash.Assign(42)
-            witness.PreImage.Assign(42)
-            assert.ProverFailed(r1cs, &witness)
+            assert.ProverFailed(&mimcCircuit, &Circuit{
+                Hash: 42,
+                PreImage: 42,
+            })
         }
 
         {
-            var witness Circuit
-            witness.PreImage.Assign(35)
-            witness.Hash.Assign("16130099170765464552823636852555369511329944820189892919423002775646948828469")
-            assert.ProverSucceeded(r1cs, &witness)
+             assert.ProverSucceeded(&mimcCircuit, &Circuit{
+                Hash: "16130099170765464552823636852555369511329944820189892919423002775646948828469",
+                PreImage: 35,
+            })
         }
 
         ```

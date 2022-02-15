@@ -66,16 +66,17 @@ pk.ReadFrom(&buf) // reader will detect if points are compressed or not.
 Witnesses (inputs to the `Prove` or `Verify` functions) may be constructed outside of `gnark`, in a
 non-Go codebase.
 
-While there is no standard yet, we followed similar patterns used by other zk-SNARK libraries.
-
-For performance reason (witnesses can be large), witnesses are encoded using a binary protocol.
-
 Two types of witnesses exist:
 
 * **Full witness**: contains public and secret inputs, needed by `Prove`
 * **Public witness**: contains public inputs only, needed by `Verify`
 
+For performance reason (witnesses can be large), witnesses should be encoded using a binary protocol.
+For convenience, gnark also support JSON encoding.
+
 ### Binary protocol
+
+While there is no standard yet, we followed similar patterns used by other zk-SNARK libraries.
 
 ```no-lang
 // Full witness     ->  [uint32(nbElements) | publicVariables | secretVariables]
@@ -109,12 +110,6 @@ A valid witness would be:
 * Hex representation with values `Y = 35`, `X = 3`, `Z = 2`
 `00000003000000000000000000000000000000000000000000000000000000000000002300000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000002`
 
-!!! note
-
-    In the upcoming `v0.5.0` release, we want to offer additional solutions for non-Go codebase.
-
-    See this [Github issue](https://github.com/ConsenSys/gnark/issues/70).
-
 ### Example
 
 This example is intended for a multi-process usage of `gnark` where you need
@@ -128,17 +123,27 @@ to construct the witness in one process and deserialize it in another.
 
     ```go
     // witness
-    var w cubic.Circuit
-    w.X.Assign(3)
-    w.Y.Assign(35)
+    var assignment cubic.Circuit
+    assignment.X = 3 
+    assignment.Y = 35
+    witness, _ := frontend.NewWitness(&assignment, ecc.BN254)
 
-    // io.Writer
-    var buf bytes.Buffer
+    // Binary marshalling
+    data, err := witness.MarshalBinary()
 
-    witness.WriteFullTo(&buf, ecc.BN254, &w)
-    // respectively witness.WritePublicTo(&buf, ecc.BN254, &w)
+    // JSON marshalling
+    json, err := witness.MarshalJSON()
+
     ...
-    // in another process
-    proof, _ := groth16.ReadAndProve(cs, pk, &buf)
-    // respectively groth16.ReadAndVerify(proof, vk, &buf)
+    // recreate a witness
+    witness, err := witness.New(ecc.BN254, ccs.GetSchema()) // note that schema is optional for binary encoding
+    
+    // Binary unmarshalling
+    err := witness.UnmarshalBinary(data)
+    
+    // JSON unmarshalling
+    err := witness.UnmarshalJSON(json)
+
+    // extract the public part only
+    publicWitness, _ := witness.Public()
     ```
