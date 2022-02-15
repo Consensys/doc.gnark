@@ -16,7 +16,7 @@ We provide the following functions in `gnark/std`:
     ```go
     func (circuit *mimcCircuit) Define(api frontend.API) error {
         // ...
-        hFunc, _ := mimc.NewMiMC("seed", api.Curve())
+        hFunc, _ := mimc.NewMiMC(api.Curve())
         computedHash := hFunc.Hash(cs, circuit.Data)
         // ...
     }
@@ -49,7 +49,7 @@ We provide the following functions in `gnark/std`:
     }
 
     func (circuit *merkleCircuit) Define(api frontend.API) error {
-        hFunc, _ := mimc.NewMiMC("seed", api.Curve())
+        hFunc, _ := mimc.NewMiMC(api.Curve())
         merkle.VerifyProof(cs, hFunc, circuit.RootHash, circuit.Path, circuit.Helper)
         return nil
     }

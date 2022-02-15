@@ -55,7 +55,7 @@ easily added.
         // Define declares the circuit's constraints
         func (circuit *Circuit) Define(api frontend.API) error {
             // hash function
-            mimc, err := mimc.NewMiMC("seed", api.Curve())
+            mimc, err := mimc.NewMiMC(api.Curve())
 
             // specify constraints
             // mimc(preImage) == hash
