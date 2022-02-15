@@ -182,7 +182,7 @@ func Verify(api frontend.API, sig Signature, msg frontend.Variable, pubKey Publi
         pubKey.A.Y,
         msg,
     }
-    hash, err := mimc.NewMiMC("seed", pubKey.Curve.ID)
+    hash, err := mimc.NewMiMC(pubKey.Curve.ID)
     if err != nil {
         return err
     }
@@ -320,7 +320,7 @@ Implementations of EdDSA exist for several curves, here you will choose BN254.
 ```go
 func main() {
     // instantiate hash function
-    hFunc := hash.MIMC_BN254.New("seed")
+    hFunc := hash.MIMC_BN254.New()
 
     // create a eddsa key pair
     privateKey, err := signature.EDDSA_BN254.New(crand.Reader)
