@@ -277,12 +277,12 @@ func (circuit *eddsaCircuit) Define(api frontend.API) error {
     if err != nil {
         return err
     }
-    
+
     mimc, err := mimc.NewMiMC(api)
     if err != nil {
         return err
     }
-    
+
     // verify the signature in the cs
     return eddsa.Verify(curve, circuit.Signature, circuit.Message, circuit.PublicKey, &mimc)
 
