@@ -4,11 +4,6 @@ description: gnark standard library
 
 # `gnark` standard library
 
-!!! note
-
-    `gnark/std` will be improved in the `v0.5.0` release. See this
-    [Github issue](https://github.com/ConsenSys/gnark/issues/80) for more details.
-
 We provide the following functions in `gnark/std`:
 
 === "MiMC hash"
@@ -67,13 +62,8 @@ We provide the following functions in `gnark/std`:
     }
 
     func (circuit *verifierCircuit) Define(api frontend.API) error {
-        // pairing data
-        var pairingInfo sw.PairingContext
-        pairingInfo.Extension = fields.GetBLS377ExtensionFp12(cs)
-        pairingInfo.AteLoop = 9586122913090633729
 
-        // create the verifier cs
-        groth16.Verify(cs, pairingInfo, circuit.InnerVk, circuit.InnerProof, []frontend.Variable{circuit.Hash})
+        groth16.Verify(api, circuit.InnerVk, circuit.InnerProof, []frontend.Variable{circuit.Hash})
 
         return nil
     }

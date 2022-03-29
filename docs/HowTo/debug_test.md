@@ -47,17 +47,17 @@ assert := test.NewAssert(t)
 var cubicCircuit Circuit
 
 assert.ProverFailed(&cubicCircuit, &Circuit{
-    PreImage:   frontend.Value(42),
-    Hash:       frontend.Value(42),
+    PreImage:   42,
+    Hash:       42,
 })
 
 assert.ProverSucceeded(&cubicCircuit, &Circuit{
-    PreImage:   frontend.Value(35),
-    Hash:       frontend.Value("16130099170765464552823636852555369511329944820189892919423002775646948828469"),
+    PreImage:   35,
+    Hash:       "16130099170765464552823636852555369511329944820189892919423002775646948828469",
 }, test.WithCurves(ecc.BN254))
 
 ```
 
-See the [test package documentation](https://pkg.go.dev/github.com/consensys/gnark/test@v0.5.2) for more details.
+See the [test package documentation](https://pkg.go.dev/github.com/consensys/gnark/test@v0.7.0) for more details.
 
 In particular, the default behavior of the assert helper is to test the circuit across all supported curves and backends, ensure correct serialization, and cross-test the constraint system solver against a `big.Int` test execution engine.
