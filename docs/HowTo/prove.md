@@ -84,7 +84,7 @@ using a `geth` simulated blockchain.
 
 ```go
 // 1. Compile (Groth16 + BN254)
-cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &myCircuit)
+cs, err := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &myCircuit)
 
 // 2. Setup
 pk, vk, err := groth16.Setup(cs)

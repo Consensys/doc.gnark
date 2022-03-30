@@ -61,16 +61,11 @@ What variables are needed (the witness) to verify the EdDSA signature?
     Let's create the `struct` containing the twisted Edwards curve parameter:
 
     ```go
-    package twistededwards
-
-    import (
-        "github.com/consensys/gnark-crypto/ecc"
-        "math/big"
-    )
-
-    type EdCurve struct {
-        A, D, Cofactor, Order, BaseX, BaseY, Modulus big.Int
-        ID                                           ecc.ID
+    // CurveParams twisted edwards curve parameters ax^2 + y^2 = 1 + d*x^2*y^2
+    // Matches gnark-crypto curve specific params
+    type CurveParams struct {
+        A, D, Cofactor, Order *big.Int
+        Base                  [2]*big.Int // base point coordinates
     }
     ```
 
@@ -87,7 +82,6 @@ What variables are needed (the witness) to verify the EdDSA signature?
 
     type PublicKey struct {
         A     twistededwards.Point
-        Curve twistededwards.EdCurve
     }
     ```
 
@@ -102,32 +96,20 @@ What variables are needed (the witness) to verify the EdDSA signature?
     $R$ is a point $(x,y)$ on the twisted Edwards curve, and $S$ is a scalar.
     The scalar $S$ is used to perform a scalar multiplication on the twisted Edwards curve.
 
-    **Problem**: Remember that the variables in a circuit, and the points on the twisted Edwards
-    curve live in $\mathbb{F}_r$. However the scalar $S$ does not belong to this field.
-    It is reduced modulo $q$, the number of points of the twisted Edwards curve, can be greater than
-    $r$. When $S$ is passed as a witness to the circuit, $S$ is implicitly reduced to modulo $r$.
-    If $S < r$, there is no problem. However, if $S>r$, $S$ is reduced to $S'=S[r]$ and
-    $S'[q]\neq S[q]$, it leads to a bug.
-
-    **Solution**: The solution is to split $S$ in a small base (for example, $2^{128}$ if $r$ is $256$-bits) and write $S=2^{128}*S_1+S_2$.
-    This way, $S_1$ and $S_2$ are not reduced to modulo $r$ and the bug is fixed.
-
-    The $S$ of the signature is a number reduced modulo $l$, the order of the base point of the twisted Edwards curve.
-    In a SNARK circuit, $S$ is also reduced modulo $r$ because the variables in the SNARK circuit live in $\mathbb{F}_r$.
-    We need to ensure that there is no inconsistency between reduction modulo $l$ and reduction modulo $r$.
-    If $l<r$, there's no problem since $S[l]$ is less than $r$.
-    A twisted Edwards on $\mathbb{F}_r$ has at most $N=r+2*sqrt(r)+3$ because there are $2$ points of multiplicity $2$.
-    The group used for EdDSA contains at most $N/2$ points because there is a point of order $2$ on the twisted Edwards.
-    Therefore $l<r$.
-
     Now you can define the structure for storing a signature:
 
     ```go
     import "github.com/consensys/gnark/frontend"
 
+    // Signature stores a signature  (to be used in gnark circuit)
+    // An EdDSA signature is a tuple (R,S) where R is a point on the twisted Edwards curve
+    // and S a scalar. Since the base field of the twisted Edwards is Fr, the number of points
+    // N on the Edwards is < r+1+2sqrt(r)+2 (since the curve has 2 points of multiplicity 2).
+    // The subgroup l used in eddsa is <1/2N, so the reduction
+    // mod l ensures S < r, therefore there is no risk of overflow.
     type Signature struct {
-        R      twistededwards.Point
-        S1, S2 frontend.Variable // S = S1*basis + S2, where basis if 1/2 log r (ex 128 in case of bn256)
+        R twistededwards.Point
+        S frontend.Variable
     }
     ```
 
@@ -172,7 +154,7 @@ import (
     "github.com/consensys/gnark/std/hash/mimc"
 )
 
-func Verify(api frontend.API, sig Signature, msg frontend.Variable, pubKey PublicKey) error {
+func Verify(curve twistededwards.Curve, sig Signature, msg frontend.Variable, pubKey PublicKey, hash hash.Hash) error {
 
     // compute H(R, A, M)
     data := []frontend.Variable{
@@ -181,10 +163,6 @@ func Verify(api frontend.API, sig Signature, msg frontend.Variable, pubKey Publi
         pubKey.A.X,
         pubKey.A.Y,
         msg,
-    }
-    hash, err := mimc.NewMiMC(pubKey.Curve.ID)
-    if err != nil {
-        return err
     }
     hramConstant := hash.Hash(cs, data...)
 
@@ -295,15 +273,18 @@ import (
 )
 
 func (circuit *eddsaCircuit) Define(api frontend.API) error {
-
-    params, err := twistededwards.NewEdCurve(api.Curve())
+    curve, err := twistededwards.NewEdCurve(api, circuit.curveID)
     if err != nil {
         return err
     }
-    circuit.PublicKey.Curve = params
+
+    mimc, err := mimc.NewMiMC(api)
+    if err != nil {
+        return err
+    }
 
     // verify the signature in the cs
-    eddsa.Verify(cs, circuit.Signature, circuit.Message, circuit.PublicKey)
+    return eddsa.Verify(curve, circuit.Signature, circuit.Message, circuit.PublicKey, &mimc)
 
     return nil
 }
@@ -313,7 +294,7 @@ To test the circuit, you need to generate an EdDSA signature, assign the signatu
 witnesses, and verify that the circuit has been correctly solved.
 
 To generate the signature, use the
-`github.com/consensys/gnark-crypto/ecc/bn254/twistededwards/eddsa` package.
+`github.com/consensys/gnark-crypto/signature/eddsa` package.
 
 Implementations of EdDSA exist for several curves, here you will choose BN254.
 
@@ -323,7 +304,7 @@ func main() {
     hFunc := hash.MIMC_BN254.New()
 
     // create a eddsa key pair
-    privateKey, err := signature.EDDSA_BN254.New(crand.Reader)
+    privateKey, err := eddsa.New(twistededwards.BN254, crand.Reader)
     publicKey := privateKey.Public()
 
     // note that the message is on 4 bytes
@@ -346,7 +327,7 @@ Compile the circuit:
 
 ```go
     var circuit eddsaCircuit
-    r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &circuit)
+    r1cs, err := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
 ```
 
 !!! note
@@ -375,28 +356,11 @@ from the previously computed `signature`.
     // public key bytes
     _publicKey := publicKey.Bytes()
 
-    // temporary point
-    var p edwardsbn254.PointAffine
-
     // assign public key values
-    p.SetBytes(_publicKey[:32])
-    axb := p.X.Bytes()
-    ayb := p.Y.Bytes()
-    assignment.PublicKey.A.X = axb[:]
-    assignment.PublicKey.A.Y = ayb[:]
+    assignment.PublicKey.Assign(ecc.BN254, _publicKey[:32])
 
     // assign signature values
-    p.SetBytes(signature[:32])
-    rxb := p.X.Bytes()
-    ryb := p.Y.Bytes()
-    assignment.Signature.R.X = rxb[:]
-    assignment.Signature.R.Y = ryb[:]
-
-    // The S part of the signature is a 32 bytes scalar stored in signature[32:64].
-    // As decribed earlier, we split is in S1, S2 such that S = 2^128*S1+S2 to prevent
-    // overflowing the underlying representation in the circuit.
-    assignment.Signature.S1 = signature[32:48]
-    assignment.Signature.S2 = signature[48:]
+    assignment.Signature.Assign(ecc.BN254, signature)
 ```
 
 Last step is to generate the proof and verify it.

@@ -12,5 +12,5 @@ sequence of constraints which have a simple mathematic form.
 
 ```go
 var myCircuit Circuit
-r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &myCircuit)
+r1cs, err := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &myCircuit)
 ```

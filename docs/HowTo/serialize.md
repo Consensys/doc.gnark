@@ -12,7 +12,7 @@ To serialize a `gnark` object:
 
 ```go
 // compile a circuit
-cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &circuit)
+cs, err := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
 
 // cs implements io.WriterTo
 var buf bytes.Buffer

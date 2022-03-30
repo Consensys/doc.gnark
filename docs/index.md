@@ -69,7 +69,7 @@ easily added.
 
         ```go
         var mimcCircuit Circuit
-        r1cs, err := frontend.Compile(ecc.BN254, backend.GROTH16, &mimcCircuit)
+        r1cs, err := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &mimcCircuit)
         ```
 
     === "3. create proof"
