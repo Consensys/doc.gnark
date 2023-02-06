@@ -1,52 +1,60 @@
 ---
+title: Create and verify proofs
 description: How to create and verify proofs
+sidebar_position: 4
 ---
 
 # Create and verify a `Proof`
 
 ## Use `gnark/backend`
 
-Once the [circuit](write/circuit_structure.md) is [compiled](compile.md), you can run the three
-algorithms of a zk-SNARK back end:
+Once the [circuit](write/circuit_structure.md) is [compiled](compile.md), you can run the three algorithms of a zk-SNARK back end:
 
-* `Setup`
-* `Prove`
-* `Verify`
+- `Setup`
+- `Prove`
+- `Verify`
 
-!!! note
+:::note
 
-    Supported zk-SNARK backends are under `gnark/backend`.
-    `gnark` currently implements `Groth16` and an experimental version of `PlonK`.
+Supported zk-SNARK backends are under `gnark/backend`. `gnark` currently implements `Groth16` and an experimental version of `PlonK`.
 
-!!!example "Use a zk-SNARK back end"
+:::
 
-    === "Groth16"
+:::info Use a zk-SNARK back end
 
-        ```go
-        // 1. One time setup
-        pk, vk, err := groth16.Setup(cs)
+<!--tabs-->
 
-        // 2. Proof creation
-        proof, err := groth16.Prove(cs, pk, witness)
+# Groth16
 
-        // 3. Proof verification
-        err := groth16.Verify(proof, vk, publicWitness)
+```go
+// 1. One time setup
+pk, vk, err := groth16.Setup(cs)
 
-        ```
+// 2. Proof creation
+proof, err := groth16.Prove(cs, pk, witness)
 
-    === "PlonK"
+// 3. Proof verification
+err := groth16.Verify(proof, vk, publicWitness)
 
-        ```go
-        // 1. One time setup
-        publicData, _ := plonk.Setup(cs, ...) // WIP
+```
 
-        // 2. Proof creation
-        proof, err := plonk.Prove(r1cs, publicData, witness)
+# PlonK
 
-        // 3. Proof verification
-        err := plonk.Verify(proof, publicData, publicWitness)
+```go
+// 1. One time setup
+publicData, _ := plonk.Setup(cs, ...) // WIP
 
-        ```
+// 2. Proof creation
+proof, err := plonk.Prove(r1cs, publicData, witness)
+
+// 3. Proof verification
+err := plonk.Verify(proof, publicData, publicWitness)
+
+```
+
+<!--/tabs-->
+
+:::
 
 ## Construct the witness
 
@@ -68,19 +76,17 @@ groth16.Prove(cs, pk, witness)
 // test file --> assert.ProverSucceeded(cs, &witness)
 ```
 
-!!! tip
+:::tip
 
-    If witness is not built within the same process, or in another programming language, refer to
-    [Serialize](serialize.md).
+If witness is not built within the same process, or in another programming language, refer to [Serialize](serialize.md).
+
+:::
 
 ## Verify a `Proof` on Ethereum
 
-On `ecc.BN254` + `Groth16`, `gnark` can export the `groth16.VerifyingKey` as a solidity smart
-contract.
+On `ecc.BN254` + `Groth16`, `gnark` can export the `groth16.VerifyingKey` as a solidity smart contract.
 
-Refer to [the code example](https://github.com/ConsenSys/gnark-tests/blob/main/solidity/contract/main.go)
-and [end-to-end integration test](https://github.com/ConsenSys/gnark-tests/blob/47873ce8e146c1f74477a15972ec63cbfd73c888/solidity/solidity_test.go#L81)
-using a `geth` simulated blockchain.
+Refer to [the code example](https://github.com/ConsenSys/gnark-tests/blob/main/solidity/contract/main.go) and [end-to-end integration test](https://github.com/ConsenSys/gnark-tests/blob/47873ce8e146c1f74477a15972ec63cbfd73c888/solidity/solidity_test.go#L81) using a `geth` simulated blockchain.
 
 ```go
 // 1. Compile (Groth16 + BN254)

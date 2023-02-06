@@ -1,5 +1,6 @@
 ---
-description: Add gnark to your project
+title: Add gnark to your project
+sidebar_position: 1
 ---
 
 # Add gnark to your project
@@ -16,9 +17,14 @@ description: Add gnark to your project
 go get github.com/consensys/gnark@{{content_vars.gnark_version}}
 ```
 
-!!! note
-    If you use Go modules, in `go.mod` the module path is case sensitive
-    (use `consensys` and not `ConsenSys`).
+:::note
 
-!!! info
-    `gnark` is optimized for `amd64` targets (`x86 64bits`) and tested on Unix (Linux / macOS).
+If you use Go modules, in `go.mod` the module path is case sensitive (use `consensys` and not `ConsenSys`).
+
+:::
+
+:::info
+
+`gnark` is optimized for `amd64` targets (`x86 64bits`) and tested on Unix (Linux / macOS).
+
+:::

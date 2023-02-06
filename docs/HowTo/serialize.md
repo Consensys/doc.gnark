@@ -1,5 +1,7 @@
 ---
+title: Serialize
 description: How to serialize gnark objects
+sidebar_position: 5
 ---
 
 # Serialize
@@ -19,8 +21,7 @@ var buf bytes.Buffer
 cs.WriteTo(&buf)
 ```
 
-To deserialize, first instantiate a *curve-typed* object, as per `gnark` API design
-choices, these objects are not directly accessible (under `internal/`).
+To deserialize, first instantiate a _curve-typed_ object, as per `gnark` API design choices, these objects are not directly accessible (under `internal/`).
 
 ```go
 // instantiate a curve-typed object
@@ -29,23 +30,19 @@ cs := groth16.NewCS(ecc.BN254)
 cs.ReadFrom(&buf)
 ```
 
-!!! important
+:::caution
 
-    Constraint systems (`R1CS` and `SparseR1CS`, for `Groth16` and `PLONK`) currently use the `cbor`
-    serialization protocol.
+Constraint systems (`R1CS` and `SparseR1CS`, for `Groth16` and `PLONK`) currently use the `cbor` serialization protocol.
 
-    Other `gnark` objects, like `ProvingKey`, `VerifyingKey` or `Proof` contains elliptic curve points,
-    and use a binary serialization protocol, allowing [point compression](#compression).
+Other `gnark` objects, like `ProvingKey`, `VerifyingKey` or `Proof` contains elliptic curve points, and use a binary serialization protocol, allowing [point compression](#compression).
 
-    We strongly discourage to using another protocol, because for security reasons, deserialization must
-    also perform curve and subgroup checks.
+We strongly discourage to using another protocol, because for security reasons, deserialization must also perform curve and subgroup checks.
+
+:::
 
 ## Compression
 
-Elliptic curve points, which are the main citizens of `ProvingKey`, `VerifyingKey` or `Proof`
-objects can be compressed by storing only the `X` coordinate, and a parity bit. This divides the
-required `bytes` that represent these objects by two, but comes at a significant CPU cost on the
-deserialization side.
+Elliptic curve points, which are the main citizens of `ProvingKey`, `VerifyingKey` or `Proof` objects can be compressed by storing only the `X` coordinate, and a parity bit. This divides the required `bytes` that represent these objects by two, but comes at a significant CPU cost on the deserialization side.
 
 These objects implement `io.WriterRawTo`, which doesn't use point compression.
 
@@ -56,23 +53,22 @@ pk := groth16.NewProvingKey(ecc.BN254)
 pk.ReadFrom(&buf) // reader will detect if points are compressed or not.
 ```
 
-!!! tip
+:::tip
 
-    Use `WriteRawTo` when deserialization speed >>> storage cost, otherwise use `WriteTo` with point
-    compression.
+Use `WriteRawTo` when deserialization speed >>> storage cost, otherwise use `WriteTo` with point compression.
+
+:::
 
 ## Witness
 
-Witnesses (inputs to the `Prove` or `Verify` functions) may be constructed outside of `gnark`, in a
-non-Go codebase.
+Witnesses (inputs to the `Prove` or `Verify` functions) may be constructed outside of `gnark`, in a non-Go codebase.
 
 Two types of witnesses exist:
 
-* **Full witness**: contains public and secret inputs, needed by `Prove`
-* **Public witness**: contains public inputs only, needed by `Verify`
+- **Full witness**: contains public and secret inputs, needed by `Prove`
+- **Public witness**: contains public inputs only, needed by `Verify`
 
-For performance reason (witnesses can be large), witnesses should be encoded using a binary protocol.
-For convenience, gnark also support JSON encoding.
+For performance reason (witnesses can be large), witnesses should be encoded using a binary protocol. For convenience, gnark also support JSON encoding.
 
 ### Binary protocol
 
@@ -85,14 +81,12 @@ While there is no standard yet, we followed similar patterns used by other zk-SN
 
 Where:
 
-* `nbElements == len(publicVariables) + len(secretVariables)`.
-* each variable (a *field element*) is encoded as a big-endian byte array, where
-`len(bytes(variable)) == len(bytes(modulus))`
+- `nbElements == len(publicVariables) + len(secretVariables)`.
+- each variable (a _field element_) is encoded as a big-endian byte array, where `len(bytes(variable)) == len(bytes(modulus))`
 
 ### Ordering
 
-The ordering sequence is first, `publicVariables`, then `secretVariables`.
-Each subset is ordered from the order of definition in the circuit structure.
+The ordering sequence is first, `publicVariables`, then `secretVariables`. Each subset is ordered from the order of definition in the circuit structure.
 
 For example, with this circuit on `ecc.BN254`:
 
@@ -106,44 +100,42 @@ type Circuit struct {
 
 A valid witness would be:
 
-* `[uint32(3)|bytes(Y)|bytes(X)|bytes(Z)]`
-* Hex representation with values `Y = 35`, `X = 3`, `Z = 2`
-`00000003000000000000000000000000000000000000000000000000000000000000002300000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000002`
+- `[uint32(3)|bytes(Y)|bytes(X)|bytes(Z)]`
+- Hex representation with values `Y = 35`, `X = 3`, `Z = 2` `00000003000000000000000000000000000000000000000000000000000000000000002300000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000002`
 
 ### Example
 
-This example is intended for a multi-process usage of `gnark` where you need
-to construct the witness in one process and deserialize it in another.
+This example is intended for a multi-process usage of `gnark` where you need to construct the witness in one process and deserialize it in another.
 
-!!! tip
+:::tip
 
-    If the witness creation and proof creation live in the same process, refer to [Construct the witness](prove.md).
+If the witness creation and proof creation live in the same process, refer to [Construct the witness](prove.md).
 
-!!! example "Full witness in Go"
+:::
 
-    ```go
-    // witness
-    var assignment cubic.Circuit
-    assignment.X = 3 
-    assignment.Y = 35
-    witness, _ := frontend.NewWitness(&assignment, ecc.BN254)
+```go title="Full witness in Go"
+// witness
+var assignment cubic.Circuit
+assignment.X = 3
+assignment.Y = 35
+witness, _ := frontend.NewWitness(&assignment, ecc.BN254)
 
-    // Binary marshalling
-    data, err := witness.MarshalBinary()
+// Binary marshalling
+data, err := witness.MarshalBinary()
 
-    // JSON marshalling
-    json, err := witness.MarshalJSON()
+// JSON marshalling
+json, err := witness.MarshalJSON()
 
-    ...
-    // recreate a witness
-    witness, err := witness.New(ecc.BN254, ccs.GetSchema()) // note that schema is optional for binary encoding
-    
-    // Binary unmarshalling
-    err := witness.UnmarshalBinary(data)
-    
-    // JSON unmarshalling
-    err := witness.UnmarshalJSON(json)
+...
+// recreate a witness
+witness, err := witness.New(ecc.BN254, ccs.GetSchema()) // note that schema is optional for binary encoding
 
-    // extract the public part only
-    publicWitness, _ := witness.Public()
-    ```
+// Binary unmarshalling
+err := witness.UnmarshalBinary(data)
+
+// JSON unmarshalling
+err := witness.UnmarshalJSON(json)
+
+// extract the public part only
+publicWitness, _ := witness.Public()
+```

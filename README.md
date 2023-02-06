@@ -1,17 +1,17 @@
-# gnark library documentation
+# ConsenSys gnark
 
- Latest: [![Documentation Status](https://readthedocs.com/projects/pegasys-gnark/badge/?version=latest)](https://docs.gnark.consensys.net/en/latest/?badge=latest)
- Stable: [![Documentation Status](https://readthedocs.com/projects/pegasys-gnark/badge/?version=stable)](https://docs.gnark.consensys.net/en/stable/?badge=stable)
+This documentation repo is built using [Docusaurus 2](https://docusaurus.io/).
 
-[gnark] is a fast, open-source library for zero-knowledge proof protocols written in Go.
+### Local Development
 
-The software sources are hosted in [gnark] repository.
+    $ npm install
+    $ npm run prepare
+    $ npm start
 
-This repository only contains the sources for [gnark documentation website hosted by ReadTheDocs.com].
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-This repository uses a Git submodule. Please refer to the [common tools wiki] for explanation about
-how to build and contribute to this documentation.
+### Build
 
-[gnark]: https://github.com/ConsenSys/gnark
-[common tools wiki]: https://github.com/Consensys/doc.common/wiki
-[gnark documentation website hosted by ReadTheDocs.com]: https://docs.gnark.consensys.net/
+    $ npm run build
+
+This command generates static content into the `build` directory and can be served using any static contents hosting service.

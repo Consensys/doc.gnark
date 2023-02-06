@@ -1,5 +1,7 @@
 ---
+title: Debug and test circuits
 description: How to debug and test gnark circuits
+sidebar_position: 4
 ---
 
 # Debug and test circuits
@@ -12,28 +14,33 @@ The most common error you may get while trying to create a proof is:
 constraint is not satisfied: [(.. * ..) != (.. * ..) + (.. * ..) + (.. * ..)]
 ```
 
-The error means the solver couldn't satisfy at least one of the constraints with the provided
-witness.
+The error means the solver couldn't satisfy at least one of the constraints with the provided witness.
 
-!!! note
-    In some cases, you may encounter a `couldn't solve computational constraint` error, which means
-    the solver couldn't perform an operation needed to verify a constraint.
-    For example, a division by 0.
+:::note
 
-!!! tip
-    You can run the program with `-tags=debug` to display a more verbose stack trace.
+In some cases, you may encounter a `couldn't solve computational constraint` error, which means the solver couldn't perform an operation needed to verify a constraint. For example, a division by 0.
+
+:::
+
+:::tip
+
+You can run the program with `-tags=debug` to display a more verbose stack trace.
+
+:::
 
 ### Print values
 
-The easiest way to debug a circuit is to use `api.Println()`, which behaves like `fmt.Println`, except
-it outputs the values when they are solved. For example:
+The easiest way to debug a circuit is to use `api.Println()`, which behaves like `fmt.Println`, except it outputs the values when they are solved. For example:
 
 ```go
 api.Println("A.X", pubKey.A.X)
 ```
 
-!!! note
-    With solving errors and `api.Println`, `gnark` outputs a stack trace which contain the exact line number to refer to in the circuit definition.
+:::note
+
+With solving errors and `api.Println`, `gnark` outputs a stack trace which contain the exact line number to refer to in the circuit definition.
+
+:::
 
 ## Test
 
