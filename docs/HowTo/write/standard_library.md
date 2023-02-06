@@ -1,70 +1,76 @@
 ---
+title: Standard library
 description: gnark standard library
+sidebar_position: 4
 ---
 
 # `gnark` standard library
 
 We provide the following functions in `gnark/std`:
 
-=== "MiMC hash"
+<!--tabs-->
 
-    ```go
-    func (circuit *mimcCircuit) Define(api frontend.API) error {
-        // ...
-        hFunc, _ := mimc.NewMiMC(api.Curve())
-        computedHash := hFunc.Hash(cs, circuit.Data)
-        // ...
-    }
-    ```
+# MiMC hash
 
-=== "EdDSA signature verification"
+```go
+func (circuit *mimcCircuit) Define(api frontend.API) error {
+    // ...
+    hFunc, _ := mimc.NewMiMC(api.Curve())
+    computedHash := hFunc.Hash(cs, circuit.Data)
+    // ...
+}
+```
 
-    ```go
-    type eddsaCircuit struct {
-        PublicKey eddsa.PublicKey           `gnark:",public"`
-        Signature eddsa.Signature           `gnark:",public"`
-        Message   frontend.Variable         `gnark:",public"`
-    }
+# EdDSA signature verification
 
-    func (circuit *eddsaCircuit) Define(api frontend.API) error {
-        edCurve, _ := twistededwards.NewEdCurve(api.Curve())
-        circuit.PublicKey.Curve = edCurve
+```go
+type eddsaCircuit struct {
+    PublicKey eddsa.PublicKey           `gnark:",public"`
+    Signature eddsa.Signature           `gnark:",public"`
+    Message   frontend.Variable         `gnark:",public"`
+}
 
-        eddsa.Verify(cs, circuit.Signature, circuit.Message, circuit.PublicKey)
-        return nil
-    }
-    ```
+func (circuit *eddsaCircuit) Define(api frontend.API) error {
+    edCurve, _ := twistededwards.NewEdCurve(api.Curve())
+    circuit.PublicKey.Curve = edCurve
 
-=== "Merkle proof verification"
+    eddsa.Verify(cs, circuit.Signature, circuit.Message, circuit.PublicKey)
+    return nil
+}
+```
 
-    ```go
-    type merkleCircuit struct {
-        RootHash     frontend.Variable `gnark:",public"`
-        Path, Helper []frontend.Variable
-    }
+# Merkle proof verification
 
-    func (circuit *merkleCircuit) Define(api frontend.API) error {
-        hFunc, _ := mimc.NewMiMC(api.Curve())
-        merkle.VerifyProof(cs, hFunc, circuit.RootHash, circuit.Path, circuit.Helper)
-        return nil
-    }
-    ```
+```go
+type merkleCircuit struct {
+    RootHash     frontend.Variable `gnark:",public"`
+    Path, Helper []frontend.Variable
+}
 
-=== "zk-SNARK verifier"
+func (circuit *merkleCircuit) Define(api frontend.API) error {
+    hFunc, _ := mimc.NewMiMC(api.Curve())
+    merkle.VerifyProof(cs, hFunc, circuit.RootHash, circuit.Path, circuit.Helper)
+    return nil
+}
+```
 
-    Enables verifying a *BLS12_377* Groth16 `Proof` inside a *BW6_761* circuit
+# zk-SNARK verifier
 
-    ```go
-    type verifierCircuit struct {
-        InnerProof Proof
-        InnerVk    VerifyingKey
-        Hash       frontend.Variable
-    }
+Enables verifying a _BLS12_377_ Groth16 `Proof` inside a _BW6_761_ circuit
 
-    func (circuit *verifierCircuit) Define(api frontend.API) error {
+```go
+type verifierCircuit struct {
+    InnerProof Proof
+    InnerVk    VerifyingKey
+    Hash       frontend.Variable
+}
 
-        groth16.Verify(api, circuit.InnerVk, circuit.InnerProof, []frontend.Variable{circuit.Hash})
+func (circuit *verifierCircuit) Define(api frontend.API) error {
 
-        return nil
-    }
-    ```
+    groth16.Verify(api, circuit.InnerVk, circuit.InnerProof, []frontend.Variable{circuit.Hash})
+
+    return nil
+}
+```
+
+<!--/tabs-->
