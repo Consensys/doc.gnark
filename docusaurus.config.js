@@ -212,34 +212,19 @@ const config = {
           language: "nodejs",
           logoClass: "nodejs",
         },
-        // {
-        //  highlight: "ruby",
-        //  language: "ruby",
-        //  logoClass: "ruby",
-        // },
-        // {
-        //   highlight: "csharp",
-        //   language: "csharp",
-        //   logoClass: "csharp",
-        // },
-        // {
-        //   highlight: "php",
-        //   language: "php",
-        //   logoClass: "php",
-        // },
       ],
     }),
   plugins: [
     [
       "@docusaurus/plugin-google-tag-manager",
       {
-        containerId: "GTM-P8DD38T",
+        containerId: "GTM-P4FDDG8",
       },
     ],
     [
       "@docusaurus/plugin-google-gtag",
       {
-        trackingID: "G-N5TSH1NV4Q",
+        trackingID: "G-GWMGBWJX08",
         anonymizeIP: true,
       },
     ],
