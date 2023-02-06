@@ -6,7 +6,7 @@ const baseUrl = isDev ? "/" : "/";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "ConsenSys gnark",
+  title: "gnark",
   tagline:
     "A fast zk-SNARK library that offers a high-level API to design circuits",
   url: "https://docs.gnark.consensys.net",
