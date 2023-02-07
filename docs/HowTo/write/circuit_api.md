@@ -49,4 +49,4 @@ Refer to the [EdDSA tutorial](../../Tutorials/eddsa.md) for an example.
 
 <!--links-->
 
-[Go package documentation]: https://pkg.go.dev/mod/github.com/consensys/gnark@{{content_vars.gnark_version}}/frontend
+[Go package documentation]: https://pkg.go.dev/mod/github.com/consensys/gnark/frontend

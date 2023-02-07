@@ -460,3 +460,7 @@ Zecale
 arithmetization
 mathbb
 Nakamoto
+arkworks
+pprof
+blst
+rapidsnark

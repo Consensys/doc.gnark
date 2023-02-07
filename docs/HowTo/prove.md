@@ -1,7 +1,7 @@
 ---
 title: Create and verify proofs
 description: How to create and verify proofs
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Create and verify a `Proof`

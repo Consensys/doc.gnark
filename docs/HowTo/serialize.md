@@ -1,7 +1,7 @@
 ---
 title: Serialize
 description: How to serialize gnark objects
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Serialize

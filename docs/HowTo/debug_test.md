@@ -28,6 +28,18 @@ You can run the program with `-tags=debug` to display a more verbose stack trace
 
 :::
 
+:::tip Test Engine
+
+For a faster development workflow, it is possible (and recommended) to _execute_ a circuit without running a zk-SNARK prover.
+
+```go
+err := test.IsSolved(circuit, witness, field)
+```
+
+Under the hood it executes the instructions in the circuit, in plain Go, without generating a constraint system and calling a solver.
+
+:::
+
 ### Print values
 
 The easiest way to debug a circuit is to use `api.Println()`, which behaves like `fmt.Println`, except it outputs the values when they are solved. For example:

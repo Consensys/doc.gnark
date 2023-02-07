@@ -14,3 +14,5 @@ The `frontend.Compile` method takes a high-level program and translates it to a 
 var myCircuit Circuit
 r1cs, err := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &myCircuit)
 ```
+
+:::tip Check out the [gnark Playground](https://play.gnark.io) to compile and visualize the sequence of constraints from a circuit. :::
