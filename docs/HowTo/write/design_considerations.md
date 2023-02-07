@@ -22,7 +22,7 @@ Refer to the conceptual documentation if you're not familiar with:
 
 [`Circuits`](../../Concepts/circuits.md) are programmable but can't (practically and efficiently) prove any algorithm. The way constraints are represented make some things more natural ("snark-friendly") to do than others.
 
-Numbers used in constraints are not integers or floats, but finite field elements (big numbers modulo a prime $p$).
+Numbers used in constraints are not integers or floats, but finite field elements (big numbers modulo a prime `p`).
 
 So when writing `a = b * c`, not only don't you have the liberty to specify _types_ for these variables (for example `float` or `int`), but you must also consider field overflow.
 
@@ -30,7 +30,7 @@ Some cryptographic constructs, like MiMC hash or EdDSA signature scheme were des
 
 Examples of programing concepts used in a traditional programming language, but are un-natural in most zk-SNARK constructs are:
 
-- Using floating numbers
+- Using floating point numbers
 - Using conditional statements (`if` and `else`)
 - Managing memory.
 
