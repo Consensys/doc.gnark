@@ -36,8 +36,8 @@ const CardList: CardItem[] = [
     link: "/category/concepts",
     description: (
       <>
-        Check out some general concepts that will help you understand how
-        EthSigner works under the hood and architected.
+        Check out some general concepts that will help you understand how gnark
+        works under the hood and architected.
       </>
     ),
     buttonName: "Go to concepts",
