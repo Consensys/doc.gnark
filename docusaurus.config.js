@@ -132,7 +132,7 @@ const config = {
             position: "right",
           },
           {
-            href: "https://twitter.com/consensys",
+            href: "https://twitter.com/gnark_team",
             className: "header-twitter-link",
             position: "right",
           },
