@@ -6,7 +6,7 @@ sidebar_position: 7
 
 # Profile circuits
 
-In the [Performance](write/design_considerations#performance) we emphasize the importance of minimizing the number of constraints.
+In the [Performance](write/design_considerations.md#performance) we emphasize the importance of minimizing the number of constraints.
 
 `gnark/profile` is a profiling package, which creates `pprof` compatible profiling files. Once the `.pprof` file is generated, one can visualize it using `go tool pprof` like standard Golang CPU or Memory profiles.
 
