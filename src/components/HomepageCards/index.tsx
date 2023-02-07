@@ -24,8 +24,8 @@ const CardList: CardItem[] = [
     link: "/category/how-to",
     description: (
       <>
-        The quickest way to get started by either deploying with Docker,
-        standalone binary or building from source.
+        Create and verify your first zk-SNARK. The quickest way to write, debug
+        and profile circuits.
       </>
     ),
     buttonName: "Go to guides",
@@ -36,8 +36,8 @@ const CardList: CardItem[] = [
     link: "/category/concepts",
     description: (
       <>
-        Check out some general concepts that will help you understand how gnark
-        works under the hood and is architected.
+        Check out some general concepts on constraint systems, proving schemes
+        and zk-SNARKs.
       </>
     ),
     buttonName: "Go to concepts",
@@ -47,13 +47,22 @@ const CardList: CardItem[] = [
     title: "👨‍💻 Reference",
     link: "/Reference/api",
     description: (
-      <>
-        Find command line arguments, API methods through JSON-RPC, and general
-        configuration in the References section.
-      </>
+      <>Find API documentation and GoDoc links in the Reference section.</>
     ),
     buttonName: "Go to reference",
     buttonType: "info",
+  },
+  {
+    title: "🛴 Playground",
+    link: "https://play.gnark.io",
+    description: (
+      <>
+        Compile and run circuits in your browser. Check out the examples for a
+        quick tour.
+      </>
+    ),
+    buttonName: "play.gnark.io",
+    buttonType: "link",
   },
 ];
 
