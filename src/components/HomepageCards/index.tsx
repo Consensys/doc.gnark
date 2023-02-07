@@ -37,7 +37,7 @@ const CardList: CardItem[] = [
     description: (
       <>
         Check out some general concepts that will help you understand how gnark
-        works under the hood and architected.
+        works under the hood and is architected.
       </>
     ),
     buttonName: "Go to concepts",
