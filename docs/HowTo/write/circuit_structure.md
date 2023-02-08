@@ -40,21 +40,12 @@ By default, a `frontend.Variable` has the `gnark:",secret"` visibility.
 
 Similar to standard Go packages (like `encoding/json`), struct fields can have tags which adds important metadata to input declarations.
 
-Other tag options:
+Other tag option:
 
 ```go
 // omits Y, frontend.Compile will not instantiate a new variable in the ConstraintSystem
 // this can be useful when a Variable is referenced in multiple places but we only wish to instantiate it once
 Y frontend.Variable `gnark:"-"`
-```
-
-```go
-// embeds a Variable or struct
-// can be helpful for test purposes, where one may want to test part of a circuit and redefine
-// the Define method on another struct while keeping the same inputs
-type circuitSignature struct {
-    Circuit `gnark:",embed"`
-}
 ```
 
 :::

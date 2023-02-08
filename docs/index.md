@@ -18,9 +18,11 @@ In a typical workflow:
 1. Use the `gnark/frontend` package to [translate the algorithm into a set of mathematical constraints].
 1. Use the `gnark/backend` package to [create and verify your **proof of knowledge**](HowTo/prove.md). That is, you prove that you know a list of **secret inputs** satisfying a set of mathematical constraints.
 
+![gnark workflow](Images/gnark_workflow.png)
+
 :::warning
 
-`gnark` has not been audited and is provided as-is, use at your own risk.
+`gnark` has been [partially audited](https://github.com/ConsenSys/gnark-crypto/blob/master/audit_oct2022.pdf) and is provided as-is, use at your own risk.
 
 In particular, `gnark` makes no security guarantees such as constant time implementation or side-channel attack resistance.
 
@@ -79,7 +81,7 @@ assignment := &Circuit{
     Hash: "16130099170765464552823636852555369511329944820189892919423002775646948828469",
     PreImage: 35,
 }
-witness, _ := frontend.NewWitness(assignment, ecc.BN254)
+witness, _ := frontend.NewWitness(assignment, ecc.BN254.ScalarField())
 publicWitness, _ := witness.Public()
 pk, vk, err := groth16.Setup(r1cs)
 proof, err := groth16.Prove(r1cs, pk, witness)
@@ -117,35 +119,38 @@ var mimcCircuit Circuit
 
 :::info
 
+- `gnark` won the [ZPrize competition to accelerate MSM on Mobile](https://mirror.xyz/ocelotlabs.eth/QytYZQIaiA73abHeUj8NS0Mm5_f0fMptrZM70DvmeMc) 🎉
+- [zka.lc](https://zka.lc/charts) shows gnark performs better than `arkworks` or `supranational/blst` for most operations
+
+:::
+
+:::note
+
 It is difficult to fairly and accurately compare benchmarks among libraries. Some implementations may excel in conditions where others may not. Results depend on target or available instruction set, CPUs and RAM.
 
 :::
 
-Here we benchmark the same circuit using `gnark`, `bellman` (BLS12_381), and `bellman_ce` (BN254).
+On low-level primitives like the pairing or the field multiplication, [gnark-crypto](https://github.com/ConsenSys/gnark-crypto) outperforms most libraries out there. It translates well up-the-stack - `gnark` compiles gigantic circuits in seconds, and its solver (aka witness generation) and provers perform very well on most architectures.
 
-#### BN254
+Here we benchmark two circuits (65k and 8M constraints) using `gnark`, `arkworks` and `rapidsnark` on the BN254 curve.
 
-| Number of constraints | 100000 | 32000000 | 64000000 |
-| --------------------- | ------ | -------- | -------- |
-| `bellman_ce` (s/op)   | 0.43   | 106      | 214.8    |
-| `gnark` (s/op)        | 0.12   | 27.1     | 53.9     |
-| _Speed improvement_   | _x3.6_ | _x3.9_   | _x4.0_   |
+#### Groth16 Prover (BN254, 65k constraints)
 
-On large circuits, that's **over 1.18 million constraints per second**.
+![groth16 prove 65k](Images/prove-65k.png)
 
-#### BLS12_381
+#### Groth16 Prover (BN254, 8 million constraints)
 
-| Number of constraints | 100000 | 32000000 | 64000000 |
-| --------------------- | ------ | -------- | -------- |
-| `bellman` (s/op)      | 0.6    | 158      | 316.8    |
-| `gnark` (s/op)        | 0.19   | 41.4     | 80.6     |
-| _Speed improvement_   | _x3.1_ | _x3.8_   | _x3.9_   |
+![groth16 prove 8M](Images/prove-8M.png)
+
+On large circuits, that's **over 2 million constraints per second**.
+
+#### Groth16 Verifier (BN254)
+
+![groth16 verifier](Images/verify-65k.png)
 
 :::note
 
-These benchmarks were executed on an AWS `c5a.24xlarge` instance, with hyper-threading disabled.
-
-Results are not recent and [will be updated](https://github.com/ConsenSys/gnark/issues/83).
+These benchmarks were executed on an AWS `hpc6a` instance in November 2022.
 
 :::
 

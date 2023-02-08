@@ -14,7 +14,7 @@ sidebar_position: 1
 `gnark` is a standard Go module, install it using the following command inside your Go module:
 
 ```bash
-go get github.com/consensys/gnark@{{content_vars.gnark_version}}
+go get github.com/consensys/gnark@latest
 ```
 
 :::note
