@@ -12,7 +12,7 @@ The `frontend.Compile` method takes a high-level program and translates it to a 
 
 ```go
 var myCircuit Circuit
-r1cs, err := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &myCircuit)
+r1cs, err := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &myCircuit)
 ```
 
 :::tip Playground
