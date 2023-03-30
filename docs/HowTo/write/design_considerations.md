@@ -28,7 +28,7 @@ So when writing `a = b * c`, not only don't you have the liberty to specify _typ
 
 Some cryptographic constructs, like MiMC hash or EdDSA signature scheme were designed to work on those field elements, and are well suited to be used with zk-SNARKs. Which is why zk-SNARKs are mostly used to verify hashes, signatures or other "snark friendly" cryptographic primitives.
 
-Examples of programing concepts used in a traditional programming language, but are un-natural in most zk-SNARK constructs are:
+Examples of programming concepts used in a traditional programming language, but are un-natural in most zk-SNARK constructs are:
 
 - Using floating numbers
 - Using conditional statements (`if` and `else`)
