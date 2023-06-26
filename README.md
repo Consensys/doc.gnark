@@ -1,17 +1,7 @@
-# ConsenSys gnark
+# gnark documentation
 
-This documentation repo is built using [Docusaurus 2](https://docusaurus.io/).
+This documentation repository is built using [Docusaurus](https://docusaurus.io/), and the doc
+site is published at [`docs.gnark.consensys.net`](https://docs.gnark.consensys.net/).
 
-### Local Development
-
-    $ npm install
-    $ npm run prepare
-    $ npm start
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-    $ npm run build
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+View the [ConsenSys doc contribution guidelines](https://docs-template.consensys.net/) for
+information about submitting documentation changes and previewing the site locally.
