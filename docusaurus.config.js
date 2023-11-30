@@ -12,7 +12,7 @@ const config = {
   title: "gnark",
   tagline:
     "A fast zk-SNARK library that offers a high-level API to design circuits",
-  url: "https://docs.gnark.consensys.net",
+  url: "https://docs.gnark.consensys.io",
   baseUrl,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
