@@ -1,6 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
+import Heading from '@theme/Heading'
+
 // import styles from "./styles.module.css";
 
 type CardItem = {
@@ -72,7 +74,7 @@ function Card({ title, link, description, buttonName, buttonType }: CardItem) {
       <div className="card-demo">
         <div className="card">
           <div className="card__header">
-            <h3>{title}</h3>
+          <Heading as='h3'>{title}</Heading>
           </div>
           <div className="card__body">
             <p>{description}</p>
@@ -98,7 +100,7 @@ export default function HomepageCards(): JSX.Element {
   return (
     <section className={clsx("margin-top--lg", "margin-bottom--lg")}>
       <div className="container">
-        <h1>Quick Links</h1>
+      <Heading as='h1'>Quick Links</Heading>
         <hr />
         <div className="row">
           {CardList.map((props, idx) => (

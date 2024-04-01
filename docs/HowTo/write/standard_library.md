@@ -3,14 +3,15 @@ title: Standard library
 description: gnark standard library
 sidebar_position: 4
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # `gnark` standard library
 
 We provide the following functions in `gnark/std`:
 
-<!--tabs-->
-
-# MiMC hash
+<Tabs>
+  <TabItem value="MiMC hash" label="MiMC hash" >
 
 ```go
 func (circuit *mimcCircuit) Define(api frontend.API) error {
@@ -21,7 +22,8 @@ func (circuit *mimcCircuit) Define(api frontend.API) error {
 }
 ```
 
-# EdDSA signature verification
+  </TabItem>
+  <TabItem value="EdDSA signature verification" label="EdDSA signature verification" >
 
 ```go
 type eddsaCircuit struct {
@@ -39,7 +41,8 @@ func (circuit *eddsaCircuit) Define(api frontend.API) error {
 }
 ```
 
-# Merkle proof verification
+  </TabItem>
+  <TabItem value="Merkle proof verification" label="Merkle proof verification" >
 
 ```go
 type merkleCircuit struct {
@@ -54,7 +57,8 @@ func (circuit *merkleCircuit) Define(api frontend.API) error {
 }
 ```
 
-# zk-SNARK verifier
+  </TabItem>
+  <TabItem value="zk-SNARK verifier" label="zk-SNARK verifier" >
 
 Enables verifying a _BLS12_377_ Groth16 `Proof` inside a _BW6_761_ circuit
 
@@ -73,4 +77,5 @@ func (circuit *verifierCircuit) Define(api frontend.API) error {
 }
 ```
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>

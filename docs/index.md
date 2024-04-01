@@ -3,6 +3,8 @@ title: gnark
 description: gnark is a fast, open-source zk-SNARK library written in Go
 slug: overview
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # gnark
 
@@ -41,9 +43,8 @@ Users write their zk-SNARK circuits in plain Go. `gnark` uses Go because:
 
 :::info Example of how to prove knowledge of a pre-image
 
-<!--tabs-->
-
-# 1. define circuit
+<Tabs>
+  <TabItem value="define circuit" label="define circuit" >
 
 ```go
 // Circuit defines a pre-image knowledge proof
@@ -66,14 +67,16 @@ func (circuit *Circuit) Define(api frontend.API) error {
 }
 ```
 
-# 2. compile circuit
+  </TabItem>
+  <TabItem value="compile circuit" label="compile circuit" >
 
 ```go
 var mimcCircuit Circuit
 r1cs, err := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &mimcCircuit)
 ```
 
-# 3. create proof
+  </TabItem>
+  <TabItem value="create proof" label="create proof" >
 
 ```go
 // witness
@@ -88,7 +91,8 @@ proof, err := groth16.Prove(r1cs, pk, witness)
 err := groth16.Verify(proof, vk, publicWitness)
 ```
 
-# 4. unit test
+  </TabItem>
+  <TabItem value="unit test" label="unit test" >
 
 ```go
 assert := groth16.NewAssert(t)
@@ -111,7 +115,8 @@ var mimcCircuit Circuit
 
 ```
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 
 :::
 

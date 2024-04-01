@@ -3,6 +3,8 @@ title: Create and verify proofs
 description: How to create and verify proofs
 sidebar_position: 5
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Create and verify a `Proof`
 
@@ -22,9 +24,8 @@ Supported zk-SNARK backends are under `gnark/backend`. `gnark` currently impleme
 
 :::info Use a zk-SNARK back end
 
-<!--tabs-->
-
-# Groth16
+<Tabs>
+  <TabItem value="Groth16" label="Groth16" >
 
 ```go
 // 1. One time setup
@@ -38,7 +39,8 @@ err := groth16.Verify(proof, vk, publicWitness)
 
 ```
 
-# PlonK
+  </TabItem>
+  <TabItem value="PlonK" label="PlonK" >
 
 ```go
 // 1. One time setup
@@ -52,7 +54,8 @@ err := plonk.Verify(proof, publicData, publicWitness)
 
 ```
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 
 :::
 
