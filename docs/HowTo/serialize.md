@@ -75,12 +75,14 @@ For performance reason (witnesses can be large), witnesses should be encoded usi
 While there is no standard yet, we followed similar patterns used by other zk-SNARK libraries.
 
 ```no-lang
-// Full witness     ->  [uint32(nbElements) | publicVariables | secretVariables]
+// Full witness     ->  [uint32(nbPublicElements) | uint32(nbPrivateElements) | uint32(nbElements) | publicVariables | secretVariables]
 // Public witness   ->  [uint32(nbElements) | publicVariables ]
 ```
 
 Where:
 
+- `nbPublicElements == len(publicVariables)`.
+- `nbPrivateElements == len(secretVariables)`.
 - `nbElements == len(publicVariables) + len(secretVariables)`.
 - each variable (a _field element_) is encoded as a big-endian byte array, where `len(bytes(variable)) == len(bytes(modulus))`
 
@@ -100,8 +102,8 @@ type Circuit struct {
 
 A valid witness would be:
 
-- `[uint32(3)|bytes(Y)|bytes(X)|bytes(Z)]`
-- Hex representation with values `Y = 35`, `X = 3`, `Z = 2` `00000003000000000000000000000000000000000000000000000000000000000000002300000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000002`
+- `[uint32(1)|uint32(2)|uint32(3)|bytes(Y)|bytes(X)|bytes(Z)]`
+- Hex representation with values `Y = 35`, `X = 3`, `Z = 2` `000000010000000200000003000000000000000000000000000000000000000000000000000000000000002300000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000002`
 
 ### Example
 
