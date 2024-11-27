@@ -6,7 +6,7 @@ sidebar_position: 3
 
 # Prove schemes and curves
 
-`gnark` supports two proving schemes [Groth16](https://eprint.iacr.org/2016/260.pdf) and [PlonK](https://eprint.iacr.org/2019/953.pdf). These schemes can be instantiated with any of the following elliptic curves: _BN254_, _BLS12-381_, _BLS12-377_, _BLS24-315_, _BW6-633_ or _BW6-761_.
+`gnark` supports two proving schemes [Groth16](https://eprint.iacr.org/2016/260.pdf) and [PlonK](https://eprint.iacr.org/2019/953.pdf). These schemes can be instantiated with any of the following elliptic curves: BN254, BLS12-381, BLS24-317, BLS12-377, BW6-761, BLS24-315 or BW6-633.
 
 An ID is supplied to `gnark` to choose the proving scheme and the instantiating curve.
 
@@ -14,12 +14,12 @@ An ID is supplied to `gnark` to choose the proving scheme and the instantiating 
 
 :::info Quick system guide
 
-|                   | Groth16            | PlonK                  |
-| ----------------- | ------------------ | ---------------------- |
-| trusted[^1] setup | circuit-specific   | universal :star::star: |
-| proof length      | :star::star::star: | :star:                 |
-| prover work       | :star::star:       | :star:                 |
-| verifier work     | :star::star:       | :star:                 |
+|                   | Groth16                 | PlonK                  |
+| ----------------- | ----------------------- | ---------------------- |
+| trusted setup     | circuit-specific :star: | universal :star::star: |
+| proof length      | :star::star::star:      | :star:                 |
+| prover work       | :star::star:            | :star:                 |
+| verifier work     | :star::star:            | :star:                 |
 
 Groth16 is best suited when an application needs to generate many proofs for the same circuit (for instance a single logic computation) and performance is critical, while PlonK is best suited when it needs to handle many different circuits (for example different arbitrary business logics) with reasonably fast performance.
 
@@ -65,15 +65,15 @@ There are also versions for the prover/verifier tradeoff. For example "fast-prov
 There are also different optimizations. For example:
 
 - [TurboPlonK](https://docs.zkproof.org/pages/standards/accepted-workshop3/proposal-turbo_plonk.pdf),
-- [Plookup](https://eprint.iacr.org/2020/315.pdf)).
+- [Plookup](https://eprint.iacr.org/2020/315.pdf).
 
-Currently, `gnark` supports PlonK with KZG polynomial commitment.
+Currently, `gnark` supports PlonK with KZG and FRI polynomial commitments.
 
 :::
 
 ## Choosing an elliptic curve
 
-Both Groth16 and PlonK (with KZG scheme) need to be instantiated with an elliptic curve. `gnark` supports six elliptic curves: BN254, BLS12-381, BLS12-377, BW6-761, BLS24-315, and BW6-633. All these curves are defined over a finite field $\mathbb{F}_p$ and have an equation of the form $y^2=x^3+b$ ($b\in \mathbb{F}_p$).
+Both Groth16 and PlonK (with KZG scheme) need to be instantiated with an elliptic curve. `gnark` supports seven elliptic curves: BN254, BLS12-381, BLS24-317, BLS12-377, BW6-761, BLS24-315, and BW6-633. All these curves are defined over a finite field $\mathbb{F}_p$ and have an equation of the form $y^2=x^3+b$ ($b\in \mathbb{F}_p$).
 
 To work with Groth16 and PlonK, the curves must:
 
@@ -99,6 +99,8 @@ For applications that target Ethereum 2.0, use BLS12-381.
 
 For platform-agnostic applications, the choice requires a tradeoff between performance (BN254) and security (BLS12-381). We recommend choosing BLS12-381 as it is more secure, still fast enough to be practical, but slower than BN254.
 
+BN254 was introduced in this [USENIX Security 2014 research paper](https://eprint.iacr.org/2013/879) and BLS12-381 in this [Electric Coin Co. blog post](https://electriccoin.co/blog/new-snark-curve/).
+
 ### BLS12-377 and BW6-761 curves
 
 Applications that require one-layer proof composition (a proof of proofs) cannot use BN254 or BLS12-381 as they are quite inefficient for this purpose.
@@ -110,7 +112,7 @@ In fact, such an application needs a pair ($E_1, E_2$) of elliptic curves that:
 - Have a highly 2-adic subgroup order, for efficient proof generation.
 - $E_2$ has a subgroup order equal to $E_1$'s field characteristic, for efficient proof composition.
 
-BLS12-377 and BW6-761 curves satisfy these conditions, while having fast implementations.
+BLS12-377 and BW6-761 curves satisfy these conditions, while having fast implementations. BLS12-377 was introduced in this [IEEE S&P 2020 research paper](https://eprint.iacr.org/2018/962) while BW6-761 was introduced in this [CANS 2020 research paper](https://eprint.iacr.org/2020/351).
 
 :::note
 
@@ -137,3 +139,8 @@ In summary, (BLS24-315, BW6-633) is a pair of elliptic curves that:
 - Are optimized for KZG-based SNARKs (for example, PlonK).
 - Have a highly 2-adic subgroup order, for efficient proof generation.
 - For efficient proof composition, BW6-633 has a subgroup order equal to BLS24-315's field characteristic.
+
+These curves were introduced in this [Eurocrypt 2022 research paper](https://eprint.iacr.org/2021/1359).
+
+### BLS24-317
+BLS24-317 is optimized only for $G_1$ and $G_T$ operations (for PlonK-KZG), similarly to BLS24-315 but it does not form a 2-chain. The main difference is that BLS24-317 has a higher 2-adicity i.e. 60 vs. 22 for BLS24-315. It can be seen as the equivalent of BLS12-381 targeted for KZG applications that need to speed up the prover. This curve was introduced in this [DCC2022 research paper](https://eprint.iacr.org/2022/586) and its efficiency detailed in this [blog post](https://hackmd.io/@gnark/kzg-bls24)
