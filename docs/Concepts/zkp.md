@@ -10,7 +10,7 @@ A zk-SNARK is a cryptographic construction that allows you to provide a proof of
 
 In addition, verifying a proof is a computational operation which is at worst logarithmic in the size of the mathematical statement (**Succinct**), and the procedure of proving and verifying a proof requires no interaction between the prover and the verifier, except passing the proof to the verifier (**non-interactive**).
 
-If we don't consider **Succinctness**, and if we slightly modify the notion of **Zero knowledge** to **Honest Verifier Zero Knowledge** (which is weaker than the **Zero Knowledge** property), examples of (HV)ZK-NARK are digital signatures algorithms ECDSA and EDDSA, which are in fact applications of the Schnorr Identification Protocol. It is essentially an argument of knowledge to prove knowledge of the discrete log of a point in a group where the discrete log is hard. Verifying such signatures is not computationally costly, but does not verify the **Succinctness** property as it was previously defined.
+If we don't consider **Succinctness**, and if we slightly modify the notion of **Zero knowledge** to **Honest Verifier Zero Knowledge** (which is weaker than the **Zero Knowledge** property), examples of (HV)ZK-NARK are digital signatures algorithms ECDSA and EDDSA, which are in fact applications of the Schnorr Identification Protocol. It is essentially an argument of knowledge to prove knowledge of the discrete log of a point in a group where the discrete log is hard. Verifying such signatures is not computationally costly, but does not satisfy the **Succinctness** property as it was previously defined.
 
 The signature schemes are specific mathematical statements, or [**circuits**](circuits.md).
 
