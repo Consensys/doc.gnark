@@ -45,7 +45,7 @@ It's a proving scheme with a preprocessing phase that can be updated, and has a 
 
 :::info
 
-For more information, we recommend this [Plonk paper](https://eprint.iacr.org/2019/953.pdf), and [this Plonk article](https://hackmd.io/@zkteam/plonk).
+For more information, we recommend this [Plonk paper](https://eprint.iacr.org/2019/953.pdf), and [this Plonk article](https://hackmd.io/@gnark/plonk).
 
 Some projects that use PlonK include Aztec, ZKSync, and Dusk.
 
@@ -120,7 +120,7 @@ Given $E_1$ must have a highly 2-adic field characteristic, BLS12-381 cannot be 
 
 :::info
 
-Some [benchmarks and comparisons](https://hackmd.io/@zkteam/eccbench) of third-parties implementations against `gnark-crypto`.
+Some [benchmarks and comparisons](https://hackmd.io/@gnark/eccbench) of third-parties implementations against `gnark-crypto`.
 
 Some applications that use one-layer proof composition include ZEXE, Celo, Aleo, and Zecale.
 
