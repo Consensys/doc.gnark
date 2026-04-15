@@ -2,19 +2,13 @@ const fs = require("fs");
 const lightCodeTheme = require("prism-react-renderer").themes.github;
 const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 
-const math = require("remark-math");
-const katex = require("rehype-katex");
-
-const isDev = process.env.NODE_ENV === "development";
-const baseUrl = isDev ? "/" : "/";
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "gnark",
   tagline:
     "A fast zk-SNARK library that offers a high-level API to design circuits",
   url: "https://docs.gnark.consensys.io",
-  baseUrl,
+  baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
   favicon: "img/favicon.ico",
@@ -44,10 +38,6 @@ const config = {
           editUrl: "https://github.com/ConsenSys/doc.gnark/tree/main/",
           routeBasePath: "/",
           path: "docs",
-          // @ts-ignore
-          // eslint-disable-next-line global-require
-          remarkPlugins: [math],
-          rehypePlugins: [katex],
           include: ["**/*.md", "**/*.mdx"],
           exclude: [
             "**/_*.{js,jsx,ts,tsx,md,mdx}",
@@ -246,4 +236,12 @@ const config = {
   themes: [],
 };
 
-module.exports = config;
+module.exports = async function createConfig() {
+  const remarkMath = (await import("remark-math")).default;
+  const rehypeKatex = (await import("rehype-katex")).default;
+
+  config.presets[0][1].docs.remarkPlugins = [remarkMath];
+  config.presets[0][1].docs.rehypePlugins = [rehypeKatex];
+
+  return config;
+};
