@@ -11,6 +11,6 @@ jobs:
     name: Run trivy scanner
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Trivy
         uses: ConsenSys/docs-gha/trivy@main
