@@ -1,108 +1,61 @@
 import React from "react";
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import Heading from '@theme/Heading'
-
-// import styles from "./styles.module.css";
+import Heading from "@theme/Heading";
+import styles from "./styles.module.css";
 
 type CardItem = {
   title: string;
   link: string;
-  description: JSX.Element;
-  buttonName: string;
-  buttonType:
-    | "primary"
-    | "secondary"
-    | "success"
-    | "info"
-    | "warning"
-    | "danger"
-    | "link";
+  eyebrow: string;
+  description: string;
 };
 
 const CardList: CardItem[] = [
   {
-    title: "🏁 Getting Started",
-    link: "/category/how-to",
-    description: (
-      <>
-        Create and verify your first zk-SNARK. The quickest way to write, debug
-        and profile circuits.
-      </>
-    ),
-    buttonName: "Go to guides",
-    buttonType: "success",
+    eyebrow: "01 / Start",
+    title: "Build your first circuit",
+    link: "/HowTo/get_started",
+    description:
+      "Install gnark, define a circuit, and generate your first proof in Go.",
   },
   {
-    title: "💭 Concepts",
+    eyebrow: "02 / Learn",
+    title: "Understand the system",
     link: "/category/concepts",
-    description: (
-      <>
-        Check out some general concepts on constraint systems, proving schemes
-        and zk-SNARKs.
-      </>
-    ),
-    buttonName: "Go to concepts",
-    buttonType: "secondary",
+    description:
+      "Explore constraint systems, proving schemes, curves, and zk-SNARK fundamentals.",
   },
   {
-    title: "👨‍💻 Reference",
+    eyebrow: "03 / Reference",
+    title: "Find the right API",
     link: "/Reference/api",
-    description: (
-      <>Find API documentation and GoDoc links in the Reference section.</>
-    ),
-    buttonName: "Go to reference",
-    buttonType: "info",
-  },
-  {
-    title: "🛴 Playground",
-    link: "https://play.gnark.io",
-    description: (
-      <>
-        Compile and run circuits in your browser. Check out the examples for a
-        quick tour.
-      </>
-    ),
-    buttonName: "play.gnark.io",
-    buttonType: "link",
+    description:
+      "Jump from the high-level circuit API to packages and Go reference documentation.",
   },
 ];
 
-function Card({ title, link, description, buttonName, buttonType }: CardItem) {
+function Card({ eyebrow, title, link, description }: CardItem) {
   return (
-    <div className={clsx("col", "col--4", "margin-top--md")}>
-      <div className="card-demo">
-        <div className="card">
-          <div className="card__header">
-          <Heading as='h3'>{title}</Heading>
-          </div>
-          <div className="card__body">
-            <p>{description}</p>
-          </div>
-          <div className="card__footer">
-            <Link
-              className={clsx(
-                "button",
-                "button--" + buttonType,
-                "button--block",
-              )}
-              to={link}>
-              {buttonName}
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Link className={styles.card} to={link}>
+      <span className={styles.eyebrow}>{eyebrow}</span>
+      <Heading as="h3">{title}</Heading>
+      <p>{description}</p>
+      <span className={styles.arrow} aria-hidden="true">
+        →
+      </span>
+    </Link>
   );
 }
 
 export default function HomepageCards(): JSX.Element {
   return (
-    <section className={clsx("margin-top--lg", "margin-bottom--lg")}>
+    <section className={styles.section}>
       <div className="container">
-      <Heading as='h1'>Quick Links</Heading>
-        <hr />
-        <div className="row">
+        <div className={styles.heading}>
+          <Heading as="h2">Choose a path</Heading>
+          <p>From first proof to production circuit.</p>
+        </div>
+        <div className={styles.grid}>
           {CardList.map((props, idx) => (
             <Card key={idx} {...props} />
           ))}

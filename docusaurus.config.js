@@ -1,18 +1,21 @@
-const fs = require("fs");
 const lightCodeTheme = require("prism-react-renderer").themes.github;
 const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "gnark",
-  tagline:
-    "A fast zk-SNARK library that offers a high-level API to design circuits",
+  tagline: "Fast, expressive zk-SNARKs in Go",
   url: "https://docs.gnark.consensys.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "throw",
-  favicon: "img/favicon.ico",
+  favicon: "img/gnark-logo-assets/svgs/black-symbol.svg",
   trailingSlash: false,
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "throw",
+    },
+  },
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -33,6 +36,7 @@ const config = {
       "classic",
       {
         docs: {
+          breadcrumbs: true,
           sidebarPath: require.resolve("./sidebars.js"),
           // Set a base path separate from default /docs
           editUrl: "https://github.com/ConsenSys/doc.gnark/tree/main/",
@@ -94,6 +98,15 @@ const config = {
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
+      image: "img/gnark-logo-assets/jpgs/black-social-banner@2x@2x.jpg",
+      metadata: [
+        {
+          name: "description",
+          content:
+            "Documentation for gnark, a fast and expressive zk-SNARK library written in Go.",
+        },
+        { name: "theme-color", content: "#121212" },
+      ],
       tableOfContents: {
         minHeadingLevel: 2,
         maxHeadingLevel: 5,
@@ -107,11 +120,11 @@ const config = {
       navbar: {
         // title: "gnark",
         logo: {
-          alt: "gnark",
-          src: "img/logo.svg",
-          srcDark: "img/logo_dark.svg",
-          width: 81,
-          height: 29,
+          alt: "gnark documentation",
+          src: "img/gnark-logo-assets/svgs/black-logomark.svg",
+          srcDark: "img/gnark-logo-assets/svgs/white-logomark.svg",
+          width: 104,
+          height: 32,
         },
         items: [
           {
@@ -122,19 +135,19 @@ const config = {
             label: "Docs",
           },
           {
+            href: "https://play.gnark.io",
+            label: "Playground",
+            position: "left",
+          },
+          {
             href: "https://github.com/ConsenSys/gnark",
             className: "header-github-link",
             position: "right",
-          },
-          {
-            href: "https://twitter.com/gnark_team",
-            className: "header-twitter-link",
-            position: "right",
+            "aria-label": "gnark on GitHub",
           },
         ],
       },
       footer: {
-        style: "dark",
         links: [
           {
             title: "Learn",
@@ -158,29 +171,33 @@ const config = {
             ],
           },
           {
-            title: "Community",
+            title: "Build",
             items: [
               {
-                label: "Issues",
-                href: "https://github.com/ConsenSys/gnark/issues",
+                label: "Playground",
+                href: "https://play.gnark.io",
+              },
+              {
+                label: "Go package",
+                href: "https://pkg.go.dev/github.com/consensys/gnark",
               },
             ],
           },
           {
-            title: "More",
+            title: "Project",
             items: [
               {
-                label: "Documentation on GitHub",
-                href: "https://github.com/ConsenSys/doc.gnark",
+                label: "gnark on GitHub",
+                href: "https://github.com/ConsenSys/gnark",
               },
               {
-                label: "ConsenSys",
-                href: "https://consensys.net",
+                label: "Improve these docs",
+                href: "https://github.com/ConsenSys/doc.gnark",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} ConsenSys, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Consensys Software Inc.`,
       },
       prism: {
         theme: lightCodeTheme,
