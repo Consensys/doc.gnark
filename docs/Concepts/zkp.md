@@ -4,6 +4,8 @@ description: What are zk-SNARKs
 sidebar_position: 1
 ---
 
+<!-- markdownlint-disable MD013 -->
+
 # zk-SNARK
 
 A zk-SNARK is a cryptographic construction that allows you to provide a proof of knowledge (Argument of Knowledge) of secret inputs satisfying a public mathematical statement, without leaking any information on the inputs (**Zero Knowledge**).
@@ -28,7 +30,7 @@ zk-SNARK is an active area of academic research with improvements and new protoc
 
 <!-- vale off -->
 
-["A Cambrian Explosion of Crypto Proofs" overview article on Nakamoto.com](https://nakamoto.com/cambrian-explosion-of-crypto-proofs/)
+["A Cambrian Explosion of Crypto Proofs" overview article](https://nakamoto.ghost.io/cambrian-explosion-of-crypto-proofs/)
 
 <!-- vale on -->
 
