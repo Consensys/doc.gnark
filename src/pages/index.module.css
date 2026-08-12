@@ -1,39 +1,101 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
+.hero {
+  background: #121212;
+  color: #fff;
+  overflow: hidden;
+}
+
+.heroInner {
+  align-items: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+  min-height: 34rem;
+  padding-bottom: 5rem;
+  padding-top: 5rem;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 1;
+}
+
+.kicker {
+  color: #aaa;
+  display: block;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  color: #fff;
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 0.88;
+  margin-bottom: 2rem;
+}
+
+.hero p {
+  color: #c9c9c9;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.55;
+  margin-bottom: 2rem;
+  max-width: 38rem;
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.textLink {
+  color: #fff;
+  font-weight: 600;
+}
+
+.textLink:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.mark {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0.12;
+}
+
+.mark img {
+  height: auto;
+  transform: translateX(12%);
+  width: min(34vw, 27rem);
+}
 
 @media screen and (max-width: 996px) {
-  .introductionBlock {
-    padding: 2rem;
+  .heroInner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-bottom: 4rem;
+    padding-top: 4rem;
+  }
+
+  .mark {
+    display: none;
   }
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@media screen and (max-width: 576px) {
+  .hero h1 {
+    font-size: 3.75rem;
+  }
 
-.introductionBlock {
-  background: linear-gradient(56.02deg, #2c56dd 49.2%, #30daad 95.07%), #2c56dd;
-  padding: 6rem;
-  text-align: center;
-  width: 100%;
-}
-
-.forceColor {
-  color: var(--ifm-color-content-inverse);
-}
-
-html[data-theme="dark"] .forceColor {
-  color: var(--ifm-font-color-secondary);
-}
-
-.title {
-  font-size: clamp(1.5rem, 5vw, 6rem);
-}
-
-.subtitle {
-  font-size: clamp(0.8rem, 1vw, 2rem);
+  .actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
