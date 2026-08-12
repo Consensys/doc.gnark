@@ -3,6 +3,8 @@ title: gnark
 description: gnark is a fast, open-source zk-SNARK library written in Go
 slug: overview
 ---
+
+<!-- markdownlint-disable MD013 -->
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -24,7 +26,7 @@ In a typical workflow:
 
 :::warning
 
-`gnark` has been [partially audited](https://github.com/ConsenSys/gnark-crypto/blob/master/audit_oct2022.pdf) and is provided as-is, use at your own risk.
+`gnark` has been [audited](https://github.com/Consensys/gnark/blob/master/audits/2022-10%20-%20Kudelski%20-%20gnark-crypto.pdf) and is provided as-is, use at your own risk.
 
 In particular, `gnark` makes no security guarantees such as constant time implementation or side-channel attack resistance.
 
